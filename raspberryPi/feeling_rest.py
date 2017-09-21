@@ -27,62 +27,56 @@ MittagessenStart = time(11, 45)
 MittagessenEnd = time(13, 0)
 
 def CallHipchatRestApi (channel):
-    channelurl = hipchat_url + channel['channel'] + '/notification?auth_token=' + channel['key'] 
-    params = {
-        'message': channel['message'],
-        'notify': 'true',
-        'message_format': 'text',
-        'color': 'random'
-    }
-    response = requests.post(channelurl, params, timeout=3)
+  channelurl = hipchat_url + channel['channel'] + '/notification?auth_token=' + channel['key'] 
+  params = {'message': channel['message'],
+            'notify': 'true',
+            'message_format': 'text',
+            'color': 'random'
+  }
+  response = requests.post(channelurl, params, timeout=3)
             
 
 def getEntryInfo(url):
-    response = requests.get(url, timeout=1)
-    print(response.json())
+  response = requests.get(url, timeout=1)
+  print(response.json())
 
 
 def getAccountByUid(uid):
-    response = None
-    account_url = feeling_board_url + 'account'
-    response = requests.get(account_url + '/chipid/' + uid, timeout = 1)
-    if not response.text:
-        params = {
-            'chipUID': uid,
-            }
-        response = requests.post(account_url, json=params, timeout=1)
-        response = requests.get(response.headers['location'])
-    return response
+  response = None
+  account_url = feeling_board_url + 'account'
+  response = requests.get(account_url + '/chipid/' + uid, timeout = 1)
+  if not response.text:
+    params = {'chipUID': uid}
+    response = requests.post(account_url, json=params, timeout=1)
+    response = requests.get(response.headers['location'])
+  return response
 
 def getUserNameByUid(uid):
-    account = getAccountByUid(uid)
-    username = ''
-    if account:
-        username = account.json()['name']
-    return username
+  account = getAccountByUid(uid)
+  username = ''
+  if account:
+    username = account.json()['name']
+  return username
 
 def addFeelingBoardEntry(rfid_uid, feeling):
-    accountID = 0
-    account = getAccountByUid(rfid_uid)
-    if account and account.json():
-        accountID = account.json()['id']
-    else:
-        return None
-    feeling_url = feeling_board_url + 'entry'
-    params = {
-        'accountID': accountID,
-        'feeling': feeling
-        }
-    response = requests.post(feeling_url, json=params, timeout=1)
+  accountID = 0
+  account = getAccountByUid(rfid_uid)
+  if account and account.json():
+    accountID = account.json()['id']
+  else:
+    return None
+  feeling_url = feeling_board_url + 'entry'
+  params = {'accountID': accountID, 'feeling': feeling}
+  response = requests.post(feeling_url, json=params, timeout=1)
 
-    return response
+  return response
 
 def pressHotButton():
-    nowTime = datetime.now()
-    channel = TestButtonChannel
-    if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
-        channel = EisChannel
-    elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
-        channel = MittagessenChannel
-    CallHipchatRestApi(channel) 
+  nowTime = datetime.now()
+  channel = TestButtonChannel
+  if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
+    channel = EisChannel
+  elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
+    channel = MittagessenChannel
+  CallHipchatRestApi(channel) 
 

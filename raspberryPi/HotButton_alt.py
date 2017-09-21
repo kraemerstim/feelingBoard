@@ -39,42 +39,42 @@ MittagessenStart = time(11, 45)
 MittagessenEnd = time(13, 00)
 
 def CallHipchatRestApi (channel):
-    channelurl = hipchat_url + channel['channel'] + '/notification?auth_token=' + channel['key'] 
-    params = {
-        'message': channel['message'],
-        'notify': 'true',
-        'message_format': 'text',
-        'color': 'random'
-    }
-    if DebugMode:  
-        print(EistimeStart.isoformat() + ' ' + EistimeEnd.isoformat() + ' ' + datetime.now().time().isoformat())
-        print(datetime.now().strftime('%H:%M:%S') + ' channel =' + channel + ' key = ' + key + ' message = ' + message)
-        MakeGreatJobSound()
-    else:
-        try:
-            response = requests.post(channelurl, params)
-            MakeGreatJobSound()
-        except:
-            print('exception!!!')
+  channelurl = hipchat_url + channel['channel'] + '/notification?auth_token=' + channel['key'] 
+  params = {
+      'message': channel['message'],
+      'notify': 'true',
+      'message_format': 'text',
+      'color': 'random'
+  }
+  if DebugMode:  
+    print(EistimeStart.isoformat() + ' ' + EistimeEnd.isoformat() + ' ' + datetime.now().time().isoformat())
+    print(datetime.now().strftime('%H:%M:%S') + ' channel =' + channel + ' key = ' + key + ' message = ' + message)
+    MakeGreatJobSound()
+  else:
+    try:
+      response = requests.post(channelurl, params)
+      MakeGreatJobSound()
+    except:
+      print('exception!!!')
 
 def MakeGreatJobSound ():
-    if not SilentMode:
-        GPIO.output(SoundPin, GPIO.HIGH)
-        time2.sleep(0.1)
-        GPIO.output(SoundPin, GPIO.LOW)
+  if not SilentMode:
+    GPIO.output(SoundPin, GPIO.HIGH)
+    time2.sleep(0.1)
+    GPIO.output(SoundPin, GPIO.LOW)
 
 def pressHotButton():
-    channel = TestButtonChannel
-    if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
-        print('Eiszeit!!')
-        channel = EisChannel
-    elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
-        print('Mittagszeit!!')
-        channel = MittagessenChannel
-    else:
-        SilentMode = 1
-        print('Keine Eiszeit!!!')
-    CallHipchatRestApi(channel) 
+  channel = TestButtonChannel
+  if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
+    print('Eiszeit!!')
+    channel = EisChannel
+  elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
+    print('Mittagszeit!!')
+    channel = MittagessenChannel
+  else:
+    SilentMode = 1
+    print('Keine Eiszeit!!!')
+  CallHipchatRestApi(channel) 
     
 #initialisieren  
 # RPi.GPIO Layout verwenden (wie Pin-Nummern)
@@ -94,46 +94,46 @@ startTime = datetime.min
 # Programm
 # Dauersschleife
 while 1:
-    # aktuelle Zeit lesen
-    nowTime = datetime.now()
-    # GPIO lesen
-    if GPIO.input(ButtonPin1) == GPIO.HIGH:
-        if startTime == datetime.min:
-          startTime = nowTime
-          
+  # aktuelle Zeit lesen
+  nowTime = datetime.now()
+  # GPIO lesen
+  if GPIO.input(ButtonPin1) == GPIO.HIGH:
+    if startTime == datetime.min:
+      startTime = nowTime
+  
         # Warte 100 ms
-        time2.sleep(0.1)
+    time2.sleep(0.1)
+  else:
+    if startTime == datetime.min:
+      time2.sleep(0.01)
     else:
-        if startTime == datetime.min:
-            time2.sleep(0.01)
+      Previousmode = SilentMode
+      durationTime = nowTime-startTime
+      channel = TestButtonChannel
+      if durationTime.seconds == 0:
+        print('Unter einer Sekunde gedrueckt, normalmode')
+        if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
+          print('Eiszeit!!')
+          channel = EisChannel
+        elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
+          print('Mittagszeit!!')
+          channel = MittagessenChannel
         else:
-            Previousmode = SilentMode
-            durationTime = nowTime-startTime
-            channel = TestButtonChannel
-            if durationTime.seconds == 0:
-                print('Unter einer Sekunde gedrueckt, normalmode')
-                if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
-                    print('Eiszeit!!')
-                    channel = EisChannel
-                elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
-                    print('Mittagszeit!!')
-                    channel = MittagessenChannel
-                else:
-                    SilentMode = 1
-                    print('Keine Eiszeit!!!')
-                CallHipchatRestApi(channel['channel'], channel['key'], channel['message'])   
-            else:
-                SilentMode = 1
-                print('ueber einer Sekunde gedrueckt, debugmode')
-                DebugNachricht = 'Interfaces:'
-                for iface in ni.interfaces():   
-                    ipv4s = ni.ifaddresses(iface).get(ni.AF_INET, [])
-                    for entry in ipv4s:
-                        addr = entry.get('addr')
-                        if not addr:
-                            continue
-                        DebugNachricht = DebugNachricht + ' ' + addr
-                CallHipchatRestApi(channel['channel'], channel['key'], DebugNachricht)
-            startTime = datetime.min
-            SilentMode = Previousmode
-            time2.sleep(1)
+          SilentMode = 1
+          print('Keine Eiszeit!!!')
+        CallHipchatRestApi(channel['channel'], channel['key'], channel['message'])   
+      else:
+        SilentMode = 1
+        print('ueber einer Sekunde gedrueckt, debugmode')
+        DebugNachricht = 'Interfaces:'
+        for iface in ni.interfaces():   
+          ipv4s = ni.ifaddresses(iface).get(ni.AF_INET, [])
+          for entry in ipv4s:
+            addr = entry.get('addr')
+            if not addr:
+              continue
+            DebugNachricht = DebugNachricht + ' ' + addr
+        CallHipchatRestApi(channel['channel'], channel['key'], DebugNachricht)
+      startTime = datetime.min
+      SilentMode = Previousmode
+      time2.sleep(1)

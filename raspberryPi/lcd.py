@@ -73,10 +73,10 @@ def lcd_init():
   time.sleep(0.1)
 
 def lcd_display(line1, line2, style):
-	lcd_byte(LCD_LINE_1, LCD_CMD)
-	lcd_string(line1, style)
-	lcd_byte(LCD_LINE_2, LCD_CMD)
-	lcd_string(line2, style)
+  lcd_byte(LCD_LINE_1, LCD_CMD)
+  lcd_string(line1, style)
+  lcd_byte(LCD_LINE_2, LCD_CMD)
+  lcd_string(line2, style)
 
 def lcd_string(message,style):
   # Send string to display
