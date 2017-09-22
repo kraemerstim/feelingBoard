@@ -9,23 +9,50 @@ from threading import Thread
 class Display:
 
   def setDisplay(self, line1, line2, seconds=0, style=2):
-    print('input = %(line1)s, %(line2)s, displaynumber = %(displaynumber)d, seconds = %(seconds)d' % {'line1': line1, 'line2': line2, 'displaynumber': self.display_number, 'seconds': seconds})
+    self.display_number, 'seconds': seconds})
     self.lcd_lock.acquire()
     try:
       lcd.lcd_display(line1, line2, style)
+      self.display_number += 1
       if seconds > 0:
-        self.display_number += 1
-        print('input = %(line1)s, %(line2)s, displaynumber = %(displaynumber)d.' % {'line1': line1, 'line2': line2, 'displaynumber': self.display_number})
-        Thread(target=self.__threaded_display_method, args=(self.display_number, seconds)).start()
+        Thread(target=self.__threaded_display_reset, args=(self.display_number, seconds)).start()
     finally:
       self.lcd_lock.release()
 
-  def __threaded_display_method(self, displaynumber, seconds):
+  def __threaded_display_reset(self, displaynumber, seconds):
     time.sleep(seconds)
     if self.display_number == displaynumber:
-      print('closing displaynumber = %(displaynumber)d.' % {'displaynumber': self.display_number})
       self.setDisplay(self.head_line, self.bottom_line)
   
+  def __threaded_display_move(self, displaynumber, line1, line2, interval = 0.5)
+    iteration = 0
+    while (self.display_number == displaynumber)
+      topLine = __get_line_part(line1, iteration)
+      bottomLine = __get_line_part(line2, iteration)
+      
+      time.sleep(interval)
+      iteration += 1
+  
+  def __get_line_part(line, iteration):
+    scount = len(line)
+    if scount <= 16:
+      return line
+    
+    step = iteration % (scount - 15)
+    step += 4 #hinzufügen der start und end-pausen
+    start -= 2 #start berechnen
+    if (start <= 0):
+      start = 0
+      
+    if start > (scount - 15):
+      start = (scount - 15)
+    
+    return line[start:]
+  
+  def set_default_values(self, line1, line2):
+    self.head_line = line1
+    self.bottom_line = line2
+    
   def __init__(self):
     self.lcd_lock = threading.Lock()
     self.display_number = 0
