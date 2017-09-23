@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <script type = "text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
+</head>
+<body>
+    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <canvas id="myChart"></canvas>
+    </div>
+	<script th:inline="javascript">
+	var ctx = document.getElementById("myChart");
+	var test = /*[[${ChartData}]]*/ null;
+	var myChart = new Chart(ctx, {
+	    type: 'line',
+	    data: test
+	    
+	    /*{
+	    	"labels":[1,2,3,4,5,6,7,8,9,10,11,12],
+	        "datasets": [{
+	            label: '# of Votes',
+	            data: [{x: 1, y: 12}, {x: 2, y: 19}, {x: 3, y: 3}, {x: 5, y: 5}, {x: 6, y: 2}, {x: 12, y: 3}],
+	            borderWidth: 1
+	        }]
+	    }*/
+	    ,
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+	</script>
+</body>
+</html>

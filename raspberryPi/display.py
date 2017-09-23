@@ -24,31 +24,33 @@ class Display:
     return line[start:(start + 16)]
     
   def setDisplay(self, line1, line2, seconds=0, style=2):
-    self.lcd_lock.acquire()
     self.display_number += 1
+    if len(line1) <= 16 and len(line2) <= 16:
+      self.__secure_set_display(line1, line2, style)
+    else:
+      Thread(target=self.__threaded_display_move, args=(self.display_number, line1, line2)).start()
+    if seconds > 0:
+      Thread(target=self.__threaded_display_reset, args=(self.display_number, seconds)).start()
+      
+  def __secure_set_display(self, line1, line2, style=2):
+    self.lcd_lock.acquire()
     try:
-      if len(line1) <= 16 and len(line2) <= 16:
-        lcd.lcd_display(line1, line2, style)
-      else:
-        Thread(target=self.__threaded_display_move, args=(self.display_number, line1, line2)).start()
-      if seconds > 0:
-        Thread(target=self.__threaded_display_reset, args=(self.display_number, seconds)).start()
+      lcd.lcd_display(line1, line2, style)
     finally:
       self.lcd_lock.release()
 
   def __threaded_display_reset(self, displaynumber, seconds):
     time.sleep(seconds)
     if self.display_number == displaynumber:
-      self.setDisplay(self.head_line, self.bottom_line)
+      self.__secure_set_display(self.head_line, self.bottom_line)
   
   def __threaded_display_move(self, displaynumber, line1, line2, interval=0.2):
     iteration = 0
     while (self.display_number == displaynumber):
       topLine = Display.__get_line_part(line1, iteration)
       bottomLine = Display.__get_line_part(line2, iteration)
+      self.__secure_set_display(topLine, bottomLine)
       iteration += 1
-      print (topLine + " " + bottomLine + " " + str(iteration) + " " + str(interval))
-      lcd.lcd_display(topLine, bottomLine,2)
       time.sleep(interval)
   
   def set_default_values(self, line1, line2):
