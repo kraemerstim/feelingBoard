@@ -11,26 +11,32 @@
 	<script th:inline="javascript">
 	var ctx = document.getElementById("myChart");
 	var test = /*[[${ChartData}]]*/ null;
+	var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
 	var myChart = new Chart(ctx, {
 	    type: 'line',
-	    data: test
-	    
-	    /*{
-	    	"labels":[1,2,3,4,5,6,7,8,9,10,11,12],
-	        "datasets": [{
-	            label: '# of Votes',
-	            data: [{x: 1, y: 12}, {x: 2, y: 19}, {x: 3, y: 3}, {x: 5, y: 5}, {x: 6, y: 2}, {x: 12, y: 3}],
-	            borderWidth: 1
-	        }]
-	    }*/
-	    ,
+	    data: test,
 	    options: {
 	        scales: {
 	            yAxes: [{
 	                ticks: {
-	                    beginAtZero:true
+	                    beginAtZero:false,
+	                    stepSize: 1,
+	                    min: 0,
+	                    max: 6
 	                }
-	            }]
+	            }],
+	            xAxes: [{
+					type: 'time',
+					time: {
+						format: timeFormat,
+						// round: 'day'
+						tooltipFormat: 'll HH:mm'
+					},
+					scaleLabel: {
+						display: true,
+						labelString: 'Date'
+					}
+				}]
 	        }
 	    }
 	});
