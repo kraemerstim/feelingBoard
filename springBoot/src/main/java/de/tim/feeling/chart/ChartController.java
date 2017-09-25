@@ -1,14 +1,23 @@
 package de.tim.feeling.chart;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.tim.feeling.Account.Account;
 import de.tim.feeling.Account.AccountRepository;
@@ -67,4 +76,22 @@ public class ChartController {
 		model.addAttribute("ChartData", chartData);
 		return "home";
 	}
+	
+	 @GetMapping("/search")
+	    public @ResponseBody ChartData<?> getSearchResultViaAjax(Model model, @RequestParam String from, @RequestParam String to) throws ParseException {
+		 	DateFormat format = DateFormat.getDateTimeInstance();
+		    ChartData<Date> result = new ChartData<Date>();
+		    Account account = accountRepository.findOne((long) 1);
+		    Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse(from), format.parse(to));
+	        DataSet<Date> dataSet = new DataSet<Date>();
+			dataSet.setLabel(account.getName());
+			for (Entry entry : entries) {
+				dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+			}
+			dataSet.setBackgroundColor(color[0]);
+			dataSet.setBorderColor(color[0]);
+			result.addDataSet(dataSet);
+
+	        return result;
+	    }
 }

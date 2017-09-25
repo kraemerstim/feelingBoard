@@ -1,45 +1,70 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <script type = "text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
+<title>Getting Started: Handling Form Submission</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
-    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-    <canvas id="myChart"></canvas>
-    </div>
+	<div id="feedback"></div>
+	<form class="form-horizontal" id="search-form">
+            <div class="form-group form-group-lg">
+                <label class="col-sm-2 control-label">from</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="from"/>
+                </div>
+                <label class="col-sm-2 control-label">to</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="to"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" id="btn-search"
+                            class="btn btn-primary btn-lg">Search
+                    </button>
+                </div>
+            </div>
+      </form>
+	<div class="chart-container"
+		style="position: relative; height: 40vh; width: 80vw">
+		<canvas id="myChart"></canvas>
+	</div>
+	<script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script type="text/javascript" th:src="@{/lib/main.js}"></script>
+	<script type="text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
 	<script th:inline="javascript">
-	var ctx = document.getElementById("myChart");
-	var test = /*[[${ChartData}]]*/ null;
-	var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
-	var myChart = new Chart(ctx, {
-	    type: 'line',
-	    data: test,
-	    options: {
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:false,
-	                    stepSize: 1,
-	                    min: 0,
-	                    max: 6
-	                }
-	            }],
-	            xAxes: [{
-					type: 'time',
-					time: {
-						format: timeFormat,
-						// round: 'day'
-						tooltipFormat: 'll HH:mm'
-					},
-					scaleLabel: {
-						display: true,
-						labelString: 'Date'
-					}
-				}]
-	        }
-	    }
-	});
+		var ctx = document.getElementById("myChart");
+		var test = /*[[${ChartData}]]*/null;
+		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
+		var myChart = new Chart(ctx, {
+			type : 'line',
+			data : test,
+			options : {
+				scales : {
+					yAxes : [ {
+						ticks : {
+							beginAtZero : false,
+							stepSize : 1,
+							min : 0,
+							max : 6
+						}
+					} ],
+					xAxes : [ {
+						type : 'time',
+						time : {
+							format : timeFormat,
+							// round: 'day'
+							tooltipFormat : 'll HH:mm'
+						},
+						scaleLabel : {
+							display : true,
+							labelString : 'Date'
+						}
+					} ]
+				}
+			}
+		});
 	</script>
 </body>
 </html>
