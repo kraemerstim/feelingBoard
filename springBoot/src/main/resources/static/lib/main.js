@@ -3,6 +3,11 @@ $(document).ready(function () {
 	        event.preventDefault();
 	        fire_ajax_submit();
 	    });
+	    
+	    $("#slider-form").submit(function (event) {
+	        event.preventDefault();
+	        fire_ajax_submit();
+	    });
 
 	function fire_ajax_submit() {
 		var fromTest = $("#from").val();

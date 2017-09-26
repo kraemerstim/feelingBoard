@@ -45,9 +45,9 @@ class Feeling_Machine:
     self.display.setDisplay("Test1", "Test2", 4)
 
   def testSoundButton (self, channel):
-    mixer.music.load(self.sounds[channel-1])
+    mixer.music.load(self.sounds[channel])
     mixer.music.play()
-    self.display.setDisplay('Now Playing', self.sounds[channel-1])
+    self.display.setDisplay('Now Playing', self.sounds[channel])
 
   def rfid_id_callback(self, uidString):
     nowTime = datetime.now()
