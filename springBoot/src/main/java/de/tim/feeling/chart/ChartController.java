@@ -82,7 +82,7 @@ public class ChartController {
 		 	DateFormat format = DateFormat.getDateTimeInstance();
 		    ChartData<Date> result = new ChartData<Date>();
 		    Account account = accountRepository.findOne((long) 1);
-		    Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse(from), format.parse(to));
+		    Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse(from + " 00:00:00"), format.parse(to + " 23:59:59"));
 	        DataSet<Date> dataSet = new DataSet<Date>();
 			dataSet.setLabel(account.getName());
 			for (Entry entry : entries) {

@@ -4,23 +4,35 @@
 <title>Getting Started: Handling Form Submission</title>
 <link rel="stylesheet" type="text/css"
 	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css"
-	th:href="@{/css/bootstrap-slider.css}" />
+<link
+	href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" />
 </head>
 <body>
 	<div id="feedback"></div>
 	<form class="form-horizontal" id="search-form">
-		<div class="form-group form-group-lg">
-			<label class="col-sm-2 control-label">from</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="from" />
+		<div class="container">
+			<div class='col-md-5'>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker6'>
+						<input type='text' class="form-control" id='from'/> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
 			</div>
-			<label class="col-sm-2 control-label">to</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="to" />
+			<div class='col-md-5'>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker7'>
+						<input type='text' class="form-control" id='to' /> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
-
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<button type="submit" id="btn-search" class="btn btn-primary btn-lg">Search
@@ -28,47 +40,21 @@
 			</div>
 		</div>
 	</form>
-	
-	<form class="form-vertical" id="slider-form">
-		Slider-Test:
-		<b>€ 10</b>
-		<input id="ex2" type="text" class="span2" value="" data-slider-min="10"
-			data-slider-max="1000" data-slider-step="5"
-			data-slider-value="[250,450]" />
-		<b>€ 1000</b>
-		<span id="ex6CurrentSliderValLabel">Current Slider Value: <span id="ex6SliderVal">3</span></span>
-		<button type="submit" id="btn-search" class="btn btn-primary btn-lg">Search
-		</button> 
-	</form>
-	
 
 	<div class="chart-container"
 		style="position: relative; height: 40vh; width: 80vw">
 		<canvas id="myChart"></canvas>
 	</div>
-	<script type="text/javascript"
-		src="/webjars/jquery/2.2.4/jquery.min.js"></script>
-	<script type="text/javascript" th:src="@{/lib/main.js}"></script>
-	<script type="text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
-	<script type="text/javascript" th:src="@{/lib/bootstrap-slider.js}"></script>
+	<script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script type="text/javascript" th:src="@{/lib/main.js}"></script>
+<script type="text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
+<script
+	src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 	<script th:inline="javascript">
-		$(document).ready(function() {
-			$("#ex2").slider(
-					/*{
-				formatter: function(value) {
-					return "Value = " + value + "yay";
-					
-				}
-			}*/
-			);
-			$("#ex2").slider().on('slide', function(sliderValue) {
-				document.getElementById("ex6SliderVal").textContent = sliderValue;
-			});
-		});
-		
-		var testFunction = function() {
-			
-		};
 		var ctx = document.getElementById("myChart");
 		var test = /*[[${ChartData}]]*/null;
 		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
