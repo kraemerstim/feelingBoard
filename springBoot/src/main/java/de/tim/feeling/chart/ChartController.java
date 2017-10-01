@@ -81,16 +81,22 @@ public class ChartController {
 	    public @ResponseBody ChartData<?> getSearchResultViaAjax(Model model, @RequestParam String from, @RequestParam String to) throws ParseException {
 		 	DateFormat format = DateFormat.getDateTimeInstance();
 		    ChartData<Date> result = new ChartData<Date>();
-		    Account account = accountRepository.findOne((long) 1);
-		    Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse(from + " 00:00:00"), format.parse(to + " 23:59:59"));
-	        DataSet<Date> dataSet = new DataSet<Date>();
-			dataSet.setLabel(account.getName());
-			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+		    Iterable<Account> accounts = accountRepository.findAll();
+		    int index = 0;
+		    for (Account account : accounts) {
+				Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse(from + " 00:00:00"), format.parse(to + " 23:59:59"));
+				if (!entries.iterator().hasNext())
+					continue;
+				DataSet<Date> dataSet = new DataSet<Date>();
+				dataSet.setLabel(account.getName());
+				for (Entry entry : entries) {
+					dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+				}
+				dataSet.setBackgroundColor(color[index%20]);
+				dataSet.setBorderColor(color[index%20]);
+				result.addDataSet(dataSet);
+				index++;
 			}
-			dataSet.setBackgroundColor(color[0]);
-			dataSet.setBorderColor(color[0]);
-			result.addDataSet(dataSet);
 
 	        return result;
 	    }
