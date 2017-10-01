@@ -6,7 +6,7 @@ import requests
 
 #Konstanten
 hipchat_url = 'https://cassoftware.hipchat.com/v2/room/'
-feeling_board_url = 'http://192.168.0.39:8080/'
+feeling_board_url = 'http://localhost:8080/'
 
 #Konfiguration
 EisChannel = {'message': '(Eismann)',
@@ -35,12 +35,6 @@ def CallHipchatRestApi (channel):
   }
   response = requests.post(channelurl, params, timeout=3)
             
-
-def getEntryInfo(url):
-  response = requests.get(url, timeout=1)
-  print(response.json())
-
-
 def getAccountByUid(uid):
   response = None
   account_url = feeling_board_url + 'account'
@@ -51,27 +45,23 @@ def getAccountByUid(uid):
     response = requests.get(response.headers['location'])
   return response
 
-def getUserNameByUid(uid):
-  account = getAccountByUid(uid)
-  username = ''
-  if account:
-    username = account.json()['name']
-  return username
-
 def addFeelingBoardEntry(rfid_uid, feeling):
   accountID = 0
   account = getAccountByUid(rfid_uid)
   if account and account.json():
     accountID = account.json()['id']
   else:
-    return None
+    return True
+    
   feeling_url = feeling_board_url + 'entry'
   params = {'accountID': accountID, 'feeling': feeling}
   response = requests.post(feeling_url, json=params, timeout=1)
+  if (response and response.ok and response.headers['location']):
+    return False
+    
+  return True
 
-  return response
-
-def pressHotButton():
+def callHipchatApi():
   nowTime = datetime.now()
   channel = TestButtonChannel
   if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
