@@ -2,8 +2,10 @@
 
 import feeling_rest
 import rfidWrapper
+import RPi.GPIO as GPIO
 
 class FB_Status:
+  LED = 20
     
   def initialize(self):
     self.RFID_uid = '0'
@@ -39,8 +41,11 @@ class FB_Status:
       
   def rfid_changed(self):
     if (self.RFID_uid != '0'):
+      GPIO.output(FB_Status.LED, GPIO.HIGH)
       self.Mode = self.RFID_role
       print('Mode = ' + self.Mode)
+    else:
+      GPIO.output(FB_Status.LED, GPIO.LOW)
       
     self.__callback(self.RFID_uid, self.RFID_name, self.RFID_role)
   

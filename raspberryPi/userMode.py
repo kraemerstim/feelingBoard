@@ -4,8 +4,10 @@
 import FB_Status
 import feeling_rest
 from datetime import datetime, timedelta
+import RPi.GPIO as GPIO
 
 class User_Mode:
+  GREAT_JOB_SOUND = 24
   BUTTON_REPEAT_DELAY = timedelta(seconds=5)
   
   def __init__(self, aStatus, aDisplay):
@@ -28,7 +30,7 @@ class User_Mode:
     self.makeGreatJobSound()
     
   def makeGreatJobSound (self):
-    GPIO.output(Feeling_Machine.GREAT_JOB_SOUND, GPIO.HIGH)
+    GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)
     time.sleep(0.1)
-    GPIO.output(Feeling_Machine.GREAT_JOB_SOUND, GPIO.LOW)
+    GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.LOW)
     self.display.setDisplay('Test1', 'Test2', 4)
