@@ -7,6 +7,9 @@ import RPi.GPIO as GPIO
 class FB_Status:
   LED = 20
     
+  def __init__(self):
+    GPIO.setup(FB_Status.LED, GPIO.OUT) 
+    
   def initialize(self):
     self.RFID_uid = '0'
     self.RFID_name = 'Anton'

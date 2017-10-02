@@ -71,12 +71,9 @@ def initialize():
   GPIO.add_event_detect(HOT_BUTTON, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
  
 def main():
-  print('0')
   initialize()
-  print('1')
   while program_running:
     time.sleep(0.5)
-  print('2')
   feeling_machine.cleanup()
 
 if __name__ == '__main__':

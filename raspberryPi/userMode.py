@@ -14,6 +14,7 @@ class User_Mode:
     self.status = aStatus
     self.display = aDisplay
     self.Button_Activate_Time = datetime.min
+    GPIO.setup(User_Mode.GREAT_JOB_SOUND, GPIO.OUT)
   
   def ButtonPressed(self, button):
     if self.Button_Activate_Time < datetime.now():

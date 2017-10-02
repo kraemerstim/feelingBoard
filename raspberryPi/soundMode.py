@@ -21,9 +21,9 @@ class Sound_Mode:
     self.sounds.append('sounds/incrediblethoughts.mp3')
   
   def ButtonPressed(self, button):
-    mixer.music.load(self.sounds[channel])
+    mixer.music.load(self.sounds[button])
     mixer.music.play()
-    self.display.setDisplay('Now Playing', self.sounds[channel])
+    self.display.setDisplay('Now Playing', self.sounds[button])
     
   
   def HotButtonPresses(self):

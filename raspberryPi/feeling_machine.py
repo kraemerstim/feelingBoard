@@ -5,6 +5,7 @@ import signal
 import time
 import FB_Status
 import userMode
+import soundMode
 
 class Feeling_Machine:
   
@@ -37,9 +38,6 @@ class Feeling_Machine:
     
     self.userMode = userMode.User_Mode(self.status, self.display)
     self.soundMode = soundMode.Sound_Mode(self.status, self.display)
-    
-    GPIO.setup(Feeling_Machine.GREAT_JOB_SOUND, GPIO.OUT)
-    GPIO.setup(Feeling_Machine.LED, GPIO.OUT) 
 
   def cleanup(self):
     self.status.cleanup()
