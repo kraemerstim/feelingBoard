@@ -52,6 +52,9 @@ class FB_Status:
       
     self.__callback(self.RFID_uid, self.RFID_name, self.RFID_role)
   
+  def resetMode(self):
+    self.Mode = 'User'
+    
   def start(self, callback):
     self.__callback = callback
     self.RFIDReader = rfidWrapper.RFID_Wrapper()

@@ -26,5 +26,5 @@ class Sound_Mode:
     self.display.setDisplay('Now Playing', self.sounds[button])
     
   
-  def HotButtonPresses(self):
-    pass
+  def HotButtonPressed(self):
+    self.status.resetMode()

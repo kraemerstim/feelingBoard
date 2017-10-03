@@ -27,7 +27,7 @@ class User_Mode:
     else:
       self.display.setDisplay('nicht so schnell', 'Cowboy') 
   
-  def HotButtonPresses(self):
+  def HotButtonPressed(self):
     self.makeGreatJobSound()
     
   def makeGreatJobSound (self):
