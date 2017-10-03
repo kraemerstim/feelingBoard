@@ -5,6 +5,7 @@ import FB_Status
 import feeling_rest
 import netifaces as ni
 import os
+import time
 
 
 class Admin_Mode:
@@ -40,9 +41,11 @@ class Admin_Mode:
       self.display.setDisplay('Interfaces:', interfaces)
     elif (self.jobToApply == 'Restart'):
       self.display.setDisplay('Restarting now', 'please wait')
+      time.sleep(1)
       os.system('sudo shutdown -r now')
     elif (self.jobToApply == 'Shutdown'):
       self.display.setDisplay('Shutting down', 'Bye cruel world!')
+      time.sleep(1)
       os.system('sudo shutdown -h now')
     self.status.resetMode()
     
