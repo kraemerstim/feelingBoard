@@ -10,22 +10,25 @@ from random import randint
 
 class Sound_Mode:
   
+  def getFilePath(aFilePath):
+    return os.path.join(os.path.dirname(__file__), aFilePath)
+  
   def __init__(self, aStatus, aDisplay):
     self.status = aStatus
     self.display = aDisplay
     
     mixer.init()
     self.sounds = []
-    self.sounds.append('sounds/weird_russian.mp3')
-    self.sounds.append('sounds/letitgo.mp3')
-    self.sounds.append('sounds/timetogetlaid.mp3')
-    self.sounds.append('sounds/justhadsex.mp3')
-    self.sounds.append('sounds/incrediblethoughts.mp3')
+    self.sounds.append(Sound_Mode.getFilePath('sounds/weird_russian.mp3'))
+    self.sounds.append(Sound_Mode.getFilePath('sounds/letitgo.mp3'))
+    self.sounds.append(Sound_Mode.getFilePath('sounds/timetogetlaid.mp3'))
+    self.sounds.append(Sound_Mode.getFilePath('sounds/justhadsex.mp3'))
+    self.sounds.append(Sound_Mode.getFilePath('sounds/incrediblethoughts.mp3'))
     
     self.randomSounds = []
-    for root, dirs, files in os.walk('sounds/random/'):
+    for root, dirs, files in os.walk(Sound_Mode.getFilePath('sounds/random/')):
       for filename in files:
-        self.randomSounds.append('sounds/random/' + filename)
+        self.randomSounds.append(Sound_Mode.getFilePath('sounds/random/' + filename))
   
   def ButtonPressed(self, button):
     if (button < len(self.sounds)):
@@ -34,7 +37,7 @@ class Sound_Mode:
       sound = self.randomSounds[randint(0, len(self.randomSounds)-1)]
       
     mixer.music.load(sound)
-    self.display.setDisplay('Now Playing', sound)
+    self.display.setDisplay('Now Playing', os.path.basename(sound))
     mixer.music.play()
   
   def HotButtonPressed(self):

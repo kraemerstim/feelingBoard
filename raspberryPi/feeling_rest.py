@@ -38,10 +38,10 @@ def CallHipchatRestApi (channel):
 def getAccountByUid(uid):
   response = None
   account_url = feeling_board_url + 'account'
-  response = requests.get(account_url + '/chipid/' + uid, timeout = 1)
+  response = requests.get(account_url + '/chipid/' + uid, timeout = 5)
   if not response.text:
     params = {'chipUID': uid}
-    response = requests.post(account_url, json=params, timeout=1)
+    response = requests.post(account_url, json=params, timeout=5)
     response = requests.get(response.headers['location'])
   return response
 
