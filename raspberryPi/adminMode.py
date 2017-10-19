@@ -7,29 +7,35 @@ import netifaces as ni
 import os
 import time
 
-
 class Admin_Mode:
   
-  configJobs = ('NetConfig', 'Restart', 'Shutdown')
+  configJobs = ('Sound', 'NetConfig', 'Restart', 'Shutdown', 'Update')
   
   def __init__(self, aStatus, aDisplay):
     self.status = aStatus
     self.display = aDisplay
-    self.jobToApply = ''
+    self.jobToApply = 0
+    self.display.setDisplay(Admin_Mode.configJobs[self.jobToApply], 'Mit Rot bestaetigen')
   
   def ButtonPressed(self, button):
-    if (button < len(Admin_Mode.configJobs)):
-      self.jobToApply = Admin_Mode.configJobs[button];
-      self.display.setDisplay(Admin_Mode.configJobs[button], 'Mit HotButton bestaetigen')
-    else:
-      self.jobToApply = '';
-      self.display.setDisplay('noch nicht implementiert', 'Sorry :(')
+    if (button == 0):
+      self.jobToApply = (self.jobToApply -1) % len(Admin_Mode.configJobs)
+    if (button == 1):
+      self.jobToApply = (self.jobToApply +1) % len(Admin_Mode.configJobs)
+    if (button == 4):
+      self.applyConfig()
+    if (button == 5)
+      self.status.resetMode()
+      return
+
+    self.display.setDisplay(Admin_Mode.configJobs[self.jobToApply], 'Mit Rot bestaetigen')
   
   def HotButtonPressed(self):
-    self.applyConfig()
+    pass
     
   def applyConfig (self):
-    if (self.jobToApply == 'NetConfig'):
+    chosenJob = Admin_Mode.configJobs[self.jobToApply]
+    if (chosenJob == 'NetConfig'):
       interfaces = ''
       for iface in ni.interfaces():   
         ipv4s = ni.ifaddresses(iface).get(ni.AF_INET, [])
@@ -39,15 +45,18 @@ class Admin_Mode:
             continue
           interfaces = interfaces + ' ' + addr
       self.display.setDisplay('Interfaces:', interfaces)
-    elif (self.jobToApply == 'Restart'):
+    elif (chosenJob == 'Restart'):
       self.display.setDisplay('Restarting now', 'please wait')
       time.sleep(1)
       os.system('sudo shutdown -r now')
-    elif (self.jobToApply == 'Shutdown'):
+    elif (chosenJob == 'Update'):
+      self.display.setDisplay('Updating services', 'please wait')
+      time.sleep(1)
+      scriptPath = os.path.join(os.path.dirname(__file__), '../updateFB.sh')
+      os.system(scriptPath)
+    elif (chosenJob == 'Shutdown'):
       self.display.setDisplay('Shutting down', 'Bye cruel world!')
       time.sleep(1)
       os.system('sudo shutdown -h now')
-    self.status.resetMode()
-    
-    
-    
+    elif (chosenJob == 'Sound'):
+      self.status.setMode('Sound')

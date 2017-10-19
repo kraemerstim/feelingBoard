@@ -54,6 +54,9 @@ class FB_Status:
   
   def resetMode(self):
     self.Mode = 'User'
+   
+  def setMode(self, aMode):
+    self.Mode = aMode
     
   def start(self, callback):
     self.__callback = callback
