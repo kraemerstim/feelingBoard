@@ -24,6 +24,7 @@ class Admin_Mode:
       self.jobToApply = (self.jobToApply +1) % len(Admin_Mode.configJobs)
     if (button == 4):
       self.applyConfig()
+      return
     if (button == 5):
       self.status.resetMode()
       return
