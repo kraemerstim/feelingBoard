@@ -12,6 +12,10 @@ class Sound_Mode:
   
   def getFilePath(aFilePath):
     return os.path.join(os.path.dirname(__file__), aFilePath)
+    
+  def getFileName(aFilePath):
+    filename = os.path.basename(aFilePath)
+    return filename[:-4]
   
   def __init__(self, aStatus, aDisplay):
     self.status = aStatus
@@ -28,7 +32,8 @@ class Sound_Mode:
     self.randomSounds = []
     for root, dirs, files in os.walk(Sound_Mode.getFilePath('sounds/random/')):
       for filename in files:
-        self.randomSounds.append(Sound_Mode.getFilePath('sounds/random/' + filename))
+        if filename.endswith('.mp3'):
+          self.randomSounds.append(Sound_Mode.getFilePath('sounds/random/' + filename))
   
   def ButtonPressed(self, button):
     if (button < len(self.sounds)):
@@ -37,8 +42,14 @@ class Sound_Mode:
       sound = self.randomSounds[randint(0, len(self.randomSounds)-1)]
       
     mixer.music.load(sound)
-    self.display.setDisplay('Now Playing', os.path.basename(sound))
+    self.display.setDisplay('Now Playing', Sound_Mode.getFileName(sound))
     mixer.music.play()
   
   def HotButtonPressed(self):
     self.status.resetMode()
+    
+  def userChanged(self, aUid, aUserName):
+    pass
+    
+  def modeChanged(self):
+    self.display.setDisplay('Sound Mode', 'Chose your sound')

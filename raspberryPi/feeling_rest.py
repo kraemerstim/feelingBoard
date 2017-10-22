@@ -55,7 +55,7 @@ def addFeelingBoardEntry(rfid_uid, feeling):
     
   feeling_url = feeling_board_url + 'entry'
   params = {'accountID': accountID, 'feeling': feeling}
-  response = requests.post(feeling_url, json=params, timeout=1)
+  response = requests.post(feeling_url, json=params, timeout=5)
   if (response and response.ok and response.headers['location']):
     return False
     

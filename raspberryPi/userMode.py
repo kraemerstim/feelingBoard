@@ -3,6 +3,7 @@
 
 import FB_Status
 import feeling_rest
+import time
 from datetime import datetime, timedelta
 import RPi.GPIO as GPIO
 
@@ -30,8 +31,16 @@ class User_Mode:
   def HotButtonPressed(self):
     self.makeGreatJobSound()
     
+  def userChanged(self, aUid, aUserName):
+    if (aUid == '0'):
+      self.modeChanged()
+    else:
+      self.display.setDisplay('Hallo ' + aUserName, 'Wie geht\'s?')
+    
+  def modeChanged(self):
+    self.display.setDisplay('Hallo', 'Wie geht\'s dir?')
+    
   def makeGreatJobSound (self):
     GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)
     time.sleep(0.1)
     GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.LOW)
-    self.display.setDisplay('Test1', 'Test2', 4)

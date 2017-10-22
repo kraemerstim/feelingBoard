@@ -1,53 +1,42 @@
 #!/usr/bin/env python
 
-import display
-import signal
-import time
-import FB_Status
-import userMode
-import soundMode
-import adminMode
-
 class Feeling_Machine:
+  def __init__(self):
+    self.modes_dict = {}
+    
+  def getCurrentModeObject(self):
+    if self.status.Mode in self.modes_dict:
+      return self.modes_dict[self.status.Mode]
   
   def hot_button_pressed(self):
-    if self.status.Mode == 'User':
-      self.userMode.HotButtonPressed()
-    elif self.status.Mode == 'Sound':
-      self.soundMode.HotButtonPressed()
-    elif self.status.Mode == 'Admin':
-      self.adminMode.HotButtonPressed()
+    mode_object = self.getCurrentModeObject()
+    if mode_object != None:
+      mode_object.HotButtonPressed()
   
   def button_pressed(self, channel):
-    if self.status.Mode == 'User':
-      self.userMode.ButtonPressed(channel)
-    elif self.status.Mode == 'Sound':
-      self.soundMode.ButtonPressed(channel)
-    elif self.status.Mode == 'Admin':
-      self.adminMode.ButtonPressed(channel)
+    mode_object = self.getCurrentModeObject()
+    if mode_object != None:
+      mode_object.ButtonPressed(channel)
 
-  def rfid_id_callback(self, uidString, userName, userRole):
-    if (uidString == '0'):
-      self.display.setDisplay('Gefuehlsboard', '2.0')
-    else:
-      self.display.setDisplay('Hallo ' + userName, 'Wie geht\'s?')
+  def statusUserCallback(self, uidString, userName):
+    mode_object = self.getCurrentModeObject()
+    if mode_object != None:
+      mode_object.userChanged(uidString, userName)
+      
+  def statusModeCallback(self, mode):
+    mode_object = self.getCurrentModeObject()
+    if mode_object != None:
+      mode_object.modeChanged()
     
-  def initialize(self):
-    self.sound_mode = 0
+  def addMode(self, modeString, modeObject):
+    if modeString not in self.modes_dict:
+      self.modes_dict[modeString] = modeObject
+  
+  def initialize(self, aStatus, aDisplay):
+    self.display = aDisplay
+    self.status = aStatus
     
-    self.display = display.Display()
-    
-    self.status = FB_Status.FB_Status()
     self.status.initialize()
-    self.status.start(self.rfid_id_callback)
+    self.status.start(self.statusUserCallback, self.statusModeCallback)
     
-    self.userMode = userMode.User_Mode(self.status, self.display)
-    self.soundMode = soundMode.Sound_Mode(self.status, self.display)
-    self.adminMode = adminMode.Admin_Mode(self.status, self.display)
-    
-    self.display.setDisplay('Gefuehlsboard', '2.0')
-
-  def cleanup(self):
-    self.status.cleanup()
-    self.display.setDisplay('Bye bye', ':(')
-    self.display.cleanup()
+    self.statusModeCallback('User')

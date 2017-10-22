@@ -45,21 +45,24 @@ class FB_Status:
   def rfid_changed(self):
     if (self.RFID_uid != '0'):
       GPIO.output(FB_Status.LED, GPIO.HIGH)
-      self.Mode = self.RFID_role
-      print('Mode = ' + self.Mode)
+      self.setMode(self.RFID_role)
     else:
       GPIO.output(FB_Status.LED, GPIO.LOW)
       
-    self.__callback(self.RFID_uid, self.RFID_name, self.RFID_role)
+    self.__userCallback(self.RFID_uid, self.RFID_name)
   
   def resetMode(self):
-    self.Mode = 'User'
+    self.setMode('User')
    
   def setMode(self, aMode):
-    self.Mode = aMode
+    if (aMode != self.Mode):
+      self.Mode = aMode
+      print('Mode = ' + self.Mode)
+      self.__modeCallback(self.Mode)
     
-  def start(self, callback):
-    self.__callback = callback
+  def start(self, aUserCallback, aModeCallback):
+    self.__userCallback = aUserCallback
+    self.__modeCallback = aModeCallback
     self.RFIDReader = rfidWrapper.RFID_Wrapper()
     self.RFIDReader.start(self.rfid_id_callback)
         

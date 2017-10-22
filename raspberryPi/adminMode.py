@@ -15,7 +15,6 @@ class Admin_Mode:
     self.status = aStatus
     self.display = aDisplay
     self.jobToApply = 0
-    self.display.setDisplay(Admin_Mode.configJobs[self.jobToApply], 'Mit Rot bestaetigen')
   
   def ButtonPressed(self, button):
     if (button == 0):
@@ -33,6 +32,12 @@ class Admin_Mode:
   
   def HotButtonPressed(self):
     pass
+    
+  def userChanged(self, aUid, aUserName):
+    pass
+    
+  def modeChanged(self):
+    self.display.setDisplay('Admin Mode', 'Chose your action')
     
   def applyConfig (self):
     chosenJob = Admin_Mode.configJobs[self.jobToApply]
