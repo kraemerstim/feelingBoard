@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Feeling Board Register</title>
+<div th:replace="fragments/header :: header-css" />
+</head>
+<body>
+  <div th:replace="fragments/header :: header" />
+  <div class="container">
+
+    <div class="row" style="margin-top: 20px">
+      <div
+        class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+
+        <div th:if="${error}">
+          <div class="alert alert-danger">Error</div>
+        </div>
+
+        <form action="#" th:action="@{/register}"
+          th:object="${accountData}" method="post">
+          <fieldset>
+            <h1>Register</h1>
+            <div class="form-group">
+              <input th:field="*{username}" type="text" name="username"
+                id="username" class="form-control input-lg"
+                placeholder="UserName" required="true" autofocus="true" />
+            </div>
+            <div class="form-group">
+              <input th:field="*{password}" type="password"
+                name="password" id="password"
+                class="form-control input-lg" placeholder="Password"
+                required="true" />
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <input type="submit"
+                  class="btn btn-lg btn-primary btn-block"
+                  value="Register" />
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-6"></div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div th:replace="fragments/footer :: footer" />
+</body>
+</html>

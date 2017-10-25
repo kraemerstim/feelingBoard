@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
 	Account findFirstByChipUID(String chipUID);
+	Account findFirstByUsername(String username);
 }

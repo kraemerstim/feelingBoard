@@ -1,0 +1,92 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Feeling Board</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link
+	href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
+	rel="stylesheet" />
+</head>
+<body>
+	<div id="feedback"></div>
+	<form class="form-horizontal" id="search-form">
+		<div class="container">
+			<div class='col-md-5'>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker6'>
+						<input type='text' class="form-control" id='from' /> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class='col-md-5'>
+				<div class="form-group">
+					<div class='input-group date' id='datetimepicker7'>
+						<input type='text' class="form-control" id='to' /> <span
+							class="input-group-addon"> <span
+							class="glyphicon glyphicon-calendar"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" id="btn-search" class="btn btn-primary btn-lg">Search
+				</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="chart-container"
+		style="position: relative; height: 40vh; width: 80vw">
+		<canvas id="myChart"></canvas>
+	</div>
+	<script type="text/javascript"
+		src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+	<script type="text/javascript" th:src="@{/lib/main.js}"></script>
+	<script type="text/javascript" th:src="@{/lib/Chart.bundle.js}"></script>
+	<script
+		src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript"
+		src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<script th:inline="javascript">
+		var ctx = document.getElementById("myChart");
+		var test = /*[[${ChartData}]]*/null;
+		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
+		var myChart = new Chart(ctx, {
+			type : 'line',
+			data : test,
+			options : {
+				scales : {
+					yAxes : [ {
+						ticks : {
+							beginAtZero : false,
+							stepSize : 1,
+							min : 0,
+							max : 6
+						}
+					} ],
+					xAxes : [ {
+						type : 'time',
+						time : {
+							format : timeFormat,
+							// round: 'day'
+							tooltipFormat : 'll HH:mm'
+						},
+						scaleLabel : {
+							display : true,
+							labelString : 'Date'
+						}
+					} ]
+				}
+			}
+		});
+	</script>
+</body>
+</html>
