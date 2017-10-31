@@ -33,7 +33,7 @@ public class MainController extends ControllerBase{
 
 	@GetMapping("/login")
     public String login(Model model) {
-        return "Login";
+        return "login";
     }
     
     @GetMapping("/register")
