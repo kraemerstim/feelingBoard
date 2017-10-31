@@ -36,7 +36,6 @@ class Feeling_Machine:
     self.display = aDisplay
     self.status = aStatus
     
-    self.status.initialize()
     self.status.start(self.statusUserCallback, self.statusModeCallback)
     
     self.statusModeCallback('User')

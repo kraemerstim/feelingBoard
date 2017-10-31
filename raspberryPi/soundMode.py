@@ -52,4 +52,5 @@ class Sound_Mode:
     pass
     
   def modeChanged(self):
+    self.display.set_default_values('Sound Mode', 'Chose your sound')
     self.display.setDisplay('Sound Mode', 'Chose your sound')

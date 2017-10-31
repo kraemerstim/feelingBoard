@@ -22,13 +22,14 @@ class User_Mode:
       error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, button)
       self.Button_Activate_Time = datetime.now() + User_Mode.BUTTON_REPEAT_DELAY
       if not error:
-        self.display.setDisplay('Danke ' + self.status.RFID_name + ' ' + str(button), 'fuers Mitmachen!')
+        self.display.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)
       else:
         self.display.setDisplay('Error while', 'adding Entry')
     else:
       self.display.setDisplay('nicht so schnell', 'Cowboy') 
   
   def HotButtonPressed(self):
+    feeling_rest.callHipchatApi()
     self.makeGreatJobSound()
     
   def userChanged(self, aUid, aUserName):
@@ -38,6 +39,7 @@ class User_Mode:
       self.display.setDisplay('Hallo ' + aUserName, 'Wie geht\'s?')
     
   def modeChanged(self):
+    self.display.set_default_values('Hallo', 'Wie geht\'s dir?')
     self.display.setDisplay('Hallo', 'Wie geht\'s dir?')
     
   def makeGreatJobSound (self):

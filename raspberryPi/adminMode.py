@@ -37,6 +37,7 @@ class Admin_Mode:
     pass
     
   def modeChanged(self):
+    self.display.set_default_values('Admin Mode', 'Chose your action')
     self.display.setDisplay('Admin Mode', 'Chose your action')
     
   def applyConfig (self):
