@@ -56,7 +56,7 @@ public class ChartController {
 			index++;
 		}
 		model.addAttribute("ChartData", chartData);
-		return "home";
+		return "chart";
 	}
 	
 	@GetMapping("/{id}")
@@ -74,7 +74,7 @@ public class ChartController {
 		chartData.addDataSet(dataSet);
 
 		model.addAttribute("ChartData", chartData);
-		return "home";
+		return "chart";
 	}
 	
 	 @GetMapping("/search")
