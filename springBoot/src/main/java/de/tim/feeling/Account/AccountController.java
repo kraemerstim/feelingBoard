@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController    // This means that this class is a Controller
-@RequestMapping(path="/account") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/rest/account") // This means URL's start with /demo (after Application path)
 public class AccountController {
 	@Autowired 
 	private AccountRepository accountRepository;
@@ -26,13 +26,21 @@ public class AccountController {
 	}
 	
 	@GetMapping(path="/{id}")
-	Account getAccountByID(@PathVariable Long id) {
-		return this.accountRepository.findOne(id);
+	AccountReturnData getAccountByID(@PathVariable Long id) {
+		Account account = this.accountRepository.findOne(id);
+		if (account == null)
+			return null;
+		else
+			return new AccountReturnData(account);
 	}
 	
 	@GetMapping(path="/chipid/{chipid}")
-	Account getAccountByChipID(@PathVariable String chipid) {
-		return this.accountRepository.findFirstByChipUID(chipid);
+	AccountReturnData getAccountByChipID(@PathVariable String chipid) {
+		Account account = this.accountRepository.findFirstByChipUID(chipid);
+		if (account == null)
+			return null;
+		else
+			return new AccountReturnData(account);
 	}
 	
 	@PostMapping

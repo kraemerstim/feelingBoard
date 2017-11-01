@@ -7,7 +7,7 @@ import configReader
 
 #Konstanten
 hipchat_url = 'https://cassoftware.hipchat.com/v2/room/'
-feeling_board_url = 'http://localhost:8080/'
+feeling_board_url = 'http://localhost:8080/rest/'
 
 EistimeStart = time(13, 20)
 EistimeEnd = time(14, 20)
@@ -24,7 +24,6 @@ def CallHipchatRestApi (channel):
             'message_format': 'text',
             'color': 'random'
   }
-  #print(lChannelUrl)
   response = requests.post(lChannelUrl, lParams, timeout=3)
             
 def getAccountByUid(uid):
@@ -62,4 +61,3 @@ def callHipchatApi():
   elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
     channel = 'MittagessenChannel'
   CallHipchatRestApi(channel) 
-

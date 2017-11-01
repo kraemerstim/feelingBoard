@@ -18,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import de.tim.feeling.Account.AccountRepository;
 
 @RestController    // This means that this class is a Controller
-@RequestMapping(path="/entry") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/rest/entry") // This means URL's start with /demo (after Application path)
 public class EntryController {
 	@Autowired 
 	private EntryRepository entryRepository;
