@@ -19,7 +19,8 @@ GPIO_BOUNCETIME = 500
 button_lock = threading.Lock()
 
 def setCallbacks(aButtonCallback, aHotButtonCallback):
-  global __callback
+  global __buttonCallback
+  global __hotButtonCallback
   __buttonCallback = aButtonCallback
   __hotButtonCallback = aHotButtonCallback
   

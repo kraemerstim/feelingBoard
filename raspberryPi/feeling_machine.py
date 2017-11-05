@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import feeling_IO
+
 class Feeling_Machine:
   def __init__(self):
     self.modes_dict = {}

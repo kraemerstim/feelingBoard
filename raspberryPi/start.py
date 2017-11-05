@@ -39,7 +39,7 @@ def main():
   initialize()
   while program_running:
     time.sleep(0.5)
-  status.cleanup()
+  feeling_IO.cleanup()
 
 if __name__ == '__main__':
   main()

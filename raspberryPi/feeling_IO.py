@@ -11,7 +11,7 @@ RFIDReader = rfidWrapper.RFID_Wrapper()
     
 def initialize():
   configReader.initialize()
-  RFIDReader.Start()
+  RFIDReader.start()
   mixer.init()
   buttons.initialize()
   
@@ -20,8 +20,8 @@ def cleanup():
   RFIDReader.stop()
   
 #Display
-def setDisplay(aFirstRow, aSecondRow):
-  display.setDisplay(aFirstRow, aSecondRow)
+def setDisplay(aFirstRow, aSecondRow, seconds=0, style=2):
+  display.setDisplay(aFirstRow, aSecondRow, seconds, style)
   
 def setDefaultDisplayValues(aFirstRow, aSecondRow):
   display.set_default_values(aFirstRow, aSecondRow)

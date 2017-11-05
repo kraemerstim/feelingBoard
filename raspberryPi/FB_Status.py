@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import feeling_rest
+import feeling_IO
 import RPi.GPIO as GPIO
 
 class FB_Status:
