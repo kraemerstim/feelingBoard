@@ -12,6 +12,7 @@ class RFID_Wrapper:
   RFID_HOLD_TIME = 1
 
   def __init__(self):
+    self.__callback = None
     self.__currentChipUID = "0" 
     self.last_RFID_found_timestamp = datetime.min
     
@@ -43,12 +44,15 @@ class RFID_Wrapper:
         if durationTime.seconds >= RFID_Wrapper.RFID_HOLD_TIME:
           self.__currentChipUID = "0"
           self.last_RFID_found_timestamp = datetime.min
-      self.__callback(self.__currentChipUID)
+      if self.__callback: 
+        self.__callback(self.__currentChipUID)
       time.sleep(0.1)
 
-  def start(self, callback):
-    self.__continue_reading = True
+  def setCallback(self, callback):
     self.__callback = callback
+    
+  def start(self):
+    self.__continue_reading = True
     Thread(target=self.threaded_RFID_READER).start()
 
   def stop(self):
