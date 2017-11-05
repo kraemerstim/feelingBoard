@@ -3,6 +3,7 @@
 import configReader
 import display
 import rfidWrapper
+from pygame import mixer
 
 display = display.Display()
 RFIDReader = rfidWrapper.RFID_Wrapper()
@@ -10,6 +11,7 @@ RFIDReader = rfidWrapper.RFID_Wrapper()
 def initialize():
   configReader.initialize()
   RFIDReader.Start()
+  mixer.init()
   
 def cleanup():
   display.setDisplay('Bye bye', ':(')
@@ -31,3 +33,7 @@ def getIniValue(aSection, aKey):
 def setRFIDCallback(aCallback):
   RFIDReader.setCallback(aCallback)
   
+#Sound
+def playSound(aSoundFile):
+  mixer.music.load(aSoundFile)
+  mixer.music.play()
