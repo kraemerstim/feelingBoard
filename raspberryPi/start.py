@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import RPi.GPIO as GPIO
+import feeling_IO
 import signal
 import feeling_machine
 import FB_Status
@@ -10,7 +11,6 @@ import adminMode
 import display
 import threading
 import time
-import configReader
 
 BTN_1 = 23
 BTN_2 = 5
@@ -58,14 +58,13 @@ def initialize():
   # hook fuer ctrl+c    
   signal.signal(signal.SIGINT, cleanup)
   
-  configReader.initialize()
-  
   GPIO.setmode(GPIO.BCM)
 
   feeling_machine.addMode('User', userMode.User_Mode(status, display))
   feeling_machine.addMode('Sound', soundMode.Sound_Mode(status, display))
   feeling_machine.addMode('Admin', adminMode.Admin_Mode(status, display))
   status.initialize()
+  feeling_IO.initialize()
   feeling_machine.initialize(status, display)
     
   GPIO.setup(BTN_1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
