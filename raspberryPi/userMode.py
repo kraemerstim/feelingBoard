@@ -3,6 +3,7 @@
 
 import FB_Status
 import feeling_rest
+import feeling_IO
 import time
 from datetime import datetime, timedelta
 import RPi.GPIO as GPIO
@@ -11,9 +12,8 @@ class User_Mode:
   GREAT_JOB_SOUND = 24
   BUTTON_REPEAT_DELAY = timedelta(seconds=5)
   
-  def __init__(self, aStatus, aDisplay):
+  def __init__(self, aStatus):
     self.status = aStatus
-    self.display = aDisplay
     self.Button_Activate_Time = datetime.min
     GPIO.setup(User_Mode.GREAT_JOB_SOUND, GPIO.OUT)
   
@@ -22,11 +22,11 @@ class User_Mode:
       error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, button)
       self.Button_Activate_Time = datetime.now() + User_Mode.BUTTON_REPEAT_DELAY
       if not error:
-        self.display.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)
+        feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)
       else:
-        self.display.setDisplay('Error while', 'adding Entry')
+        feeling_IO.setDisplay('Error while', 'adding Entry')
     else:
-      self.display.setDisplay('nicht so schnell', 'Cowboy') 
+      feeling_IO.setDisplay('nicht so schnell', 'Cowboy') 
   
   def HotButtonPressed(self):
     feeling_rest.callHipchatApi()
@@ -36,11 +36,11 @@ class User_Mode:
     if (aUid == '0'):
       self.modeChanged()
     else:
-      self.display.setDisplay('Hallo ' + aUserName, 'Wie geht\'s?')
+      feeling_IO.setDisplay('Hallo ' + aUserName, 'Wie geht\'s?')
     
   def modeChanged(self):
-    self.display.set_default_values('Hallo', 'Wie geht\'s dir?')
-    self.display.setDisplay('Hallo', 'Wie geht\'s dir?')
+    feeling_IO.setDefaultDisplayValues('Hallo', 'Wie geht\'s dir?')
+    feeling_IO.setDisplay('Hallo', 'Wie geht\'s dir?')
     
   def makeGreatJobSound (self):
     GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)

@@ -32,8 +32,7 @@ class Feeling_Machine:
     if modeString not in self.modes_dict:
       self.modes_dict[modeString] = modeObject
   
-  def initialize(self, aStatus, aDisplay):
-    self.display = aDisplay
+  def initialize(self, aStatus):
     self.status = aStatus
     
     self.status.start(self.statusUserCallback, self.statusModeCallback)

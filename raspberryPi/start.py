@@ -8,7 +8,6 @@ import FB_Status
 import userMode
 import soundMode
 import adminMode
-import display
 import threading
 import time
 
@@ -27,7 +26,6 @@ GPIO_BOUNCETIME = 500
 button_lock = threading.Lock()
 
 feeling_machine = feeling_machine.Feeling_Machine()
-display = display.Display()
 status = FB_Status.FB_Status()
 
 # wird bei ctrl+c ausgefuehrt
@@ -60,12 +58,13 @@ def initialize():
   
   GPIO.setmode(GPIO.BCM)
 
-  feeling_machine.addMode('User', userMode.User_Mode(status, display))
-  feeling_machine.addMode('Sound', soundMode.Sound_Mode(status, display))
-  feeling_machine.addMode('Admin', adminMode.Admin_Mode(status, display))
-  status.initialize()
   feeling_IO.initialize()
-  feeling_machine.initialize(status, display)
+  
+  feeling_machine.addMode('User', userMode.User_Mode(status))
+  feeling_machine.addMode('Sound', soundMode.Sound_Mode(status))
+  feeling_machine.addMode('Admin', adminMode.Admin_Mode(status))
+  status.initialize()
+  feeling_machine.initialize(status)
     
   GPIO.setup(BTN_1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
   GPIO.setup(BTN_2, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
@@ -88,8 +87,6 @@ def main():
   while program_running:
     time.sleep(0.5)
   status.cleanup()
-  display.setDisplay('Bye bye', ':(')
-  display.cleanup()
 
 if __name__ == '__main__':
   main()
