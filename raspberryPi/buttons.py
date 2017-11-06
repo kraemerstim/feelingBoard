@@ -39,7 +39,7 @@ def buttonPressed(channel):
       __hotButtonCallback()
   else:
     if __buttonCallback:
-      __buttonCallback(channel)
+      __buttonCallback(feelings.index(channel))
 
 def initialize():
   global __buttonCallback
