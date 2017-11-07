@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import feeling_IO
+
 class Feeling_Machine:
   def __init__(self):
     self.modes_dict = {}
@@ -32,10 +34,12 @@ class Feeling_Machine:
     if modeString not in self.modes_dict:
       self.modes_dict[modeString] = modeObject
   
-  def initialize(self, aStatus, aDisplay):
-    self.display = aDisplay
+  def initialize(self, aStatus):
     self.status = aStatus
     
-    self.status.start(self.statusUserCallback, self.statusModeCallback)
+    self.status.setCallbacks(self.statusUserCallback, self.statusModeCallback)
+    self.status.start()
+    
+    feeling_IO.setButtonCallbacks(self.button_pressed, self.button_pressed)
     
     self.statusModeCallback('User')

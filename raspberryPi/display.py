@@ -65,4 +65,5 @@ class Display:
     lcd.lcd_init()
   
   def cleanup(self):
+    self.setDisplay('Bye bye', ':(')
     lcd.GPIO.cleanup()

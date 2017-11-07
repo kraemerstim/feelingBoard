@@ -3,6 +3,7 @@
 
 import FB_Status
 import feeling_rest
+import feeling_IO
 import netifaces as ni
 import os
 import time
@@ -11,9 +12,8 @@ class Admin_Mode:
   
   configJobs = ('Sound', 'NetConfig', 'Restart', 'Shutdown', 'Update')
   
-  def __init__(self, aStatus, aDisplay):
+  def __init__(self, aStatus):
     self.status = aStatus
-    self.display = aDisplay
     self.jobToApply = 0
   
   def ButtonPressed(self, button):
@@ -28,7 +28,7 @@ class Admin_Mode:
       self.status.resetMode()
       return
 
-    self.display.setDisplay(Admin_Mode.configJobs[self.jobToApply], 'Mit Rot bestaetigen')
+    feeling_IO.setDisplay(Admin_Mode.configJobs[self.jobToApply], 'Mit Rot bestaetigen')
   
   def HotButtonPressed(self):
     pass
@@ -37,8 +37,8 @@ class Admin_Mode:
     pass
     
   def modeChanged(self):
-    self.display.set_default_values('Admin Mode', 'Chose your action')
-    self.display.setDisplay('Admin Mode', 'Chose your action')
+    feeling_IO.setDefaultDisplayValues('Admin Mode', 'Chose your action')
+    feeling_IO.setDisplay('Admin Mode', 'Chose your action')
     
   def applyConfig (self):
     chosenJob = Admin_Mode.configJobs[self.jobToApply]
@@ -51,18 +51,18 @@ class Admin_Mode:
           if not addr:
             continue
           interfaces = interfaces + ' ' + addr
-      self.display.setDisplay('Interfaces:', interfaces)
+      feeling_IO.setDisplay('Interfaces:', interfaces)
     elif (chosenJob == 'Restart'):
-      self.display.setDisplay('Restarting now', 'please wait')
+      feeling_IO.setDisplay('Restarting now', 'please wait')
       time.sleep(1)
       os.system('sudo shutdown -r now')
     elif (chosenJob == 'Update'):
-      self.display.setDisplay('Updating services', 'please wait')
+      feeling_IO.setDisplay('Updating services', 'please wait')
       time.sleep(1)
       scriptPath = os.path.join(os.path.dirname(__file__), '../updateFB.sh')
       os.system(scriptPath)
     elif (chosenJob == 'Shutdown'):
-      self.display.setDisplay('Shutting down', 'Bye cruel world!')
+      feeling_IO.setDisplay('Shutting down', 'Bye cruel world!')
       time.sleep(1)
       os.system('sudo shutdown -h now')
     elif (chosenJob == 'Sound'):

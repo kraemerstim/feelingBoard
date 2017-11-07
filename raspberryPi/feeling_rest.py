@@ -3,7 +3,7 @@
 
 from datetime import datetime, time, timedelta
 import requests
-import configReader
+import feeling_IO
 
 #Konstanten
 hipchat_url = 'https://cassoftware.hipchat.com/v2/room/'
@@ -15,11 +15,9 @@ EistimeEnd = time(14, 20)
 MittagessenStart = time(11, 45)
 MittagessenEnd = time(13, 0)
 
-testmode = True
-
 def CallHipchatRestApi (channel):
-  lChannelUrl = hipchat_url + configReader.getIniValue(channel, 'channel') + '/notification?auth_token=' + configReader.getIniValue(channel, 'key')  
-  lParams = {'message': configReader.getIniValue(channel, 'message'),
+  lChannelUrl = hipchat_url + feeling_IO.getIniValue(channel, 'channel') + '/notification?auth_token=' + feeling_IO.getIniValue(channel, 'key')  
+  lParams = {'message': feeling_IO.getIniValue(channel, 'message'),
             'notify': 'true',
             'message_format': 'text',
             'color': 'random'
@@ -27,7 +25,7 @@ def CallHipchatRestApi (channel):
   response = requests.post(lChannelUrl, lParams, timeout=3)
             
 def getAccountByUid(uid):
-  restKey = configReader.getIniValue('Security', 'RestKey')
+  restKey = feeling_IO.getIniValue('Security', 'RestKey')
   response = None
   account_url = feeling_board_url + 'account'
   header = {'Key': restKey}
@@ -39,7 +37,7 @@ def getAccountByUid(uid):
   return response
 
 def addFeelingBoardEntry(rfid_uid, feeling):
-  restKey = configReader.getIniValue('Security', 'RestKey')
+  restKey = feeling_IO.getIniValue('Security', 'RestKey')
   accountID = 0
   account = getAccountByUid(rfid_uid)
   if account and account.json():

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import feeling_rest
-import rfidWrapper
+import feeling_IO
 import RPi.GPIO as GPIO
 
 class FB_Status:
@@ -59,12 +59,10 @@ class FB_Status:
       self.Mode = aMode
       print('Mode = ' + self.Mode)
       self.__modeCallback(self.Mode)
-    
-  def start(self, aUserCallback, aModeCallback):
+  
+  def setCallbacks(self, aUserCallback, aModeCallback):
     self.__userCallback = aUserCallback
     self.__modeCallback = aModeCallback
-    self.RFIDReader = rfidWrapper.RFID_Wrapper()
-    self.RFIDReader.start(self.rfid_id_callback)
-        
-  def cleanup(self):
-    self.RFIDReader.stop()
+    
+  def start(self):
+    feeling_IO.setRFIDCallback(self.rfid_id_callback)

@@ -3,8 +3,8 @@
 
 import FB_Status
 import feeling_rest
+import feeling_IO
 from datetime import datetime, timedelta
-from pygame import mixer
 import os
 from random import randint
 
@@ -17,11 +17,9 @@ class Sound_Mode:
     filename = os.path.basename(aFilePath)
     return filename[:-4]
   
-  def __init__(self, aStatus, aDisplay):
+  def __init__(self, aStatus):
     self.status = aStatus
-    self.display = aDisplay
     
-    mixer.init()
     self.sounds = []
     self.sounds.append(Sound_Mode.getFilePath('sounds/weird_russian.mp3'))
     self.sounds.append(Sound_Mode.getFilePath('sounds/letitgo.mp3'))
@@ -41,9 +39,8 @@ class Sound_Mode:
     else:
       sound = self.randomSounds[randint(0, len(self.randomSounds)-1)]
       
-    mixer.music.load(sound)
-    self.display.setDisplay('Now Playing', Sound_Mode.getFileName(sound))
-    mixer.music.play()
+    feeling_IO.playSound(sound)
+    feeling_IO.setDisplay('Now Playing', Sound_Mode.getFileName(sound))
   
   def HotButtonPressed(self):
     self.status.resetMode()
@@ -52,5 +49,5 @@ class Sound_Mode:
     pass
     
   def modeChanged(self):
-    self.display.set_default_values('Sound Mode', 'Chose your sound')
-    self.display.setDisplay('Sound Mode', 'Chose your sound')
+    feeling_IO.setDefaultDisplayValues('Sound Mode', 'Chose your sound')
+    feeling_IO.setDisplay('Sound Mode', 'Chose your sound')
