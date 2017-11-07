@@ -2,29 +2,19 @@ package de.tim.feeling.Entry;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import de.tim.feeling.Account.AccountReturnData;
 
-import de.tim.feeling.Account.Account;
-
-
-@Entity
-public class Entry {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class EntryReturnData {
 	private Long id;
-	
-	@ManyToOne
-	private Account account;
-	
+	private AccountReturnData account;
 	private Timestamp timestamp;
 	private Integer feeling;
 	
-	public Entry() {
-		super();
+	public EntryReturnData(Entry entry){
+		id = entry.getId();
+		account = new AccountReturnData(entry.getAccount());
+		timestamp = entry.getTimestamp();
+		feeling = entry.getFeeling();
 	}
 
 	public Long getId() {
@@ -33,10 +23,16 @@ public class Entry {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Account getAccount() {
+	public Timestamp getDateTimeField() {
+		return timestamp;
+	}
+	public void setDateTimeField(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+	public AccountReturnData getAccount() {
 		return account;
 	}
-	public void setAccount(Account account) {
+	public void setAccount(AccountReturnData account) {
 		this.account = account;
 	}
 	public Timestamp getTimestamp() {

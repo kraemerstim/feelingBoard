@@ -42,7 +42,7 @@ public class ChartController {
 			DataSet<Date> dataSet = new DataSet<Date>();
 			dataSet.setLabel(account.getName());
 			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 			}
 			dataSet.setBackgroundColor(color[index%20]);
 			dataSet.setBorderColor(color[index%20]);
@@ -61,7 +61,7 @@ public class ChartController {
 		DataSet<Date> dataSet = new DataSet<Date>();
 		dataSet.setLabel(account.getName());
 		for (Entry entry : entries) {
-			dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+			dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 		}
 		dataSet.setBackgroundColor(color[0]);
 		dataSet.setBorderColor(color[0]);
@@ -84,7 +84,7 @@ public class ChartController {
 				DataSet<Date> dataSet = new DataSet<Date>();
 				dataSet.setLabel(account.getName());
 				for (Entry entry : entries) {
-					dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+					dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 				}
 				dataSet.setBackgroundColor(color[index%20]);
 				dataSet.setBorderColor(color[index%20]);
