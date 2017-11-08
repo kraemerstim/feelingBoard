@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RestController    // This means that this class is a Controller
-@RequestMapping(path="/rest/account") // This means URL's start with /demo (after Application path)
+@RestController
+@RequestMapping(path="/rest/account")
 public class AccountController {
 	@Autowired 
 	private AccountRepository accountRepository;
@@ -28,7 +28,6 @@ public class AccountController {
 	
 	@GetMapping(path="/all")
 	public @ResponseBody Iterable<AccountReturnData> Accounts() {
-		// This returns a JSON or XML with the users
 		List<AccountReturnData> accounts = new ArrayList<AccountReturnData>(); 
 		for (Account account : accountRepository.findAll()) {
 			accounts.add(new AccountReturnData(account));
