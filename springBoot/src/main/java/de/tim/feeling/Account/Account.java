@@ -1,9 +1,14 @@
 package de.tim.feeling.Account;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import de.tim.feeling.Team.Team;
 
 
 @Entity
@@ -14,13 +19,43 @@ public class Account {
 	
 	private String chipUID;
 	private String name;
-	private String team;
+	
+	@ManyToOne
+	private Team team;
+	
 	private String password;
 	private String role;
 	private String username;
+	private String code;
+	private Timestamp codeTimeOut;
+	private boolean enabled;
 	
 	public String getPassword() {
 		return password;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Timestamp getCodeTimeOut() {
+		return codeTimeOut;
+	}
+
+	public void setCodeTimeOut(Timestamp codeTimeOut) {
+		this.codeTimeOut = codeTimeOut;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public void setPassword(String password) {
@@ -35,11 +70,11 @@ public class Account {
 		this.role = role;
 	}
 
-	public String getTeam() {
+	public Team getTeam() {
 		return team;
 	}
 
-	public void setTeam(String team) {
+	public void setTeam(Team team) {
 		this.team = team;
 	}
 

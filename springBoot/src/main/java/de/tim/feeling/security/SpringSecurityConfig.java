@@ -58,7 +58,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-       
         auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(
     			"select username,password,enabled from account where username=?")
     		.authoritiesByUsernameQuery(

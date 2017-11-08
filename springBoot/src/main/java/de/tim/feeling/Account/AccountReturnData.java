@@ -1,10 +1,12 @@
 package de.tim.feeling.Account;
 
+import de.tim.feeling.Team.Team;
+
 public class AccountReturnData {
 	private String username;
 	private String chipUID;
 	private String name;
-	private String team;
+	private Team team;
 	private String role;
 	private Long id;
 	
@@ -41,11 +43,11 @@ public class AccountReturnData {
 		this.name = name;
 	}
 
-	public String getTeam() {
+	public Team getTeam() {
 		return team;
 	}
 
-	public void setTeam(String team) {
+	public void setTeam(Team team) {
 		this.team = team;
 	}
 
