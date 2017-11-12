@@ -15,6 +15,7 @@ class FB_Status:
     self.RFID_name = 'Anton'
     self.RFID_role = 'User'
     self.Mode = 'User'
+    self.Code = None
 
   def rfid_id_callback(self, uidString):
     if (self.RFID_uid != uidString):
@@ -24,6 +25,7 @@ class FB_Status:
         if account:
           name = account.json()['name']
           role = account.json()['role']
+          self.code = account.json()['code']
         else:
           name = 'Error'
           role = 'Error'

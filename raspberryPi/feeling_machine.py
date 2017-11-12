@@ -40,6 +40,6 @@ class Feeling_Machine:
     self.status.setCallbacks(self.statusUserCallback, self.statusModeCallback)
     self.status.start()
     
-    feeling_IO.setButtonCallbacks(self.button_pressed, self.button_pressed)
+    feeling_IO.setButtonCallbacks(self.button_pressed, self.hot_button_pressed)
     
     self.statusModeCallback('User')

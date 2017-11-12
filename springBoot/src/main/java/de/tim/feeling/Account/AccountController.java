@@ -65,7 +65,7 @@ public class AccountController {
 		if (Key.compareTo(restKey)!=0)
 			  return ResponseEntity.badRequest().build();
 		Account account = this.accountRepository.findFirstByChipUID(chipid);
-		if (account == null)
+		if (account == null || chipid.equals("0"))
 			return ResponseEntity.notFound().build();
 		do{
 			account.refreshCode();

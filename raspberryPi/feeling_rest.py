@@ -33,7 +33,7 @@ def getAccountByUid(uid):
   if not response.text:
     params = {'chipUID': uid}
     response = requests.post(account_url, headers=header, json=params, timeout=5)
-  request.put(account_url + '/chipid/' + uid, headers=header, timeout=5)
+  requests.put(account_url + '/chipid/' + uid, headers=header, timeout=5)
   response = requests.get(account_url + '/chipid/' + uid, headers=header, timeout = 5)
   return response
 
