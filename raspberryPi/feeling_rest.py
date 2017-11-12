@@ -57,9 +57,7 @@ def addFeelingBoardEntry(rfid_uid, feeling):
 def callHipchatApi():
   nowTime = datetime.now()
   channel = 'DEFAULT'
-  if testmode:
-    channel = 'DEFAULT'
-  elif nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
+  if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
     channel = 'EisChannel'
   elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
     channel = 'MittagessenChannel'
