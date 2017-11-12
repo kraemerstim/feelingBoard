@@ -9,6 +9,7 @@ public class AccountReturnData {
 	private Team team;
 	private String role;
 	private Long id;
+	private String code;
 	
 	public AccountReturnData(Account account){
 		username = account.getUsername();
@@ -16,6 +17,7 @@ public class AccountReturnData {
 		name = account.getName();
 		team = account.getTeam();
 		role = account.getRole();
+		code = account.getCode();
 		setId(account.getId());
 	}
 
@@ -65,5 +67,13 @@ public class AccountReturnData {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

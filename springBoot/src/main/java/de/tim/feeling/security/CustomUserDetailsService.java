@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		try {
             Account account = accountRepository.findFirstByUsername(username);
             if (username.isEmpty() || account == null) {
-                return null;
+            	throw new UsernameNotFoundException("Invalid username or password.");
             }
             return new CustomUser(account);
         }

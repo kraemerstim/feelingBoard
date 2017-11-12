@@ -1,6 +1,8 @@
 package de.tim.feeling.Account;
 
+import java.security.SecureRandom;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,12 @@ public class Account {
 	private String code;
 	private Timestamp codeTimeOut;
 	private boolean enabled;
+	
+	public Account() {
+		super();
+		enabled = true;
+		role = "user";
+	}
 	
 	public String getPassword() {
 		return password;
@@ -77,10 +85,6 @@ public class Account {
 	public void setTeam(Team team) {
 		this.team = team;
 	}
-
-	public Account() {
-		super();
-	}
 	
 	public Long getId() {
 		return id;
@@ -111,5 +115,27 @@ public class Account {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public void refreshCode() {
+		if (getUsername() == null || getUsername().isEmpty()){
+			String CodeValues = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+			SecureRandom rnd = new SecureRandom();
+			StringBuilder sb = new StringBuilder(4);
+		    for( int i = 0; i < 4; i++ ) 
+		    	sb.append(CodeValues.charAt(rnd.nextInt(CodeValues.length())));
+		    setCode(sb.toString());
+		    Timestamp codeTimeout = new Timestamp(System.currentTimeMillis());
+		    Calendar cal = Calendar.getInstance();
+		    cal.setTime(codeTimeout);
+		    cal.add(Calendar.DAY_OF_WEEK, 1);
+		    codeTimeout.setTime(cal.getTime().getTime());
+		    setCodeTimeOut(codeTimeout);
+		}
+		else
+		{
+			setCodeTimeOut(null);
+			setCode(null);
+		}
 	}
 }
