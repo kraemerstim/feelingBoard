@@ -18,7 +18,7 @@ import de.tim.feeling.Account.AccountRepository;
 import de.tim.feeling.Entry.Entry;
 import de.tim.feeling.Entry.EntryRepository;
 
-@Controller // This means that this class is a Controller
+@Controller
 @RequestMapping(path = "/chart")
 public class ChartController {
 	@Autowired 
@@ -30,19 +30,17 @@ public class ChartController {
 			
 	@GetMapping("/")
 	public String chart(Model model) throws ParseException {
-		//DateFormat format = DateFormat.getDateTimeInstance();
 		ChartData<Date> chartData = new ChartData<Date>();
 		Iterable<Account> accounts = accountRepository.findAll();
 		int index = 0;
 		for (Account account : accounts) {
-			//Iterable<Entry> entries = entryRepository.findByAccountAndTimestampBetween(account, format.parse("02.09.2017 19:30:00"), format.parse("02.09.2017 20:30:00"));
 			Iterable<Entry> entries = entryRepository.findByAccount(account);
 			if (!entries.iterator().hasNext())
 				continue;
 			DataSet<Date> dataSet = new DataSet<Date>();
 			dataSet.setLabel(account.getName());
 			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 			}
 			dataSet.setBackgroundColor(color[index%20]);
 			dataSet.setBorderColor(color[index%20]);
@@ -61,7 +59,7 @@ public class ChartController {
 		DataSet<Date> dataSet = new DataSet<Date>();
 		dataSet.setLabel(account.getName());
 		for (Entry entry : entries) {
-			dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+			dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 		}
 		dataSet.setBackgroundColor(color[0]);
 		dataSet.setBorderColor(color[0]);
@@ -84,7 +82,7 @@ public class ChartController {
 				DataSet<Date> dataSet = new DataSet<Date>();
 				dataSet.setLabel(account.getName());
 				for (Entry entry : entries) {
-					dataSet.addNewDataSetCoords(new Date(entry.getDateTimeField().getTime()), entry.getFeeling());
+					dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 				}
 				dataSet.setBackgroundColor(color[index%20]);
 				dataSet.setBorderColor(color[index%20]);

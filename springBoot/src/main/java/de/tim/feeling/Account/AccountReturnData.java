@@ -1,12 +1,15 @@
 package de.tim.feeling.Account;
 
+import de.tim.feeling.Team.Team;
+
 public class AccountReturnData {
 	private String username;
 	private String chipUID;
 	private String name;
-	private String team;
+	private Team team;
 	private String role;
 	private Long id;
+	private String code;
 	
 	public AccountReturnData(Account account){
 		username = account.getUsername();
@@ -14,6 +17,7 @@ public class AccountReturnData {
 		name = account.getName();
 		team = account.getTeam();
 		role = account.getRole();
+		code = account.getCode();
 		setId(account.getId());
 	}
 
@@ -41,11 +45,11 @@ public class AccountReturnData {
 		this.name = name;
 	}
 
-	public String getTeam() {
+	public Team getTeam() {
 		return team;
 	}
 
-	public void setTeam(String team) {
+	public void setTeam(Team team) {
 		this.team = team;
 	}
 
@@ -63,5 +67,13 @@ public class AccountReturnData {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }

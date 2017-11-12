@@ -2,6 +2,8 @@ package de.tim.feeling.Entry;
 
 import java.net.URI;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import de.tim.feeling.Account.AccountRepository;
 
-@RestController    // This means that this class is a Controller
-@RequestMapping(path="/rest/entry") // This means URL's start with /demo (after Application path)
+@RestController
+@RequestMapping(path="/rest/entry")
 public class EntryController {
 	@Autowired 
 	private EntryRepository entryRepository;
@@ -26,20 +28,25 @@ public class EntryController {
 	private AccountRepository accountRepository;
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<Entry> Entries() {
-		// This returns a JSON or XML with the users
-		return entryRepository.findAll();
+	public @ResponseBody Iterable<EntryReturnData> Entries() {
+		List<EntryReturnData> entries = new ArrayList<EntryReturnData>(); 
+		for (Entry entry : entryRepository.findAll()) {
+			entries.add(new EntryReturnData(entry));
+		}
+		return entries;
 	}
 	
 	@GetMapping(path="/{id}")
-	Entry getEntryByID(@PathVariable Long id) {
+	EntryReturnData getEntryByID(@PathVariable Long id) {
 		Entry entry = this.entryRepository.findOne(id);
-		return entry;
+		if (entry == null)
+			return null;
+		return new EntryReturnData(entry);
 	}
 	
 	@PostMapping
 	ResponseEntity<?> add(@RequestBody EntryInput input) {
-		input.setDateTimeField(new Timestamp(System.currentTimeMillis()));
+		input.setTimestamp(new Timestamp(System.currentTimeMillis()));
 		Entry entry = new Entry();
 		entry.setFeeling(input.getFeeling());
 		entry.setTimestamp(input.getTimestamp());

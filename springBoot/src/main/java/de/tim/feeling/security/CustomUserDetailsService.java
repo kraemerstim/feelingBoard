@@ -19,8 +19,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
             Account account = accountRepository.findFirstByUsername(username);
-            if (account == null) {
-                return null;
+            if (username.isEmpty() || account == null) {
+            	throw new UsernameNotFoundException("Invalid username or password.");
             }
             return new CustomUser(account);
         }
