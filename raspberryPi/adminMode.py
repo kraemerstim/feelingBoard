@@ -66,4 +66,4 @@ class Admin_Mode:
       time.sleep(1)
       os.system('sudo shutdown -h now')
     elif (chosenJob == 'Sound'):
-      self.status.setMode('Sound')
+      self.status.setMode('sound')

@@ -13,8 +13,8 @@ class FB_Status:
   def initialize(self):
     self.RFID_uid = '0'
     self.RFID_name = 'Anton'
-    self.RFID_role = 'User'
-    self.Mode = 'User'
+    self.RFID_role = 'user'
+    self.Mode = 'user'
     self.Code = None
 
   def rfid_id_callback(self, uidString):
@@ -34,7 +34,7 @@ class FB_Status:
         role = 'Error'
       
       if not role:
-        role = 'User'
+        role = 'user'
        
       if not name:
         name = 'Anton'
@@ -54,7 +54,7 @@ class FB_Status:
     self.__userCallback(self.RFID_uid, self.RFID_name)
   
   def resetMode(self):
-    self.setMode('User')
+    self.setMode('user')
    
   def setMode(self, aMode):
     if (aMode != self.Mode):

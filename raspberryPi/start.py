@@ -28,9 +28,9 @@ def initialize():
   
   feeling_IO.initialize()
   
-  feeling_machine.addMode('User', userMode.User_Mode(status))
-  feeling_machine.addMode('Sound', soundMode.Sound_Mode(status))
-  feeling_machine.addMode('Admin', adminMode.Admin_Mode(status))
+  feeling_machine.addMode('user', userMode.User_Mode(status))
+  feeling_machine.addMode('sound', soundMode.Sound_Mode(status))
+  feeling_machine.addMode('admin', adminMode.Admin_Mode(status))
   
   status.initialize()
   feeling_machine.initialize(status)
