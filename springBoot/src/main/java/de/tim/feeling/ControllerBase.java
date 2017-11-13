@@ -15,7 +15,7 @@ public class ControllerBase {
    
     
 	public void InsertHeaderModelAttributes(Model model) {
-		Account account = GetLoggedInUserAccount();
+//		Account account = GetLoggedInUserAccount();
 //		if (account != null) {
 //			// Räume hinzufügen
 //			Set<Room> rooms = new HashSet<Room>();

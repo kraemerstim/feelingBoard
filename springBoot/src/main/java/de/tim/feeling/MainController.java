@@ -49,11 +49,6 @@ public class MainController extends ControllerBase {
 		return "register";
 	}
 	
-	@GetMapping("/chart")
-	public String showChart() {
-		return "chart";
-	}
-	
 	@GetMapping("/account")
 	public String editAccount() {
 		return "account";
