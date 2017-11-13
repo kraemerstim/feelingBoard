@@ -4,18 +4,14 @@
 import FB_Status
 import feeling_rest
 import feeling_IO
-import time
 from datetime import datetime, timedelta
-import RPi.GPIO as GPIO
 
 class User_Mode:
-  GREAT_JOB_SOUND = 24
   BUTTON_REPEAT_DELAY = timedelta(seconds=5)
   
   def __init__(self, aStatus):
     self.status = aStatus
     self.Button_Activate_Time = datetime.min
-    GPIO.setup(User_Mode.GREAT_JOB_SOUND, GPIO.OUT)
   
   def ButtonPressed(self, button):
     if self.Button_Activate_Time < datetime.now():
@@ -33,7 +29,6 @@ class User_Mode:
   
   def HotButtonPressed(self):
     feeling_rest.callHipchatApi()
-    self.makeGreatJobSound()
     
   def userChanged(self, aUid, aUserName):
     if (aUid == '0'):
@@ -44,8 +39,3 @@ class User_Mode:
   def modeChanged(self):
     feeling_IO.setDefaultDisplayValues('Hallo', 'Wie geht\'s dir?')
     feeling_IO.setDisplay('Hallo', 'Wie geht\'s dir?')
-    
-  def makeGreatJobSound (self):
-    GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)
-    time.sleep(0.1)
-    GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.LOW)

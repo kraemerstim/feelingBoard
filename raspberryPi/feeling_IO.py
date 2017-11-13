@@ -6,9 +6,13 @@ import rfidWrapper
 from pygame import mixer
 import os
 import buttons
+import time
+import RPi.GPIO as GPIO
 
 display = display.Display()
 RFIDReader = rfidWrapper.RFID_Wrapper()
+
+GREAT_JOB_SOUND = 24
     
 def getFilePath(aFilePath):
     return os.path.join(os.path.dirname(__file__), aFilePath)
@@ -18,6 +22,7 @@ def initialize():
   RFIDReader.start()
   mixer.init()
   buttons.initialize()
+  GPIO.setup(User_Mode.GREAT_JOB_SOUND, GPIO.OUT)
   
 def cleanup():
   display.cleanup()
@@ -43,6 +48,11 @@ def playSound(aSoundFile):
   mixer.music.load(getFilePath(aSoundFile))
   mixer.music.play()
   
+def makeGreatJobSound (self):
+  GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)
+  time.sleep(0.1)
+  GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.LOW)
+    
 #Buttons
 def setButtonCallbacks(aButtonCallback, aHotButtonCallback):
   buttons.setCallbacks(aButtonCallback, aHotButtonCallback)

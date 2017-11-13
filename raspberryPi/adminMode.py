@@ -10,7 +10,7 @@ import time
 
 class Admin_Mode:
   
-  configJobs = ('Sound', 'NetConfig', 'Restart', 'Shutdown', 'Update')
+  configJobs = ('Sound', 'NetConfig', 'Restart', 'Shutdown', 'Update', 'Test')
   
   def __init__(self, aStatus):
     self.status = aStatus
@@ -67,3 +67,8 @@ class Admin_Mode:
       os.system('sudo shutdown -h now')
     elif (chosenJob == 'Sound'):
       self.status.setMode('sound')
+    elif (chosenJob == 'Test'):
+      feeling_IO.makeGreatJobSound()
+      feeling_IO.playSound('sounds/mittagessen.mp3')
+      feeling_rest.CallHipchatRestApi('DEFAULT')
+      

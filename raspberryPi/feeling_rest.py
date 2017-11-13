@@ -59,6 +59,7 @@ def callHipchatApi():
   channel = 'DEFAULT'
   if nowTime.time() > EistimeStart and nowTime.time() < EistimeEnd:
     channel = 'EisChannel'
+    feeling_IO.makeGreatJobSound()
   elif nowTime.time() > MittagessenStart and nowTime.time() < MittagessenEnd:
     channel = 'MittagessenChannel'
     feeling_IO.playSound('sounds/mittagessen.mp3')
