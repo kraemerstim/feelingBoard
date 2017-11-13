@@ -9,10 +9,6 @@ import os
 from random import randint
 
 class Sound_Mode:
-  
-  def getFilePath(aFilePath):
-    return os.path.join(os.path.dirname(__file__), aFilePath)
-    
   def getFileName(aFilePath):
     filename = os.path.basename(aFilePath)
     return filename[:-4]
@@ -21,17 +17,17 @@ class Sound_Mode:
     self.status = aStatus
     
     self.sounds = []
-    self.sounds.append(Sound_Mode.getFilePath('sounds/weird_russian.mp3'))
-    self.sounds.append(Sound_Mode.getFilePath('sounds/letitgo.mp3'))
-    self.sounds.append(Sound_Mode.getFilePath('sounds/timetogetlaid.mp3'))
-    self.sounds.append(Sound_Mode.getFilePath('sounds/justhadsex.mp3'))
-    self.sounds.append(Sound_Mode.getFilePath('sounds/incrediblethoughts.mp3'))
+    self.sounds.append('sounds/weird_russian.mp3')
+    self.sounds.append('sounds/letitgo.mp3'))
+    self.sounds.append('sounds/timetogetlaid.mp3')
+    self.sounds.append('sounds/justhadsex.mp3')
+    self.sounds.append('sounds/incrediblethoughts.mp3')
     
     self.randomSounds = []
-    for root, dirs, files in os.walk(Sound_Mode.getFilePath('sounds/random/')):
+    for root, dirs, files in os.walk(feeling_IO.getFilePath('sounds/random/')):
       for filename in files:
         if filename.endswith('.mp3'):
-          self.randomSounds.append(Sound_Mode.getFilePath('sounds/random/' + filename))
+          self.randomSounds.append('sounds/random/' + filename)
   
   def ButtonPressed(self, button):
     if (button < len(self.sounds)):

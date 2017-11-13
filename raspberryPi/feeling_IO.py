@@ -9,6 +9,9 @@ import buttons
 display = display.Display()
 RFIDReader = rfidWrapper.RFID_Wrapper()
     
+def getFilePath(aFilePath):
+    return os.path.join(os.path.dirname(__file__), aFilePath)
+    
 def initialize():
   configReader.initialize()
   RFIDReader.start()
@@ -36,7 +39,7 @@ def setRFIDCallback(aCallback):
   
 #Sound
 def playSound(aSoundFile):
-  mixer.music.load(aSoundFile)
+  mixer.music.load(getFilePath(aSoundFile))
   mixer.music.play()
   
 #Buttons
