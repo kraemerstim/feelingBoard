@@ -18,7 +18,7 @@ class Sound_Mode:
     
     self.sounds = []
     self.sounds.append('sounds/weird_russian.mp3')
-    self.sounds.append('sounds/letitgo.mp3'))
+    self.sounds.append('sounds/letitgo.mp3')
     self.sounds.append('sounds/timetogetlaid.mp3')
     self.sounds.append('sounds/justhadsex.mp3')
     self.sounds.append('sounds/incrediblethoughts.mp3')
