@@ -4,6 +4,7 @@ import configReader
 import display
 import rfidWrapper
 from pygame import mixer
+import os
 import buttons
 
 display = display.Display()
