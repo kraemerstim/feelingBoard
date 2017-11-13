@@ -22,8 +22,8 @@ class User_Mode:
       error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, button)
       self.Button_Activate_Time = datetime.now() + User_Mode.BUTTON_REPEAT_DELAY
       if not error:
-        if self.status.code:
-          feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'Dein Code: ' + self.status.code, 5)
+        if self.status.Code:
+          feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'Dein Code: ' + self.status.Code, 5)
         else:
           feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)
       else:

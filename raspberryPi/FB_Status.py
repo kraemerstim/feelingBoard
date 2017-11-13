@@ -25,7 +25,7 @@ class FB_Status:
         if account:
           name = account.json()['name']
           role = account.json()['role']
-          self.code = account.json()['code']
+          self.Code = account.json()['code']
         else:
           name = 'Error'
           role = 'Error'
