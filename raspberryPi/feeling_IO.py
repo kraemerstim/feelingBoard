@@ -48,7 +48,7 @@ def playSound(aSoundFile):
   mixer.music.load(getFilePath(aSoundFile))
   mixer.music.play()
   
-def makeGreatJobSound (self):
+def makeGreatJobSound ():
   GPIO.output(GREAT_JOB_SOUND, GPIO.HIGH)
   time.sleep(0.1)
   GPIO.output(GREAT_JOB_SOUND, GPIO.LOW)
