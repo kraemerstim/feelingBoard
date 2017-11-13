@@ -22,7 +22,7 @@ def initialize():
   RFIDReader.start()
   mixer.init()
   buttons.initialize()
-  GPIO.setup(User_Mode.GREAT_JOB_SOUND, GPIO.OUT)
+  GPIO.setup(GREAT_JOB_SOUND, GPIO.OUT)
   
 def cleanup():
   display.cleanup()
@@ -49,9 +49,9 @@ def playSound(aSoundFile):
   mixer.music.play()
   
 def makeGreatJobSound (self):
-  GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.HIGH)
+  GPIO.output(GREAT_JOB_SOUND, GPIO.HIGH)
   time.sleep(0.1)
-  GPIO.output(User_Mode.GREAT_JOB_SOUND, GPIO.LOW)
+  GPIO.output(GREAT_JOB_SOUND, GPIO.LOW)
     
 #Buttons
 def setButtonCallbacks(aButtonCallback, aHotButtonCallback):
