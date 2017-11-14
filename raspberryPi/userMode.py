@@ -23,9 +23,9 @@ class User_Mode:
         else:
           feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)
       else:
-        feeling_IO.setDisplay('Error while', 'adding Entry')
+        feeling_IO.setDisplay('Error while', 'adding Entry', 5)
     else:
-      feeling_IO.setDisplay('nicht so schnell', 'Cowboy') 
+      feeling_IO.setDisplay('nicht so schnell', 'Cowboy', 5) 
   
   def HotButtonPressed(self):
     feeling_rest.callHipchatApi()

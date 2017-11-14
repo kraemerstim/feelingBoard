@@ -21,7 +21,7 @@ class FB_Status:
     if (self.RFID_uid != uidString):
       self.RFID_uid = uidString;
       try:
-        account = feeling_rest.getAccountByUid(self.RFID_uid)
+        account = feeling_rest.getAccountByUid(self.RFID_uid, True)
         if account:
           name = account.json()['name']
           role = account.json()['role']
@@ -37,7 +37,7 @@ class FB_Status:
         role = 'user'
        
       if not name:
-        name = 'Anton'
+        name = 'Felix'
       
       self.RFID_name = name
       self.RFID_role = role

@@ -24,7 +24,7 @@ def CallHipchatRestApi (channel):
   }
   response = requests.post(lChannelUrl, lParams, timeout=3)
             
-def getAccountByUid(uid):
+def getAccountByUid(uid, getNewCode=False):
   restKey = feeling_IO.getIniValue('Security', 'RestKey')
   response = None
   account_url = feeling_board_url + 'account'
@@ -33,8 +33,10 @@ def getAccountByUid(uid):
   if not response.text:
     params = {'chipUID': uid}
     response = requests.post(account_url, headers=header, json=params, timeout=5)
-  requests.put(account_url + '/chipid/' + uid, headers=header, timeout=5)
+  if getNewCode:
+    requests.put(account_url + '/chipid/' + uid, headers=header, timeout=5)
   response = requests.get(account_url + '/chipid/' + uid, headers=header, timeout = 5)
+  print(response.text)
   return response
 
 def addFeelingBoardEntry(rfid_uid, feeling):
