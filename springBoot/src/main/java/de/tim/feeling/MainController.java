@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import de.tim.feeling.Account.Account;
+import de.tim.feeling.Account.UserData;
 import de.tim.feeling.Account.AccountData;
 import de.tim.feeling.Account.AccountRepository;
 import de.tim.feeling.Contact.ContactEntry;
@@ -49,21 +50,29 @@ public class MainController extends ControllerBase {
 		return "register";
 	}
 	
-	@GetMapping("/account")
-	public String editAccount() {
-		return "account";
+	@GetMapping("/userData")
+	public String editAccount(Model model) {
+		model.addAttribute("userData", new UserData(GetLoggedInUserAccount()));
+		return "userData";
+	}
+	
+	@PostMapping("/userData")
+	public String setUserData(UserData userData, HttpSession session) {
+		Account account = GetLoggedInUserAccount();
+		account.setName(userData.getName());
+		accountRepository.save(account);
+
+		return "redirect:/";
 	}
 	
 	@GetMapping("/kontakt")
 	public String contact(Model model) {
-		model.addAttribute("kontaktData", new ContactEntry());
+		model.addAttribute("contactEntry", new ContactEntry());
 		return "kontakt";
 	}
 
-	// Muss noch überprüft werden ob der code stimmt und dann dem account
-	// zuordnen
 	@PostMapping("/register")
-	public String registerResponse(AccountData accountData, HttpSession session, Model model) {
+	public String registerResponse(AccountData accountData, Model model) {
 		Account account = accountRepository.findFirstByCodeAndCodeTimeOutAfter(accountData.getCode(), new Date());
 		if (account == null) {
 			model.addAttribute("error", "Code nicht korrekt");
@@ -80,14 +89,15 @@ public class MainController extends ControllerBase {
 		account.setPassword(passwordEncoder.encode(accountData.getPassword()));
 		accountRepository.save(account);
 
-		session.setAttribute("id", account.getId());
-		session.setAttribute("isLoggedIn", true);
-		return "redirect:/";
+		model.addAttribute("success", "Registrierung war Erfolgreich");
+		
+		return "register";
 	}
 	
 	@PostMapping("/kontakt")
-	public String fillContact(ContactEntry kontaktData, HttpSession session, Model model) {
-		contactEntryRepository.save(kontaktData);
-		return "redirect:/";
+	public String fillContact(ContactEntry contactEntry, Model model) {
+		contactEntryRepository.save(contactEntry);
+		model.addAttribute("success", "Danke " + contactEntry.getName() + " für das Feedback");
+		return "kontakt";
 	}
 }
