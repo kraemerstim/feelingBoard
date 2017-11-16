@@ -32,29 +32,31 @@ public class ChartController extends ControllerBase {
 
 	@GetMapping("/")
 	public String chart(Model model) throws ParseException {
-		ChartData<Date> chartData = getChartEntries(null, null);
+		ChartData<Date, String> chartData = getChartEntries(null, null);
 		model.addAttribute("ChartData", chartData);
 		return "chart";
 	}
 
 	@GetMapping("/search")
-	public @ResponseBody ChartData<?> getSearchResultViaAjax(Model model, @RequestParam String from,
+	public @ResponseBody ChartData<?, ?> getSearchResultViaAjax(Model model, @RequestParam String from,
 			@RequestParam String to) throws ParseException {
 		DateFormat format = DateFormat.getDateTimeInstance();
-		ChartData<Date> chartData = getChartEntries(format.parse(from + " 00:00:00"),
+		ChartData<Date, String> chartData = getChartEntries(format.parse(from + " 00:00:00"),
 				format.parse(to + " 23:59:59"));
 		return chartData;
 	}
 
-	private ChartData<Date> getChartEntries(Date date1, Date date2) {
+	private ChartData<Date, String> getChartEntries(Date date1, Date date2) {
 		Account account = GetLoggedInUserAccount();
-		ChartData<Date> chartData = new ChartData<Date>();
+		ChartData<Date, String> chartData = new ChartData<Date, String>();
+		for (int i = 0; i <= 5; i++)
+			chartData.addLabel(translateFeelings(i));
 		Iterable<Entry> entries = getEntries(account, date1, date2);
 		if (entries.iterator().hasNext()) {
-			DataSet<Date> dataSet = new DataSet<Date>();
+			DataSet<Date, String> dataSet = new DataSet<Date, String>();
 			dataSet.setLabel(account.getName() != null ? account.getName() : "Du");
 			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
+				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), translateFeelings(entry.getFeeling()));
 			}
 			dataSet.setBackgroundColor(color[0]);
 			dataSet.setBorderColor(color[0]);
@@ -63,16 +65,42 @@ public class ChartController extends ControllerBase {
 		account = accountRepository.findFirstByChipUID("0");
 		entries = getEntries(account, date1, date2);
 		if (entries.iterator().hasNext()) {
-			DataSet<Date> dataSet = new DataSet<Date>();
-			dataSet.setLabel(account.getName() != null ? account.getName() : "Anonym");
+			DataSet<Date, String> dataSet = new DataSet<Date, String>();
+			dataSet.setLabel("Anonym");
 			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
+				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), translateFeelings(entry.getFeeling()));
 			}
 			dataSet.setBackgroundColor(color[1]);
 			dataSet.setBorderColor(color[1]);
 			chartData.addDataSet(dataSet);
 		}
 		return chartData;
+	}
+	
+	private String translateFeelings(Integer entry)
+	{
+		String result = "error";
+		switch (entry) {
+		case 0:
+			result = "super";
+			break;
+		case 1:
+			result = "gut";
+			break;
+		case 2:
+			result = "läuft";
+			break;
+		case 3:
+			result = "grml";
+			break;
+		case 4:
+			result = "grrrrrr";
+			break;
+		case 5:
+			result = "$%&§";
+			break;
+		}
+		return result;
 	}
 
 	private Iterable<Entry> getEntries(Account account, Date date1, Date date2)

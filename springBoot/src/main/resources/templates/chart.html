@@ -66,12 +66,12 @@
 			options : {
 				scales : {
 					yAxes : [ {
-						ticks : {
-							beginAtZero : false,
-							stepSize : 1,
-							min : 0,
-							max : 6
-						}
+						type: 'category',
+                        position: 'left',
+                        display: true,
+                        ticks: {
+                            reverse: true
+                        }
 					} ],
 					xAxes : [ {
 						type : 'time',

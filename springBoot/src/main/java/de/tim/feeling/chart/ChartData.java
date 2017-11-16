@@ -1,46 +1,40 @@
 package de.tim.feeling.chart;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public class ChartData<T> {
-	private List<T> labels;
-	private List<DataSet<T>> datasets;
+public class ChartData<T, L> {
+	private List<L> yLabels;
+	private List<DataSet<T, L>> datasets;
 	
-	public List<T> getLabels() {
-		return labels;
+	public List<L> getyLabels() {
+		return yLabels;
 	}
 
-	public void setLabels(List<T> labels) {
-		this.labels = labels;
+	public void setyLabels(List<L> yLabels) {
+		this.yLabels = yLabels;
 	}
 
-	public List<DataSet<T>> getDatasets() {
+	public List<DataSet<T, L>> getDatasets() {
 		return datasets;
 	}
 
-	public void setDatasets(List<DataSet<T>> datasets) {
+	public void setDatasets(List<DataSet<T, L>> datasets) {
 		this.datasets = datasets;
 	}
 
 	public ChartData()
 	{
-		labels = new ArrayList<T>();
-		datasets = new ArrayList<DataSet<T>>();
+		yLabels = new ArrayList<L>();
+		datasets = new ArrayList<DataSet<T, L>>();
 	}
 	
-	public void addDataSet(DataSet<T> dataSet)
+	public void addDataSet(DataSet<T, L> dataSet)
 	{
 		this.datasets.add(dataSet);
 	}
 	
-	public void initWithFakeData(Collection<T> fakeData, Collection<T> fakeData_x, Collection<Integer> fakeData_y)
-	{
-		labels.addAll(fakeData);
-		
-		DataSet<T> testSet = new DataSet<T>();
-		testSet.initWithFakeData(fakeData_x, fakeData_y);
-		datasets.add(testSet);
+	public void addLabel(L label){
+		this.yLabels.add(label);
 	}
 }

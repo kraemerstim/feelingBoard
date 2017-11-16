@@ -1,38 +1,24 @@
 package de.tim.feeling.chart;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
-public class DataSet<T> {
+public class DataSet<T, L> {
 	private String label;
-	private List<DataSetCoord<T>> data;
+	private List<DataSetCoord<T, L>> data;
 	private String backgroundColor;
 	private String borderColor;
 	private boolean fill;
 
 	public DataSet()
 	{
-		data = new ArrayList<DataSetCoord<T>>();
+		data = new ArrayList<DataSetCoord<T, L>>();
 		fill = false;
 	}
 	
-	public void addNewDataSetCoords(T x, Integer y)
+	public void addNewDataSetCoords(T x, L y)
 	{
-		data.add(new DataSetCoord<T>(x, y));
-	}
-	
-	public void initWithFakeData(Collection<T> x_data, Collection<Integer> y_data)
-	{
-		label = "Fake Data";
-		
-		Iterator<T> it1 = x_data.iterator();
-		Iterator<Integer> it2 = y_data.iterator();
-
-		while (it1.hasNext() && it2.hasNext()) {
-			addNewDataSetCoords(it1.next(), it2.next());
-		}
+		data.add(new DataSetCoord<T, L>(x, y));
 	}
 
 	public String getLabel() {
@@ -43,11 +29,11 @@ public class DataSet<T> {
 		this.label = label;
 	}
 
-	public List<DataSetCoord<T>> getData() {
+	public List<DataSetCoord<T, L>> getData() {
 		return data;
 	}
 
-	public void setData(List<DataSetCoord<T>> data) {
+	public void setData(List<DataSetCoord<T, L>> data) {
 		this.data = data;
 	}
 	
