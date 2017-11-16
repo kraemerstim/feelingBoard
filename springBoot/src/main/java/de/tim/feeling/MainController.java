@@ -87,6 +87,8 @@ public class MainController extends ControllerBase {
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		account.setPassword(passwordEncoder.encode(accountData.getPassword()));
+		account.setCode(null);
+		account.setCodeTimeOut(null);
 		accountRepository.save(account);
 
 		model.addAttribute("success", "Registrierung war Erfolgreich");
