@@ -90,8 +90,7 @@ public class MainController extends ControllerBase {
 		accountRepository.save(account);
 
 		model.addAttribute("success", "Registrierung war Erfolgreich");
-		
-		return "register";
+		return "login";
 	}
 	
 	@PostMapping("/kontakt")

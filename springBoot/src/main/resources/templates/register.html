@@ -15,10 +15,6 @@
         <div th:if="${error}">
           <div class="alert alert-danger" th:text="${error}">Error</div>
         </div>
-        <div th:if="${success}">
-          <div class="alert alert-danger" th:text="${success}">Erfolg</div>
-        </div>
-
         <form action="#" th:action="@{/register}"
           th:object="${accountData}" method="post">
           <fieldset>

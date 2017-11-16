@@ -14,8 +14,10 @@
         class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
         <form th:action="@{/login}" method="post">
           <fieldset>
+            <div th:if="${success}">
+              <div class="alert alert-success" th:text="${success}">gut registriert</div>
+            </div>
             <h1>Please Sign In</h1>
-
             <div th:if="${param.error}">
               <div class="alert alert-danger">Invalid username and
                 password.</div>
