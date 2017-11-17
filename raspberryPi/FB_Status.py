@@ -12,7 +12,7 @@ class FB_Status:
     
   def initialize(self):
     self.RFID_uid = '0'
-    self.RFID_name = 'Anton'
+    self.RFID_name = 'Kevin'
     self.RFID_role = 'user'
     self.Mode = 'user'
     self.Code = None
