@@ -9,7 +9,7 @@ from threading import Thread
 class RFID_Wrapper:
   
   RFIDReader = MFRC522.MFRC522()
-  RFID_HOLD_TIME = 1
+  RFID_HOLD_TIME = 4
 
   def __init__(self):
     self.__callback = None
