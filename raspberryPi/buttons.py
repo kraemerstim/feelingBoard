@@ -12,7 +12,7 @@ BTN_5 = 13
 BTN_6 = 25
 HOT_BUTTON = 17
 
-feelings = (BTN_1, BTN_2, BTN_3, BTN_4, BTN_5, BTN_6)
+buttons = (BTN_1, BTN_2, BTN_3, BTN_4, BTN_5, BTN_6)
 
 GPIO_EVENT = GPIO.RISING
 GPIO_BOUNCETIME = 500
@@ -39,7 +39,7 @@ def buttonPressed(channel):
       __hotButtonCallback()
   else:
     if __buttonCallback:
-      __buttonCallback(feelings.index(channel))
+      __buttonCallback(buttons.index(channel))
 
 def initialize():
   global __buttonCallback

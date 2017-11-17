@@ -49,7 +49,7 @@ public class ChartController extends ControllerBase {
 	private ChartData<Date, String> getChartEntries(Date date1, Date date2) {
 		Account account = GetLoggedInUserAccount();
 		ChartData<Date, String> chartData = new ChartData<Date, String>();
-		for (int i = 0; i <= 5; i++)
+		for (int i = 5; i >= 0; i--)
 			chartData.addLabel(translateFeelings(i));
 		Iterable<Entry> entries = getEntries(account, date1, date2);
 		if (entries.iterator().hasNext()) {
@@ -82,22 +82,22 @@ public class ChartController extends ControllerBase {
 		String result = "error";
 		switch (entry) {
 		case 0:
-			result = "super";
+			result = "$%&§";
 			break;
 		case 1:
-			result = "gut";
-			break;
-		case 2:
-			result = "läuft";
-			break;
-		case 3:
-			result = "grml";
-			break;
-		case 4:
 			result = "grrrrrr";
 			break;
+		case 2:
+			result = "grml";
+			break;
+		case 3:
+			result = "läuft";
+			break;
+		case 4:
+			result = "gut";
+			break;
 		case 5:
-			result = "$%&§";
+			result = "super";
 			break;
 		}
 		return result;

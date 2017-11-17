@@ -15,7 +15,7 @@ class User_Mode:
   
   def ButtonPressed(self, button):
     if self.Button_Activate_Time < datetime.now():
-      error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, button)
+      error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, 5 - button)
       self.Button_Activate_Time = datetime.now() + User_Mode.BUTTON_REPEAT_DELAY
       if not error:
         if self.status.Code:
