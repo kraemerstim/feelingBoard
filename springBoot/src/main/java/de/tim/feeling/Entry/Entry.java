@@ -1,6 +1,7 @@
 package de.tim.feeling.Entry;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +22,16 @@ public class Entry {
 	private Account account;
 	
 	private Timestamp timestamp;
-	private Integer feeling;
+	private Double feeling;
 	
 	public Entry() {
 		super();
+	}
+	
+	public Entry(Double aFeeling, Date aTimestamp) {
+		super();
+		timestamp = new Timestamp(aTimestamp.getTime());
+		setFeeling(aFeeling);
 	}
 
 	public Long getId() {
@@ -45,10 +52,10 @@ public class Entry {
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-	public Integer getFeeling() {
+	public Double getFeeling() {
 		return feeling;
 	}
-	public void setFeeling(Integer feeling) {
+	public void setFeeling(Double feeling) {
 		this.feeling = feeling;
 	}
     

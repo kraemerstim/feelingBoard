@@ -5,17 +5,8 @@ import java.util.List;
 
 public class ChartData<T, L> {
 	private List<T> labels;
-	private List<L> yLabels;
 	private List<DataSet<T, L>> datasets;
 	
-	public List<L> getyLabels() {
-		return yLabels;
-	}
-
-	public void setyLabels(List<L> yLabels) {
-		this.yLabels = yLabels;
-	}
-
 	public List<DataSet<T, L>> getDatasets() {
 		return datasets;
 	}
@@ -26,7 +17,6 @@ public class ChartData<T, L> {
 
 	public ChartData()
 	{
-		yLabels = new ArrayList<L>();
 		datasets = new ArrayList<DataSet<T, L>>();
 		labels = new ArrayList<T>();
 	}
@@ -35,10 +25,7 @@ public class ChartData<T, L> {
 	{
 		this.datasets.add(dataSet);
 	}
-	
-	public void addLabel(L label){
-		this.yLabels.add(label);
-	}
+
 
 	public List<T> getLabels() {
 		return labels;

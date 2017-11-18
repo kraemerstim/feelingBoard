@@ -44,6 +44,11 @@ public class MainController extends ControllerBase {
 		return "login";
 	}
 
+	@GetMapping("/charttest")
+	public String testChart() {
+		return "chartTest";
+	}
+	
 	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("accountData", new AccountData());

@@ -58,12 +58,50 @@
 		src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 	<script th:inline="javascript">
 		var ctx = document.getElementById("myChart");
-		var test = /*[[${ChartData}]]*/null;
-		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
+		var timeFormat = 'YYYY-MM-DD';
 		var labels = ['super', 'gut', 'läuft', 'grml', 'grrrrrr', 'fuck'];
 		var myChart = new Chart(ctx, {
 			type : 'bar',
-			data : test,
+			data : {'datasets':
+				[{'backgroundColor':'#3366CC',
+				  'borderColor':'#3366CC',
+				  'borderWidth':null,
+				  'data':[
+					  {'x':'2017-11-13','y':5.0},
+					  {'x':'2017-11-14','y':1.0},
+					  {'x':'2017-11-15','y':2.0},
+					  {'x':'2017-11-16','y':3.0},
+					  {'x':'2017-11-17','y':4.0},
+					  {'x':'2017-11-18','y':0.0},
+					  {'x':'2017-11-19','y':3.0},
+					  {'x':'2017-11-20','y':4.0},
+					  {'x':'2017-11-21','y':1.0}
+					  ],
+				  'fill':false,
+				  'label':'Tim test',
+				  'type':'line',
+				  'yAxisID':'shown-axis'
+				  },
+				  {'backgroundColor':'rgba(220,57,18,0.5)',
+				   'borderColor':'#DC3912',
+				   'borderWidth':1,
+				   'data':[
+					   {'x':'2017-11-13','y':2.2727},
+					   {'x':'2017-11-15','y':3.7778},
+					   {'x':'2017-11-16','y':3.0},
+					   {'x':'2017-11-17','y':3.3636},
+					   {'x':'2017-11-18','y':3.0},
+					   {'x':'2017-11-19','y':2.1818},
+					   {'x':'2017-11-21','y':3.0}
+					   ],
+				   'fill':false,
+				   'label':'Anonym',
+				   'type':'bar',
+				   'yAxisID':'shown-axis'
+				   }
+				  ],
+				  'labels':[]
+					},
 			options : {
 				scales : {
 					yAxes : [ {
@@ -75,10 +113,10 @@
                         },
                         ticks: {
                             callback: function(value, index, values) {
-                            	if (value == 0) return '&#35;&#36;&#37;&#38;';
+                            	if (value == 0) return "#%$§";
                             	if (value == 1) return 'grrrrrr';
                             	if (value == 2) return 'grml';
-                            	if (value == 3) return 'l&auml;uft';
+                            	if (value == 3) return 'läuft';
                             	if (value == 4) return 'gut';
                             	if (value == 5) return 'super';
                             	return null;

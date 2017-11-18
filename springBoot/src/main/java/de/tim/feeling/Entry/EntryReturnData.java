@@ -8,7 +8,7 @@ public class EntryReturnData {
 	private Long id;
 	private AccountReturnData account;
 	private Timestamp timestamp;
-	private Integer feeling;
+	private Double feeling;
 	
 	public EntryReturnData(Entry entry){
 		id = entry.getId();
@@ -41,10 +41,10 @@ public class EntryReturnData {
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-	public Integer getFeeling() {
+	public Double getFeeling() {
 		return feeling;
 	}
-	public void setFeeling(Integer feeling) {
+	public void setFeeling(Double feeling) {
 		this.feeling = feeling;
 	}
     

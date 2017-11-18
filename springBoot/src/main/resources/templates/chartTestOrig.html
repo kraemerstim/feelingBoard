@@ -58,12 +58,53 @@
 		src="/webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 	<script th:inline="javascript">
 		var ctx = document.getElementById("myChart");
-		var test = /*[[${ChartData}]]*/null;
 		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
 		var labels = ['super', 'gut', 'läuft', 'grml', 'grrrrrr', 'fuck'];
 		var myChart = new Chart(ctx, {
 			type : 'bar',
-			data : test,
+			data : {'datasets':
+				[{'backgroundColor':'#3366CC',
+				  'borderColor':'#3366CC',
+				  'borderWidth':null,
+				  'data':[
+					  {'x':'2017-11-13T19:25:09.000+01:00','y':5.0},
+					  {'x':'2017-11-13T19:25:13.000+01:00','y':1.0},
+					  {'x':'2017-11-13T19:25:16.000+01:00','y':2.0},
+					  {'x':'2017-11-13T19:25:20.000+01:00','y':3.0},
+					  {'x':'2017-11-13T19:25:23.000+01:00','y':4.0},
+					  {'x':'2017-11-13T19:25:27.000+01:00','y':0.0},
+					  {'x':'2017-11-17T22:54:24.000+01:00','y':3.0},
+					  {'x':'2017-11-17T22:54:28.000+01:00','y':4.0},
+					  {'x':'2017-11-18T10:21:30.000+01:00','y':1.0}
+					  ],
+				  'fill':false,
+				  'label':'Tim test',
+				  'type':'line',
+				  'yAxisID':'shown-axis'
+				  },
+				  {'backgroundColor':'rgba(220,57,18,0.5)',
+				   'borderColor':'#DC3912',
+				   'borderWidth':1,
+				   'data':[
+					   {'x':'2017-09-17T00:00:00.000+02:00','y':2.2727},
+					   {'x':'2017-09-18T00:00:00.000+02:00','y':3.7778},
+					   {'x':'2017-09-19T00:00:00.000+02:00','y':3.0},
+					   {'x':'2017-10-18T00:00:00.000+02:00','y':3.3636},
+					   {'x':'2017-11-13T00:00:00.000+01:00','y':3.0},
+					   {'x':'2017-11-18T00:00:00.000+01:00','y':2.1818},
+					   {'x':'2017-11-19T00:00:00.000+01:00','y':3.0}
+					   ],
+				   'fill':false,
+				   'label':'Anonym',
+				   'type':'bar',
+				   'yAxisID':'shown-axis'
+				   }
+				  ],
+				  'labels':[]
+		},
+				  }
+				}
+			}
 			options : {
 				scales : {
 					yAxes : [ {
