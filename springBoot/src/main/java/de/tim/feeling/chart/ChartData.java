@@ -34,4 +34,9 @@ public class ChartData<T, L> {
 	public void setLabels(List<T> labels) {
 		this.labels = labels;
 	}
+	
+	public void addLabel(T aLabel)
+	{
+		labels.add(aLabel);
+	}
 }

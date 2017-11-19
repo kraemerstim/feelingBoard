@@ -10,7 +10,6 @@ public class DataSet<T, L> {
 	private String backgroundColor;
 	private String borderColor;
 	private boolean fill;
-	private String yAxisID;
 	private Integer borderWidth;
 
 	public DataSet()
@@ -23,14 +22,6 @@ public class DataSet<T, L> {
 	public void addNewDataSetCoords(T x, L y)
 	{
 		data.add(new DataSetCoord<T, L>(x, y));
-	}
-	
-	public String getyAxisID() {
-		return yAxisID;
-	}
-
-	public void setyAxisID(String yAxisID) {
-		this.yAxisID = yAxisID;
 	}
 
 	public String getLabel() {

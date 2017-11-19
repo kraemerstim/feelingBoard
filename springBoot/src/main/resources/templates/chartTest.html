@@ -67,50 +67,69 @@
 				  'borderColor':'#3366CC',
 				  'borderWidth':null,
 				  'data':[
-					  {'x':'2017-11-13','y':5.0},
+					  {'x':'2017-11-11','y':5.0},
 					  {'x':'2017-11-14','y':1.0},
 					  {'x':'2017-11-15','y':2.0},
 					  {'x':'2017-11-16','y':3.0},
 					  {'x':'2017-11-17','y':4.0},
-					  {'x':'2017-11-18','y':0.0},
 					  {'x':'2017-11-19','y':3.0},
 					  {'x':'2017-11-20','y':4.0},
 					  {'x':'2017-11-21','y':1.0}
 					  ],
 				  'fill':false,
 				  'label':'Tim test',
-				  'type':'line',
-				  'yAxisID':'shown-axis'
+				  'type':'line'
 				  },
 				  {'backgroundColor':'rgba(220,57,18,0.5)',
 				   'borderColor':'#DC3912',
 				   'borderWidth':1,
 				   'data':[
-					   {'x':'2017-11-13','y':2.2727},
-					   {'x':'2017-11-15','y':3.7778},
-					   {'x':'2017-11-16','y':3.0},
-					   {'x':'2017-11-17','y':3.3636},
-					   {'x':'2017-11-18','y':3.0},
-					   {'x':'2017-11-19','y':2.1818},
-					   {'x':'2017-11-21','y':3.0}
-					   ],
+					   2.2727,
+					   3.7778,
+					   3.0,
+					   3.3636,
+					   2.1818,
+					   3.0,
+					   0,
+					   3.0,
+					   0],
 				   'fill':false,
 				   'label':'Anonym',
-				   'type':'bar',
-				   'yAxisID':'shown-axis'
-				   }
+				   'type':'bar'
+				   },
+					  {'backgroundColor':'rgba(255,153,00,0.5)',
+					   'borderColor':'#FF9900',
+					   'borderWidth':1,
+					   'data':[3.1,
+						   3.1,
+						   2.0,
+						   1.3636,
+						   4.1818,
+						   3.3,
+						   0,
+						   3.2,
+						   1],
+					   'fill':false,
+					   'label':'Team',
+					   'type':'bar'
+					   }
 				  ],
-				  'labels':[]
+				  'labels':['2017-11-11',
+					  		'2017-11-13', 
+					  		'2017-11-14', 
+					  		'2017-11-15', 
+					  		'2017-11-16', 
+					  		'2017-11-17', 
+					  		'2017-11-18', 
+					  		'2017-11-19', 
+					  		'2017-11-20', 
+					  		'2017-11-21']
 					},
 			options : {
 				scales : {
 					yAxes : [ {
                         position: 'left',
                         display: true,
-                        scaleLabel: {
-                        	display: true,
-                        	labelString: 'Value'
-                        },
                         ticks: {
                             callback: function(value, index, values) {
                             	if (value == 0) return "#%$§";
@@ -121,21 +140,13 @@
                             	if (value == 5) return 'super';
                             	return null;
                             },
-                        	stepsize: 1
-                        },
-						id: "shown-axis"
+                            min: 0,
+                            max: 5
+                        }
 					}],
 					xAxes : [ {
-						type : 'time',
-						time : {
-							format : timeFormat,
-							tooltipFormat : 'll HH:mm'
-						},
-						scaleLabel : {
-							display : true,
-							labelString : 'Date'
-						}
-					} ]
+						type: 'category'
+					}]
 				}
 			}
 		});

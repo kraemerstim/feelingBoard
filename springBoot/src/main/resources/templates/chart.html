@@ -59,8 +59,6 @@
 	<script th:inline="javascript">
 		var ctx = document.getElementById("myChart");
 		var test = /*[[${ChartData}]]*/null;
-		var timeFormat = 'YYYY-MM-DDTHH:mm:ss';
-		var labels = ['super', 'gut', 'läuft', 'grml', 'grrrrrr', 'fuck'];
 		var myChart = new Chart(ctx, {
 			type : 'bar',
 			data : test,
@@ -69,35 +67,21 @@
 					yAxes : [ {
                         position: 'left',
                         display: true,
-                        scaleLabel: {
-                        	display: true,
-                        	labelString: 'Value'
-                        },
                         ticks: {
                             callback: function(value, index, values) {
-                            	if (value == 0) return '&#35;&#36;&#37;&#38;';
+                            	if (value == 0) return "#%$§";
                             	if (value == 1) return 'grrrrrr';
                             	if (value == 2) return 'grml';
-                            	if (value == 3) return 'l&auml;uft';
+                            	if (value == 3) return 'läuft';
                             	if (value == 4) return 'gut';
                             	if (value == 5) return 'super';
                             	return null;
-                            },
-                        	stepsize: 1
-                        },
-						id: "shown-axis"
+                            }
+                        }
 					}],
 					xAxes : [ {
-						type : 'time',
-						time : {
-							format : timeFormat,
-							tooltipFormat : 'll HH:mm'
-						},
-						scaleLabel : {
-							display : true,
-							labelString : 'Date'
-						}
-					} ]
+						type: 'category'
+					}]
 				}
 			}
 		});

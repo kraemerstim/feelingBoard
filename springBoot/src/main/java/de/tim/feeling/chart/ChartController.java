@@ -78,7 +78,6 @@ public class ChartController extends ControllerBase {
 				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
 			}
 		}
-		dataSet.setyAxisID("shown-axis");
 		return dataSet;
 	}
 
