@@ -2,7 +2,12 @@ package de.tim.feeling.chart;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import de.tim.feeling.ControllerBase;
 import de.tim.feeling.Account.Account;
 import de.tim.feeling.Account.AccountRepository;
-import de.tim.feeling.Entry.Entry;
 import de.tim.feeling.Entry.EntryRepository;
+
 
 @Controller
 @RequestMapping(path = "/chart")
 public class ChartController extends ControllerBase {
+
+	
 	@Autowired
 	private EntryRepository entryRepository;
 	@Autowired
@@ -35,7 +42,7 @@ public class ChartController extends ControllerBase {
 
 	@GetMapping("/")
 	public String chart(Model model) throws ParseException {
-		ChartData<Date, Double> chartData = getChartEntries(null, null);
+		ChartData<String, Double> chartData = getChartEntries(null, null);
 		model.addAttribute("ChartData", chartData);
 		return "chart";
 	}
@@ -44,21 +51,62 @@ public class ChartController extends ControllerBase {
 	public @ResponseBody ChartData<?, ?> getSearchResultViaAjax(Model model, @RequestParam String from,
 			@RequestParam String to) throws ParseException {
 		DateFormat format = DateFormat.getDateTimeInstance();
-		ChartData<Date, Double> chartData = getChartEntries(format.parse(from + " 00:00:00"),
+		//funktioniert gerade nicht mit dem Filtern
+		ChartData<String, Double> chartData = getChartEntries(format.parse(from + " 00:00:00"),
 				format.parse(to + " 23:59:59"));
 		return chartData;
 	}
 
-	private ChartData<Date, Double> getChartEntries(Date date1, Date date2) {
+	private ChartData<String, Double> getChartEntries(Date date1, Date date2) {
+		HashMap<String, Double> labelMap = new HashMap<String, Double>();
+		ChartSorting sorting = ChartSorting.DAY; 
 		Account account = GetLoggedInUserAccount();
-		ChartData<Date, Double> chartData = new ChartData<Date, Double>();
-		DataSet<Date, Double> dataSet = getDataSet(account, date1, date2, false);
+		List<Long> accountIDs = Arrays.asList(account.getId(), accountRepository.findFirstByChipUID("0").getId());
+		List<ChartEntry> labels = entryRepository.findByAccountsAndGroupedByDay(accountIDs);
+		if (labels.size() > 30)
+		{
+			labels = entryRepository.findByAccountsAndGroupedByWeek(accountIDs);
+			sorting = ChartSorting.WEEK;
+		}
+		if (labels.size() > 30)
+		{
+			labels = entryRepository.findByAccountsAndGroupedByMonth(accountIDs);
+			sorting = ChartSorting.MONTH;
+		}
+		
+		ChartData<String, Double> chartData = new ChartData<String, Double>();
+		for (ChartEntry entry: labels)
+		{
+			labelMap.put(entry.getString(sorting), entry.getFeeling());
+		}
+		
+		TreeMap<String, Double> map = new TreeMap<>(labelMap);
+		for (Map.Entry<String, ?> entry : map.entrySet()) {
+		  chartData.addLabel(entry.getKey());
+		}
+		
+		List<ChartEntry> entries = getEntries(account, sorting);
+		DataSet<String, Double> dataSet = new DataSet<String, Double>();
+		for (ChartEntry entry: entries)
+		{
+			dataSet.addNewDataSetCoords(entry.getString(sorting), entry.getFeeling());
+		}
 		dataSet.setBackgroundColor(color[0]);
 		dataSet.setBorderColor(color[0]);
+		dataSet.setType("line");
 		chartData.addDataSet(dataSet);
 		
 		account = accountRepository.findFirstByChipUID("0");
-		dataSet = getDataSet(account, date1, date2, true);
+		entries = getEntries(account, sorting);
+		
+		dataSet = new DataSet<String, Double>();
+		for (ChartEntry entry: entries)
+		{
+			map.put(entry.getString(sorting), entry.getFeeling());
+		}
+		for (Map.Entry<String, ?> entry : map.entrySet()) {
+			dataSet.addNewDataSetCoords(entry.getKey(), (Double)entry.getValue());
+		}
 		dataSet.setBackgroundColor(barColor[1]);
 		dataSet.setBorderColor(color[1]);
 		dataSet.setBorderWidth(1);
@@ -68,32 +116,22 @@ public class ChartController extends ControllerBase {
 		return chartData;
 	}
 	
-	private DataSet<Date, Double> getDataSet(Account account, Date date1, Date date2, boolean groupByDay)
+	private List<ChartEntry> getEntries(Account account, ChartSorting sorting)
 	{
-		Iterable<Entry> entries = getEntries(account, date1, date2, groupByDay);
-		DataSet<Date, Double> dataSet = new DataSet<Date, Double>();
-		if (entries.iterator().hasNext()) {
-			dataSet.setLabel(account.getName() != null ? account.getName() : "Du");
-			for (Entry entry : entries) {
-				dataSet.addNewDataSetCoords(new Date(entry.getTimestamp().getTime()), entry.getFeeling());
-			}
-		}
-		return dataSet;
-	}
-
-	private Iterable<Entry> getEntries(Account account, Date date1, Date date2, boolean groupByDay)
-	{
-		Iterable<Entry> entries;
-		if (groupByDay)
+		List<ChartEntry> entries = null;
+		switch (sorting) {
+		case DAY:
 			entries = entryRepository.findByAccountAndGroupedByDay(account.getId());
-		else if (date1 == null && date2 == null)
-		  entries = entryRepository.findByAccount(account);
-		else if (date2 == null)
-			entries = entryRepository.findByAccountAndTimestampAfter(account, date1);
-		else if (date1 == null)
-			entries = entryRepository.findByAccountAndTimestampBefore(account, date2);
-		else
-			entries = entryRepository.findByAccountAndTimestampBetween(account, date1, date2);
+			break;
+		case WEEK:
+			entries = entryRepository.findByAccountAndGroupedByWeek(account.getId());
+			break;
+		case MONTH:
+			entries = entryRepository.findByAccountAndGroupedByMonth(account.getId());
+			break;
+		default:
+			break;
+		}
 		return entries;
 	}
 }
