@@ -20,6 +20,13 @@
               Anzeigename: <input th:field="*{name}" type="text" name="name"
 						id="name" class="form-control input-lg" placeholder="Name"
 						required="true" autofocus="true" />
+			  New Team: <input th:field="*{newTeam}" type="text" name="newTeam"
+						id="newTeam" class="form-control input-lg" placeholder="newTeam"
+						required="true" autofocus="true" />
+			  Team: <select id="selectedTeam" name="selectedTeam">
+			  <option th:each="ateam : *{teams}" th:value="${ateam.name}" th:text="${ateam.name}"
+			  		th:selected="(*{newTeam} == ${ateam.name})" />
+			  </select>
             </div>
             <div class="row">
               <div class="col-xs-6 col-sm-6 col-md-6">

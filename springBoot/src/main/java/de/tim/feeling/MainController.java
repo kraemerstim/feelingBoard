@@ -19,6 +19,8 @@ import de.tim.feeling.Account.AccountData;
 import de.tim.feeling.Account.AccountRepository;
 import de.tim.feeling.Contact.ContactEntry;
 import de.tim.feeling.Contact.ContactEntryRepository;
+import de.tim.feeling.Team.Team;
+import de.tim.feeling.Team.TeamRepository;
 
 @Controller
 @RequestMapping(path = "/")
@@ -26,6 +28,9 @@ public class MainController extends ControllerBase {
 	@Autowired
 	private AccountRepository accountRepository;
 
+	@Autowired
+	private TeamRepository teamRepository;
+	
 	@Autowired
 	private ContactEntryRepository contactEntryRepository;
 	
@@ -57,7 +62,9 @@ public class MainController extends ControllerBase {
 	
 	@GetMapping("/userData")
 	public String editAccount(Model model) {
-		model.addAttribute("userData", new UserData(GetLoggedInUserAccount()));
+		UserData userData = new UserData(GetLoggedInUserAccount());
+		userData.setTeams(teamRepository.findAll());
+		model.addAttribute("userData", userData);
 		return "userData";
 	}
 	
@@ -65,6 +72,18 @@ public class MainController extends ControllerBase {
 	public String setUserData(UserData userData, HttpSession session) {
 		Account account = GetLoggedInUserAccount();
 		account.setName(userData.getName());
+		
+		if (!userData.getNewTeam().isEmpty())
+		{
+			Team team = teamRepository.findFirstByName(userData.getNewTeam());
+			if (team == null)
+			{
+				team = new Team();
+				team.setName(userData.getNewTeam());
+				teamRepository.save(team);
+			}
+			account.setTeam(team);
+		}
 		accountRepository.save(account);
 
 		return "redirect:/";
