@@ -5,7 +5,7 @@ import de.tim.feeling.Team.Team;
 public class UserData {
 	private String name;
 	private String newTeam;
-	private String selectedTeam;
+	private Long selectedTeam;
 	private Iterable<Team> teams;
 	
 	public UserData(Account account)
@@ -13,7 +13,7 @@ public class UserData {
 		if (account != null)
 		{
 			name = account.getName();
-			setNewTeam(account.getTeam() != null ? account.getTeam().getName() : "");
+			selectedTeam = account.getTeam() != null ? account.getTeam().getId() : -1;
 		}
 	}
 	
@@ -37,11 +37,11 @@ public class UserData {
 		this.teams = teams;
 	}
 
-	public String getSelectedTeam() {
+	public Long getSelectedTeam() {
 		return selectedTeam;
 	}
 
-	public void setSelectedTeam(String selectedTeam) {
+	public void setSelectedTeam(Long selectedTeam) {
 		this.selectedTeam = selectedTeam;
 	}
 

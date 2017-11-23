@@ -1,6 +1,7 @@
 package de.tim.feeling;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -84,7 +85,18 @@ public class MainController extends ControllerBase {
 			}
 			account.setTeam(team);
 		}
+		else if (account.getTeam() == null || userData.getSelectedTeam() != account.getTeam().getId())
+		{
+			Team team = teamRepository.findOne(userData.getSelectedTeam());
+			account.setTeam(team);
+		}
 		accountRepository.save(account);
+		
+		List<Team> emptyTeams = teamRepository.findEmptyTeams();
+		for (Team emptyTeam : emptyTeams)
+		{
+			teamRepository.delete(emptyTeam);
+		}
 
 		return "redirect:/";
 	}
