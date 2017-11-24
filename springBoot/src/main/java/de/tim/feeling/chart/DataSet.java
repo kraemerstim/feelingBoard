@@ -5,15 +5,18 @@ import java.util.List;
 
 public class DataSet<T, L> {
 	private String label;
+	private String type;
 	private List<DataSetCoord<T, L>> data;
 	private String backgroundColor;
 	private String borderColor;
 	private boolean fill;
+	private Integer borderWidth;
 
 	public DataSet()
 	{
 		data = new ArrayList<DataSetCoord<T, L>>();
 		fill = false;
+		setType("line");
 	}
 	
 	public void addNewDataSetCoords(T x, L y)
@@ -59,5 +62,21 @@ public class DataSet<T, L> {
 
 	public void setBorderColor(String borderColor) {
 		this.borderColor = borderColor;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Integer getBorderWidth() {
+		return borderWidth;
+	}
+
+	public void setBorderWidth(Integer borderWidth) {
+		this.borderWidth = borderWidth;
 	}
 }
