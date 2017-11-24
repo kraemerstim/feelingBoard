@@ -1,6 +1,10 @@
 package de.tim.feeling.Account;
 
+import java.math.BigInteger;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +58,7 @@ public class AccountController {
 	AccountReturnData getAccountByChipID(@PathVariable String chipid, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			return null;
-		Account account = this.accountRepository.findFirstByChipUID(chipid);
+		Account account = this.accountRepository.findFirstByChipUID(hashString(chipid));
 		if (account == null)
 			return null;
 		return new AccountReturnData(account);
@@ -64,13 +68,15 @@ public class AccountController {
 	ResponseEntity<?> refreshCode(@PathVariable String chipid, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			  return ResponseEntity.badRequest().build();
-		Account account = this.accountRepository.findFirstByChipUID(chipid);
+		Account account;
+		account = this.accountRepository.findFirstByChipUID(hashString(chipid));
 		if (account == null || chipid.equals("0"))
 			return ResponseEntity.notFound().build();
 		do{
 			account.refreshCode();
 		} while (accountRepository.findFirstByCodeAndCodeTimeOutAfter(account.getCode(), new Date()) != null);
 		accountRepository.save(account);
+	
 		return ResponseEntity.accepted().build();
 	}
 	
@@ -78,10 +84,27 @@ public class AccountController {
 	ResponseEntity<?> add(@RequestBody Account input, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			return ResponseEntity.badRequest().build();
+		input.setPassword(hashString(input.getPassword()));
 		Account result = accountRepository.save(input);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(result.getId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
+	
+	public String hashString(String source)
+	{
+		MessageDigest md;
+		try {
+			md = MessageDigest.getInstance( "SHA-256" );
+			md.update( source.getBytes( StandardCharsets.UTF_8 ) );
+			byte[] digest = md.digest();
+			String hex = String.format( "%064x", new BigInteger( 1, digest ) );
+			return hex;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			return "";
+		}
+	}
+
 }

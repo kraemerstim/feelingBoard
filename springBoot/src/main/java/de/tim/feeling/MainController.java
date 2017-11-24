@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import de.tim.feeling.Account.Account;
-import de.tim.feeling.Account.UserData;
 import de.tim.feeling.Account.AccountData;
 import de.tim.feeling.Account.AccountRepository;
+import de.tim.feeling.Account.UserData;
 import de.tim.feeling.Contact.ContactEntry;
 import de.tim.feeling.Contact.ContactEntryRepository;
 import de.tim.feeling.Team.Team;

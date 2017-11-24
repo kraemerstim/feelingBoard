@@ -2,6 +2,7 @@ package de.tim.feeling.chart;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -61,23 +62,35 @@ public class ChartController extends ControllerBase {
 		HashMap<String, Double> labelMap = new HashMap<String, Double>();
 		ChartSorting sorting = ChartSorting.DAY; 
 		Account account = GetLoggedInUserAccount();
-		List<Long> accountIDs = Arrays.asList(account.getId(), accountRepository.findFirstByChipUID("0").getId());
-		List<ChartEntry> labels = entryRepository.findByAccountsAndGroupedByDay(accountIDs);
+		Account anonym_account = accountRepository.findOne((long) 1);
+		List<Long> teamAccountIDs = new ArrayList<Long>();
+		if (account.getTeam() != null)
+		{
+			List<Account> accounts = accountRepository.findByTeam(account.getTeam());
+			for (Account temp_account: accounts)
+			{
+				teamAccountIDs.add(temp_account.getId());
+			}
+		}
+		List<Long> accountIDs = new ArrayList<Long>(Arrays.asList(account.getId(), anonym_account.getId()));
+		accountIDs.addAll(teamAccountIDs);
+		
+		List<ChartEntry> labels = getEntries(accountIDs, sorting);
 		if (labels.size() > 30)
 		{
-			labels = entryRepository.findByAccountsAndGroupedByWeek(accountIDs);
 			sorting = ChartSorting.WEEK;
+			labels = getEntries(accountIDs, sorting);
 		}
 		if (labels.size() > 30)
 		{
-			labels = entryRepository.findByAccountsAndGroupedByMonth(accountIDs);
 			sorting = ChartSorting.MONTH;
+			labels = getEntries(accountIDs, sorting);
 		}
 		
 		ChartData<String, Double> chartData = new ChartData<String, Double>();
 		for (ChartEntry entry: labels)
 		{
-			labelMap.put(entry.getString(sorting), entry.getFeeling());
+			labelMap.put(entry.getString(sorting), 0.0);
 		}
 		
 		TreeMap<String, Double> map = new TreeMap<>(labelMap);
@@ -94,25 +107,48 @@ public class ChartController extends ControllerBase {
 		dataSet.setBackgroundColor(color[0]);
 		dataSet.setBorderColor(color[0]);
 		dataSet.setType("line");
+		dataSet.setLabel(account.getName() == null ? "Du" : account.getName());
 		chartData.addDataSet(dataSet);
 		
-		account = accountRepository.findFirstByChipUID("0");
-		entries = getEntries(account, sorting);
+		if (!teamAccountIDs.isEmpty())
+		{
+			entries = getEntries(teamAccountIDs, sorting);
+			dataSet = new DataSet<String, Double>();
+			for (ChartEntry entry: entries)
+			{
+				map.put(entry.getString(sorting), entry.getFeeling());
+			}
+			for (Map.Entry<String, Double> entry : map.entrySet()) {
+				dataSet.addNewDataSetCoords(entry.getKey(), (Double)entry.getValue());
+				entry.setValue(0.0);
+			}
+			dataSet.setBackgroundColor(barColor[1]);
+			dataSet.setBorderColor(color[1]);
+			dataSet.setBorderWidth(1);
+			dataSet.setLabel(account.getTeam().getName());
+			dataSet.setType("bar");
+			chartData.addDataSet(dataSet);
+		}
+		
+		
+		entries = getEntries(anonym_account, sorting);
 		
 		dataSet = new DataSet<String, Double>();
 		for (ChartEntry entry: entries)
 		{
 			map.put(entry.getString(sorting), entry.getFeeling());
 		}
-		for (Map.Entry<String, ?> entry : map.entrySet()) {
+		for (Map.Entry<String, Double> entry : map.entrySet()) {
 			dataSet.addNewDataSetCoords(entry.getKey(), (Double)entry.getValue());
+			entry.setValue(0.0);
 		}
-		dataSet.setBackgroundColor(barColor[1]);
-		dataSet.setBorderColor(color[1]);
+		dataSet.setBackgroundColor(barColor[2]);
+		dataSet.setBorderColor(color[2]);
 		dataSet.setBorderWidth(1);
 		dataSet.setLabel("Anonym");
 		dataSet.setType("bar");
 		chartData.addDataSet(dataSet);
+
 		return chartData;
 	}
 	
@@ -128,6 +164,25 @@ public class ChartController extends ControllerBase {
 			break;
 		case MONTH:
 			entries = entryRepository.findByAccountAndGroupedByMonth(account.getId());
+			break;
+		default:
+			break;
+		}
+		return entries;
+	}
+	
+	private List<ChartEntry> getEntries(List<Long> accountIDs, ChartSorting sorting)
+	{
+		List<ChartEntry> entries = null;
+		switch (sorting) {
+		case DAY:
+			entries = entryRepository.findByAccountsAndGroupedByDay(accountIDs);
+			break;
+		case WEEK:
+			entries = entryRepository.findByAccountsAndGroupedByWeek(accountIDs);
+			break;
+		case MONTH:
+			entries = entryRepository.findByAccountsAndGroupedByMonth(accountIDs);
 			break;
 		default:
 			break;
