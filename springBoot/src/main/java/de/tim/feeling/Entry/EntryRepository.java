@@ -29,18 +29,4 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
 	//nach Monat gruppiert
 	@Query("Select new de.tim.feeling.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), AVG(feeling)) FROM Entry where account_id in :ids group by YEAR(timestamp), MONTH(timestamp)")
 	List<ChartEntry> findByAccountsAndGroupedByMonth(@Param("ids") List<Long> accountIDs);
-	
-	//Values
-	
-	//Nach Tag gruppiert
-	@Query("SELECT new de.tim.feeling.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), AVG(feeling)) FROM Entry where account_id = ?1 group by DATE(timestamp)")
-	List<ChartEntry> findByAccountAndGroupedByDay(Long account_id);
-	
-	//Nach Woche gruppiert
-	@Query("SELECT new de.tim.feeling.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), AVG(feeling)) FROM Entry where account_id = ?1 group by YEAR(timestamp), WEEK(timestamp)")
-	List<ChartEntry> findByAccountAndGroupedByWeek(Long account_id);
-	
-	//Nach Monat gruppiert
-	@Query("SELECT new de.tim.feeling.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), AVG(feeling)) FROM Entry where account_id = ?1 group by YEAR(timestamp), MONTH(timestamp)")
-	List<ChartEntry> findByAccountAndGroupedByMonth(Long account_id);	
 }
