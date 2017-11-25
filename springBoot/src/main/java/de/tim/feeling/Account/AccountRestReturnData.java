@@ -2,7 +2,7 @@ package de.tim.feeling.Account;
 
 import de.tim.feeling.Team.Team;
 
-public class AccountReturnData {
+public class AccountRestReturnData {
 	private String username;
 	private String chipUID;
 	private String name;
@@ -11,7 +11,7 @@ public class AccountReturnData {
 	private Long id;
 	private String code;
 	
-	public AccountReturnData(Account account){
+	public AccountRestReturnData(Account account){
 		username = account.getUsername();
 		chipUID = account.getChipUID();
 		name = account.getName();

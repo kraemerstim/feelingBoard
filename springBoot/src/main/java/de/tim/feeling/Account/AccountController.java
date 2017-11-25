@@ -33,35 +33,35 @@ public class AccountController {
 	private String restKey;
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<AccountReturnData> Accounts(@RequestHeader("Key") String Key) {
+	public @ResponseBody Iterable<AccountRestReturnData> Accounts(@RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			  return null;
-		List<AccountReturnData> accounts = new ArrayList<AccountReturnData>(); 
+		List<AccountRestReturnData> accounts = new ArrayList<AccountRestReturnData>(); 
 		for (Account account : accountRepository.findAll()) {
-			accounts.add(new AccountReturnData(account));
+			accounts.add(new AccountRestReturnData(account));
 		}
 		return accounts;
 	}
 	
 	@GetMapping(path="/{id}")
-	AccountReturnData getAccountByID(@PathVariable Long id, @RequestHeader("Key") String Key) {
+	AccountRestReturnData getAccountByID(@PathVariable Long id, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 		  return null;
 		Account account = this.accountRepository.findOne(id);
 		if (account == null)
 			return null;
 		else
-			return new AccountReturnData(account);
+			return new AccountRestReturnData(account);
 	}
 	
 	@GetMapping(path="/chipid/{chipid}")
-	AccountReturnData getAccountByChipID(@PathVariable String chipid, @RequestHeader("Key") String Key) {
+	AccountRestReturnData getAccountByChipID(@PathVariable String chipid, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			return null;
 		Account account = this.accountRepository.findFirstByChipUID(hashString(chipid));
 		if (account == null)
 			return null;
-		return new AccountReturnData(account);
+		return new AccountRestReturnData(account);
 	}
 	
 	@PutMapping(path="/chipid/{chipid}")
