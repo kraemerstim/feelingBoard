@@ -1,4 +1,4 @@
-package de.tim.feeling.security;
+package de.tim.feeling.web.security;
 
 import javax.sql.DataSource;
 

@@ -1,4 +1,4 @@
-package de.tim.feeling.chart;
+package de.tim.feeling.web.chart;
 
 public class ChartEntry {
 	private Integer year;

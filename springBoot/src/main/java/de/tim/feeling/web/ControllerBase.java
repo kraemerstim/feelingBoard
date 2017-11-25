@@ -1,4 +1,4 @@
-package de.tim.feeling;
+package de.tim.feeling.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 
 import de.tim.feeling.Account.Account;
 import de.tim.feeling.Account.AccountRepository;
-import de.tim.feeling.security.CustomUser;
+import de.tim.feeling.web.security.CustomUser;
 
 public class ControllerBase {
 

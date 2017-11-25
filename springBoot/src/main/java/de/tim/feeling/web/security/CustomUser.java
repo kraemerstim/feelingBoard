@@ -1,4 +1,4 @@
-package de.tim.feeling.security;
+package de.tim.feeling.web.security;
 
 import java.util.Collection;
 import java.util.HashSet;

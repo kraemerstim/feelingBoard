@@ -1,9 +1,6 @@
-package de.tim.feeling;
+package de.tim.feeling.web;
 
 import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,20 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import de.tim.feeling.Account.Account;
 import de.tim.feeling.Account.AccountData;
 import de.tim.feeling.Account.AccountRepository;
-import de.tim.feeling.Account.UserData;
 import de.tim.feeling.Contact.ContactEntry;
 import de.tim.feeling.Contact.ContactEntryRepository;
-import de.tim.feeling.Team.Team;
-import de.tim.feeling.Team.TeamRepository;
 
 @Controller
 @RequestMapping(path = "/")
 public class MainController extends ControllerBase {
 	@Autowired
 	private AccountRepository accountRepository;
-
-	@Autowired
-	private TeamRepository teamRepository;
 	
 	@Autowired
 	private ContactEntryRepository contactEntryRepository;
@@ -49,57 +40,6 @@ public class MainController extends ControllerBase {
 	public String login() {
 		return "login";
 	}
-
-	@GetMapping("/charttest")
-	public String testChart() {
-		return "chartTest";
-	}
-	
-	@GetMapping("/register")
-	public String register(Model model) {
-		model.addAttribute("accountData", new AccountData());
-		return "register";
-	}
-	
-	@GetMapping("/userData")
-	public String editAccount(Model model) {
-		UserData userData = new UserData(GetLoggedInUserAccount());
-		userData.setTeams(teamRepository.findAll());
-		model.addAttribute("userData", userData);
-		return "userData";
-	}
-	
-	@PostMapping("/userData")
-	public String setUserData(UserData userData, HttpSession session) {
-		Account account = GetLoggedInUserAccount();
-		account.setName(userData.getName());
-		
-		if (!userData.getNewTeam().isEmpty())
-		{
-			Team team = teamRepository.findFirstByName(userData.getNewTeam());
-			if (team == null)
-			{
-				team = new Team();
-				team.setName(userData.getNewTeam());
-				teamRepository.save(team);
-			}
-			account.setTeam(team);
-		}
-		else if (account.getTeam() == null || userData.getSelectedTeam() != account.getTeam().getId())
-		{
-			Team team = teamRepository.findOne(userData.getSelectedTeam());
-			account.setTeam(team);
-		}
-		accountRepository.save(account);
-		
-		List<Team> emptyTeams = teamRepository.findEmptyTeams();
-		for (Team emptyTeam : emptyTeams)
-		{
-			teamRepository.delete(emptyTeam);
-		}
-
-		return "redirect:/";
-	}
 	
 	@GetMapping("/kontakt")
 	public String contact(Model model) {
@@ -107,6 +47,12 @@ public class MainController extends ControllerBase {
 		return "kontakt";
 	}
 
+	@GetMapping("/register")
+	public String register(Model model) {
+		model.addAttribute("accountData", new AccountData());
+		return "register";
+	}
+	
 	@PostMapping("/register")
 	public String registerResponse(AccountData accountData, Model model) {
 		Account account = accountRepository.findFirstByCodeAndCodeTimeOutAfter(accountData.getCode(), new Date());

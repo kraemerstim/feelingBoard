@@ -1,5 +1,6 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.web.User;
 
+import de.tim.feeling.Account.Account;
 import de.tim.feeling.Team.Team;
 
 public class UserData {

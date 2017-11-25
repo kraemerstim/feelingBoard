@@ -1,4 +1,4 @@
-package de.tim.feeling.chart;
+package de.tim.feeling.web.chart;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import de.tim.feeling.ControllerBase;
 import de.tim.feeling.Account.Account;
 import de.tim.feeling.Account.AccountRepository;
 import de.tim.feeling.Entry.EntryRepository;
+import de.tim.feeling.web.ControllerBase;
 
 @Controller
 @RequestMapping(path = "/chart")
