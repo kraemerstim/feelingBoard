@@ -45,7 +45,7 @@ public class EntryController {
 	}
 	
 	@PostMapping
-	ResponseEntity<?> add(@RequestBody EntryInput input) {
+	ResponseEntity<?> add(@RequestBody EntryRestInput input) {
 		input.setTimestamp(new Timestamp(System.currentTimeMillis()));
 		Entry entry = new Entry();
 		entry.setFeeling(input.getFeeling());
