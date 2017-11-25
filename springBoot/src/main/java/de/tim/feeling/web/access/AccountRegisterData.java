@@ -1,6 +1,6 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.web.access;
 
-public class AccountData {
+public class AccountRegisterData {
 	private String username;
 	private String password;
 	private String code;
