@@ -2,17 +2,17 @@ package de.tim.feeling.Entry;
 
 import java.sql.Timestamp;
 
-import de.tim.feeling.Account.AccountReturnData;
+import de.tim.feeling.Account.AccountRestReturnData;
 
-public class EntryReturnData {
+public class EntryRestReturnData {
 	private Long id;
-	private AccountReturnData account;
+	private AccountRestReturnData account;
 	private Timestamp timestamp;
 	private Double feeling;
 	
-	public EntryReturnData(Entry entry){
+	public EntryRestReturnData(Entry entry){
 		id = entry.getId();
-		account = new AccountReturnData(entry.getAccount());
+		account = new AccountRestReturnData(entry.getAccount());
 		timestamp = entry.getTimestamp();
 		feeling = entry.getFeeling();
 	}
@@ -29,10 +29,10 @@ public class EntryReturnData {
 	public void setDateTimeField(Timestamp timestamp) {
 		this.timestamp = timestamp;
 	}
-	public AccountReturnData getAccount() {
+	public AccountRestReturnData getAccount() {
 		return account;
 	}
-	public void setAccount(AccountReturnData account) {
+	public void setAccount(AccountRestReturnData account) {
 		this.account = account;
 	}
 	public Timestamp getTimestamp() {
@@ -47,6 +47,4 @@ public class EntryReturnData {
 	public void setFeeling(Double feeling) {
 		this.feeling = feeling;
 	}
-    
-	
 }

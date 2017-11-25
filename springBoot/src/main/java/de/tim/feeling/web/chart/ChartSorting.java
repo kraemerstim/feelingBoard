@@ -1,4 +1,4 @@
-package de.tim.feeling.chart;
+package de.tim.feeling.web.chart;
 
 public enum ChartSorting {
 	DAY, WEEK, MONTH, YEAR

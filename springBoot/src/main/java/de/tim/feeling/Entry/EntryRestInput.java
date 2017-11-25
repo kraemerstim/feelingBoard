@@ -1,9 +1,9 @@
 package de.tim.feeling.Entry;
 
-public class EntryInput extends Entry {
+public class EntryRestInput extends Entry {
 	private long accountID;
 
-	public EntryInput() {
+	public EntryRestInput() {
 		super();
 	}
 

@@ -28,24 +28,24 @@ public class EntryController {
 	private AccountRepository accountRepository;
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<EntryReturnData> Entries() {
-		List<EntryReturnData> entries = new ArrayList<EntryReturnData>(); 
+	public @ResponseBody Iterable<EntryRestReturnData> Entries() {
+		List<EntryRestReturnData> entries = new ArrayList<EntryRestReturnData>(); 
 		for (Entry entry : entryRepository.findAll()) {
-			entries.add(new EntryReturnData(entry));
+			entries.add(new EntryRestReturnData(entry));
 		}
 		return entries;
 	}
 	
 	@GetMapping(path="/{id}")
-	EntryReturnData getEntryByID(@PathVariable Long id) {
+	EntryRestReturnData getEntryByID(@PathVariable Long id) {
 		Entry entry = this.entryRepository.findOne(id);
 		if (entry == null)
 			return null;
-		return new EntryReturnData(entry);
+		return new EntryRestReturnData(entry);
 	}
 	
 	@PostMapping
-	ResponseEntity<?> add(@RequestBody EntryInput input) {
+	ResponseEntity<?> add(@RequestBody EntryRestInput input) {
 		input.setTimestamp(new Timestamp(System.currentTimeMillis()));
 		Entry entry = new Entry();
 		entry.setFeeling(input.getFeeling());

@@ -1,4 +1,4 @@
-package de.tim.feeling.security;
+package de.tim.feeling.web.security;
 
 import javax.sql.DataSource;
 
@@ -34,7 +34,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.csrf().disable()
                 .authorizeRequests()
-					.antMatchers("/", "/register", "/lib/**", "/webjars/**", "/rest/**", "/kontakt", "/charttest").permitAll()
+					.antMatchers("/", "/register", "/lib/**", "/webjars/**", "/rest/**", "/kontakt").permitAll()
 					//.antMatchers("/user/**", "/home", "/chart").hasAuthority("user")
 					.anyRequest().authenticated()
                 .and()

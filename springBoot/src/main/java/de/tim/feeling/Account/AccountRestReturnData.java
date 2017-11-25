@@ -1,21 +1,19 @@
 package de.tim.feeling.Account;
 
-import de.tim.feeling.Team.Team;
-
-public class AccountReturnData {
+public class AccountRestReturnData {
 	private String username;
 	private String chipUID;
 	private String name;
-	private Team team;
+	private String team;
 	private String role;
 	private Long id;
 	private String code;
 	
-	public AccountReturnData(Account account){
+	public AccountRestReturnData(Account account){
 		username = account.getUsername();
 		chipUID = account.getChipUID();
 		name = account.getName();
-		team = account.getTeam();
+		team = account.getTeam() == null ? "" : account.getTeam().getName();
 		role = account.getRole();
 		code = account.getCode();
 		setId(account.getId());
@@ -45,11 +43,11 @@ public class AccountReturnData {
 		this.name = name;
 	}
 
-	public Team getTeam() {
+	public String getTeam() {
 		return team;
 	}
 
-	public void setTeam(Team team) {
+	public void setTeam(String team) {
 		this.team = team;
 	}
 

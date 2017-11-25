@@ -1,4 +1,4 @@
-package de.tim.feeling.chart;
+package de.tim.feeling.web.chart;
 
 import java.util.ArrayList;
 import java.util.List;
