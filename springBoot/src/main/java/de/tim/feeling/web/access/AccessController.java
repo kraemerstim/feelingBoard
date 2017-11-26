@@ -28,26 +28,26 @@ public class AccessController extends ControllerBase {
 	
 	@GetMapping("/register")
 	public String register(Model model) {
-		model.addAttribute("accountData", new AccountRegisterData());
+		model.addAttribute("accountRegisterData", new AccountRegisterData());
 		return "register";
 	}
 	
 	@PostMapping("/register")
-	public String registerResponse(AccountRegisterData accountData, Model model) {
-		Account account = accountRepository.findFirstByCodeAndCodeTimeOutAfter(accountData.getCode(), new Date());
+	public String registerResponse(AccountRegisterData accountRegisterData, Model model) {
+		Account account = accountRepository.findFirstByCodeAndCodeTimeOutAfter(accountRegisterData.getCode(), new Date());
 		if (account == null) {
 			model.addAttribute("error", "Code nicht korrekt");
 			return "register";
 		}
-		if (accountRepository.findFirstByUsername(accountData.getUsername()) != null) {
+		if (accountRepository.findFirstByUsername(accountRegisterData.getUsername()) != null) {
 			model.addAttribute("error", "Benutzername existiert bereits");
 			return "register";
 		}
 		
-		account.setUsername(accountData.getUsername());
+		account.setUsername(accountRegisterData.getUsername());
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		account.setPassword(passwordEncoder.encode(accountData.getPassword()));
+		account.setPassword(passwordEncoder.encode(accountRegisterData.getPassword()));
 		account.setCode(null);
 		account.setCodeTimeOut(null);
 		accountRepository.save(account);

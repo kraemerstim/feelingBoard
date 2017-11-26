@@ -5,10 +5,6 @@ from datetime import datetime, time, timedelta
 import requests
 import feeling_IO
 
-#Konstanten
-hipchat_url = 'https://cassoftware.hipchat.com/v2/room/'
-feeling_board_url = 'http://localhost:8080/rest/'
-
 EistimeStart = time(13, 20)
 EistimeEnd = time(14, 20)
 
@@ -16,7 +12,7 @@ MittagessenStart = time(11, 45)
 MittagessenEnd = time(13, 0)
 
 def CallHipchatRestApi (channel):
-  lChannelUrl = hipchat_url + feeling_IO.getIniValue(channel, 'channel') + '/notification?auth_token=' + feeling_IO.getIniValue(channel, 'key')  
+  lChannelUrl = feeling_IO.getIniValue('Hipchat', 'url') + feeling_IO.getIniValue(channel, 'channel') + '/notification?auth_token=' + feeling_IO.getIniValue(channel, 'key')  
   lParams = {'message': feeling_IO.getIniValue(channel, 'message'),
             'notify': 'true',
             'message_format': 'text',
@@ -27,7 +23,7 @@ def CallHipchatRestApi (channel):
 def getAccountByUid(uid, getNewCode=False):
   restKey = feeling_IO.getIniValue('Security', 'RestKey')
   response = None
-  account_url = feeling_board_url + 'account'
+  account_url = feeling_IO.getIniValue('FeelingWebservice', 'url') + 'account'
   header = {'Key': restKey}
   response = requests.get(account_url + '/chipid/' + uid, headers=header, timeout = 5)
   if not response.text:
@@ -48,7 +44,7 @@ def addFeelingBoardEntry(rfid_uid, feeling):
   else:
     return True
     
-  feeling_url = feeling_board_url + 'entry'
+  feeling_url = feeling_IO.getIniValue('FeelingWebservice', 'url') + 'entry'
   params = {'accountID': accountID, 'feeling': feeling}
   header = {'Key': restKey}
   response = requests.post(feeling_url, json=params, headers=header, timeout=5)

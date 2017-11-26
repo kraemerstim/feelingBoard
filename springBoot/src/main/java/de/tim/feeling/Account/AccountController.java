@@ -84,7 +84,7 @@ public class AccountController {
 	ResponseEntity<?> add(@RequestBody Account input, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			return ResponseEntity.badRequest().build();
-		input.setPassword(hashString(input.getPassword()));
+		input.setChipUID(hashString(input.getChipUID()));
 		Account result = accountRepository.save(input);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
