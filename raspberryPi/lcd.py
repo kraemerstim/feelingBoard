@@ -33,18 +33,17 @@ import time
 
 
 # Define GPIO to LCD mapping
-LCD_RS = 2
+LCD_RS = 23
 LCD_E  = 18
-LCD_D4 = 22 
-LCD_D5 = 27
-LCD_D6 = 3
-LCD_D7 = 4
-LED_ON = 16
+LCD_D4 = 4 
+LCD_D5 = 17
+LCD_D6 = 27
+LCD_D7 = 22
 
 # Define some device constants
 LCD_WIDTH = 16    # Maximum characters per line
-LCD_CHR = True
-LCD_CMD = False
+LCD_CHR = GPIO.HIGH
+LCD_CMD = GPIO.LOW
 
 LCD_LINE_1 = 0x80 # LCD RAM address for the 1st line
 LCD_LINE_2 = 0xC0 # LCD RAM address for the 2nd line 
@@ -60,8 +59,7 @@ def lcd_init():
   GPIO.setup(LCD_D4, GPIO.OUT) # DB4
   GPIO.setup(LCD_D5, GPIO.OUT) # DB5
   GPIO.setup(LCD_D6, GPIO.OUT) # DB6
-  GPIO.setup(LCD_D7, GPIO.OUT) # DB7
-  GPIO.setup(LED_ON, GPIO.OUT) # Backlight enable  
+  GPIO.setup(LCD_D7, GPIO.OUT) # DB7  
   # Initialise display
   lcd_byte(0x33,LCD_CMD)
   lcd_byte(0x32,LCD_CMD)
@@ -103,43 +101,43 @@ def lcd_byte(bits, mode):
   GPIO.output(LCD_RS, mode) # RS
 
   # High bits
-  GPIO.output(LCD_D4, False)
-  GPIO.output(LCD_D5, False)
-  GPIO.output(LCD_D6, False)
-  GPIO.output(LCD_D7, False)
+  GPIO.output(LCD_D4, GPIO.LOW)
+  GPIO.output(LCD_D5, GPIO.LOW)
+  GPIO.output(LCD_D6, GPIO.LOW)
+  GPIO.output(LCD_D7, GPIO.LOW)
   if bits&0x10==0x10:
-    GPIO.output(LCD_D4, True)
+    GPIO.output(LCD_D4, GPIO.HIGH)
   if bits&0x20==0x20:
-    GPIO.output(LCD_D5, True)
+    GPIO.output(LCD_D5, GPIO.HIGH)
   if bits&0x40==0x40:
-    GPIO.output(LCD_D6, True)
+    GPIO.output(LCD_D6, GPIO.HIGH)
   if bits&0x80==0x80:
-    GPIO.output(LCD_D7, True)
+    GPIO.output(LCD_D7, GPIO.HIGH)
 
   # Toggle 'Enable' pin
   time.sleep(E_DELAY)    
-  GPIO.output(LCD_E, True)  
+  GPIO.output(LCD_E, GPIO.HIGH)  
   time.sleep(E_PULSE)
-  GPIO.output(LCD_E, False)  
+  GPIO.output(LCD_E, GPIO.LOW)  
   time.sleep(E_DELAY)      
 
   # Low bits
-  GPIO.output(LCD_D4, False)
-  GPIO.output(LCD_D5, False)
-  GPIO.output(LCD_D6, False)
-  GPIO.output(LCD_D7, False)
+  GPIO.output(LCD_D4, GPIO.LOW)
+  GPIO.output(LCD_D5, GPIO.LOW)
+  GPIO.output(LCD_D6, GPIO.LOW)
+  GPIO.output(LCD_D7, GPIO.LOW)
   if bits&0x01==0x01:
-    GPIO.output(LCD_D4, True)
+    GPIO.output(LCD_D4, GPIO.HIGH)
   if bits&0x02==0x02:
-    GPIO.output(LCD_D5, True)
+    GPIO.output(LCD_D5, GPIO.HIGH)
   if bits&0x04==0x04:
-    GPIO.output(LCD_D6, True)
+    GPIO.output(LCD_D6, GPIO.HIGH)
   if bits&0x08==0x08:
-    GPIO.output(LCD_D7, True)
+    GPIO.output(LCD_D7, GPIO.HIGH)
 
   # Toggle 'Enable' pin
   time.sleep(E_DELAY)    
-  GPIO.output(LCD_E, True)  
+  GPIO.output(LCD_E, GPIO.HIGH)  
   time.sleep(E_PULSE)
-  GPIO.output(LCD_E, False)  
+  GPIO.output(LCD_E, GPIO.LOW)  
   time.sleep(E_DELAY)   

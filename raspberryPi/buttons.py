@@ -4,13 +4,13 @@ import RPi.GPIO as GPIO
 import threading
 import time
 
-BTN_1 = 23
-BTN_2 = 5
-BTN_3 = 12
+BTN_1 = 26
+BTN_2 = 19
+BTN_3 = 13
 BTN_4 = 6
-BTN_5 = 13
-BTN_6 = 25
-HOT_BUTTON = 17
+BTN_5 = 5
+BTN_6 = 12
+HOT_BUTTON = 21
 
 buttons = (BTN_1, BTN_2, BTN_3, BTN_4, BTN_5, BTN_6)
 
