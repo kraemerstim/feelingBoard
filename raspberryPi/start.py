@@ -26,6 +26,8 @@ def initialize():
   # hook fuer ctrl+c    
   signal.signal(signal.SIGINT, cleanup)
   
+  GPIO.setmode(GPIO.BCM)
+  
   feeling_IO.initialize()
   
   feeling_machine.addMode('user', userMode.User_Mode(status))
