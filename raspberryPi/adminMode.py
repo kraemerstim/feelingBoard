@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
-import FB_Status
+import os
+import time
 import feeling_rest
 import feeling_IO
 import netifaces as ni
-import os
-import time
+import FB_Status
 
 class Admin_Mode:
-  
-  configJobs = ('Sound', 'NetConfig', 'Restart', 'Shutdown', 'Update', 'Test')
+
+  configJobs = ('NetConfig', 'Restart', 'Shutdown')
   
   def __init__(self, aStatus):
     self.status = aStatus
@@ -21,10 +21,10 @@ class Admin_Mode:
       self.jobToApply = (self.jobToApply -1) % len(Admin_Mode.configJobs)
     if (button == 1):
       self.jobToApply = (self.jobToApply +1) % len(Admin_Mode.configJobs)
-    if (button == 4):
+    if (button == 2):
       self.applyConfig()
       return
-    if (button == 5):
+    if (button == 3):
       self.status.resetMode()
       return
 

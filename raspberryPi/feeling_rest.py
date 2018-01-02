@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 import requests
 import feeling_IO
 

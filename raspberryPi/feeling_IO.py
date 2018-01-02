@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
+import time
+import os
 import configReader
 import display
 import rfidWrapper
 from pygame import mixer
-import os
 import buttons
-import time
 import RPi.GPIO as GPIO
 
 display = display.Display()

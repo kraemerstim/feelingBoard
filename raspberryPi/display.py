@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
 #import
-import lcd
-import threading
 import time
+import threading
 from threading import Thread
+import lcd
 
 class Display:
 
