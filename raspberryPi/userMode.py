@@ -29,6 +29,10 @@ class User_Mode:
   
   def HotButtonPressed(self):
     feeling_rest.callHipchatApi()
+    #reset display
+    feeling_IO.resetDisplay()
+    #Anzeige wiederherstellen
+    self.modeChanged()
     
   def userChanged(self, aUid, aUserName):
     if (aUid == '0'):

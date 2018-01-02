@@ -35,6 +35,9 @@ def setDisplay(aFirstRow, aSecondRow, seconds=0, style=2):
 def setDefaultDisplayValues(aFirstRow, aSecondRow):
   display.set_default_values(aFirstRow, aSecondRow)
 
+def resetDisplay():
+  display.resetDisplay()
+
 #ConfigReader  
 def getIniValue(aSection, aKey):
   return configReader.getIniValue(aSection, aKey)

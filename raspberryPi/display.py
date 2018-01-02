@@ -63,6 +63,9 @@ class Display:
     self.head_line = "Gefuehlsboard"
     self.bottom_line = "2.0"
     lcd.lcd_init()
+
+  def resetDisplay(self):
+    lcd.lcd_initDisplay()
   
   def cleanup(self):
     self.setDisplay('Bye bye', ':(')
