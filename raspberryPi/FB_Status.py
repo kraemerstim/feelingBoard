@@ -4,8 +4,10 @@ import feeling_rest
 import feeling_IO
 import RPi.GPIO as GPIO
 
+#LEDs Board: 36,38,40
+#LEDs BCM: 16, 20, 21
 class FB_Status:
-  LED = 20
+  LED = 16
     
   def __init__(self):
     GPIO.setup(FB_Status.LED, GPIO.OUT) 

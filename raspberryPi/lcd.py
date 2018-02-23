@@ -33,12 +33,12 @@ import time
 
 
 # Define GPIO to LCD mapping
-LCD_RS = 23
-LCD_E  = 18
-LCD_D4 = 4 
-LCD_D5 = 17
-LCD_D6 = 27
-LCD_D7 = 22
+LCD_RS = 23 #Board pin 16 / bcm 23
+LCD_E  = 18 #Board pin 12 / bcm 18
+LCD_D4 = 4 #Board pin 7 / bcm 4
+LCD_D5 = 17 #Board pin 11 / bcm 17
+LCD_D6 = 27 #Board pin 13 / bcm 27
+LCD_D7 = 22 #Board pin 15 / bcm 22
 
 # Define some device constants
 LCD_WIDTH = 16    # Maximum characters per line

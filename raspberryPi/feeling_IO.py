@@ -12,7 +12,9 @@ import RPi.GPIO as GPIO
 display = display.Display()
 RFIDReader = rfidWrapper.RFID_Wrapper()
 
-GREAT_JOB_SOUND = 24
+#HotButton(board): 3 oder 5
+#HotButton(bcm): 2 oder 3
+GREAT_JOB_SOUND = 3
     
 def getFilePath(aFilePath):
     return os.path.join(os.path.dirname(__file__), aFilePath)
