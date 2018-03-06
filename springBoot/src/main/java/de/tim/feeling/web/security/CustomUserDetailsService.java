@@ -4,8 +4,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import de.tim.feeling.Account.Account;
-import de.tim.feeling.Account.AccountRepository;
+import de.tim.feeling.account.Account;
+import de.tim.feeling.account.AccountRepository;
 
 public class CustomUserDetailsService implements UserDetailsService{
 

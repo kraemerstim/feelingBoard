@@ -1,8 +1,8 @@
-package de.tim.feeling.Entry;
+package de.tim.feeling.entry;
 
 import java.sql.Timestamp;
 
-import de.tim.feeling.Account.AccountRestReturnData;
+import de.tim.feeling.account.AccountRestReturnData;
 
 public class EntryRestReturnData {
 	private Long id;

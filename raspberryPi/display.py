@@ -70,3 +70,16 @@ class Display:
   def cleanup(self):
     self.setDisplay('Bye bye', ':(')
     lcd.GPIO.cleanup()
+
+def main():
+  input1 = ''
+  input2 = ''
+  display = Display()
+
+  while input1 != 'exit':
+    input1 = input('Zeile1: ')
+    input2 = input('Zeile2: ')
+    display.setDisplay(input1, input2)
+
+if __name__ == '__main__':
+  main()

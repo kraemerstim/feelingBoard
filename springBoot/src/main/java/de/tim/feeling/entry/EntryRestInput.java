@@ -1,4 +1,4 @@
-package de.tim.feeling.Entry;
+package de.tim.feeling.entry;
 
 public class EntryRestInput extends Entry {
 	private long accountID;

@@ -1,4 +1,4 @@
-package de.tim.feeling.Team;
+package de.tim.feeling.team;
 
 import java.util.Set;
 
@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import de.tim.feeling.Account.Account;
+import de.tim.feeling.account.Account;
 
 
 @Entity

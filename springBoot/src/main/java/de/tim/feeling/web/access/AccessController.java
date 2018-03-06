@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import de.tim.feeling.Account.Account;
-import de.tim.feeling.Account.AccountRepository;
+import de.tim.feeling.account.Account;
+import de.tim.feeling.account.AccountRepository;
 import de.tim.feeling.web.ControllerBase;
 
 @Controller

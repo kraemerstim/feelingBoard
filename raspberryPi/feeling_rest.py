@@ -19,7 +19,7 @@ def CallHipchatRestApi (channel):
             'color': 'random'
   }
   response = requests.post(lChannelUrl, lParams, timeout=3)
-            
+
 def getAccountByUid(uid, getNewCode=False):
   restKey = feeling_IO.getIniValue('Security', 'RestKey')
   response = None
@@ -42,15 +42,18 @@ def addFeelingBoardEntry(rfid_uid, feeling):
   if account and account.json():
     accountID = account.json()['id']
   else:
-    return True
+    return (True, '')
     
   feeling_url = feeling_IO.getIniValue('FeelingWebservice', 'url') + 'entry'
   params = {'accountID': accountID, 'feeling': feeling}
   header = {'Key': restKey}
   response = requests.post(feeling_url, json=params, headers=header, timeout=5)
-  if (response and response.ok and response.headers['location']):
-    return False
-  return True
+  if (response and response.ok and 'location' in response.headers):
+    if ('achievement' in response.headers):
+      return (False, response.headers['achievement'])
+    else:
+      return (False, '')
+  return (True, '')
 
 def callHipchatApi():
   nowTime = datetime.now()

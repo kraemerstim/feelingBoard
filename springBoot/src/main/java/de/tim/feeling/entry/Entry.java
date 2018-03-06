@@ -1,4 +1,4 @@
-package de.tim.feeling.Entry;
+package de.tim.feeling.entry;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import de.tim.feeling.Account.Account;
+import de.tim.feeling.account.Account;
 
 
 @Entity

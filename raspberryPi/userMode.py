@@ -4,6 +4,7 @@
 import FB_Status
 import feeling_rest
 import feeling_IO
+import time
 from datetime import datetime, timedelta
 
 class User_Mode:
@@ -15,10 +16,13 @@ class User_Mode:
   
   def ButtonPressed(self, button):
     if self.Button_Activate_Time < datetime.now():
-      error = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, 3 - button)
+      error, achievement = feeling_rest.addFeelingBoardEntry(self.status.RFID_uid, 3 - button)
       self.Button_Activate_Time = datetime.now() + User_Mode.BUTTON_REPEAT_DELAY
       if not error:
-        if self.status.Code:
+        if achievement != '':
+          feeling_IO.setDisplay('New Achievement!', achievement, 5)
+          time.sleep(5)
+        if self.status.Code: 
           feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'Dein Code: ' + self.status.Code, 5)
         else:
           feeling_IO.setDisplay('Danke ' + self.status.RFID_name, 'fuers Mitmachen!', 5)

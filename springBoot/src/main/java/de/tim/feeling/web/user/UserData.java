@@ -1,7 +1,7 @@
-package de.tim.feeling.web.User;
+package de.tim.feeling.web.user;
 
-import de.tim.feeling.Account.Account;
-import de.tim.feeling.Team.Team;
+import de.tim.feeling.account.Account;
+import de.tim.feeling.team.Team;
 
 public class UserData {
 	private String name;

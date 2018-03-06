@@ -1,4 +1,4 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.account;
 
 public class AccountRestReturnData {
 	private String username;
