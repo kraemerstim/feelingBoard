@@ -1,4 +1,4 @@
-package de.tim.feeling.web.User;
+package de.tim.feeling.web.user;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import de.tim.feeling.Account.Account;
-import de.tim.feeling.Account.AccountRepository;
-import de.tim.feeling.Team.Team;
-import de.tim.feeling.Team.TeamRepository;
+import de.tim.feeling.account.Account;
+import de.tim.feeling.account.AccountRepository;
+import de.tim.feeling.team.Team;
+import de.tim.feeling.team.TeamRepository;
 import de.tim.feeling.web.ControllerBase;
 
 @Controller
@@ -32,6 +32,11 @@ public class UserController extends ControllerBase {
 		userData.setTeams(teamRepository.findAll());
 		model.addAttribute("userData", userData);
 		return "user";
+	}
+	
+	@GetMapping("/achievements")
+	public String viewAchievement(Model model) {
+		return "redirect:/user/";
 	}
 	
 	@PostMapping("/")

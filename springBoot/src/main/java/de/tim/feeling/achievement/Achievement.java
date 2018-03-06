@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.persistence.ManyToMany;
 
-import de.tim.feeling.Account.Account;;
+import de.tim.feeling.account.Account;;
 
 @Entity
 public class Achievement {
@@ -15,10 +15,16 @@ public class Achievement {
 	
 	private String name;
 	private String description;
-	private String picture;
+	private String activePicture;
+	private String inactivePicture;
+	private int probability; 
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="achievement_account", joinColumns = @JoinColumn(name = "achievement_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"))
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            },
+            mappedBy = "unlockedAchievements")
 	private Set<Account> unlockedByAccounts;
 	
 	public Long getId() {
@@ -45,12 +51,12 @@ public class Achievement {
 		this.description = description;
 	}
 
-	public String getPicture() {
-		return picture;
+	public String getActivePicture() {
+		return activePicture;
 	}
 
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setActivePicture(String activePicture) {
+		this.activePicture = activePicture;
 	}
 
 	public Set<Account> getUnlockedByAccounts() {
@@ -59,5 +65,21 @@ public class Achievement {
 
 	public void setUnlockedByAccounts(Set<Account> unlockedByAccounts) {
 		this.unlockedByAccounts = unlockedByAccounts;
+	}
+
+	public String getInactivePicture() {
+		return inactivePicture;
+	}
+
+	public void setInactivePicture(String inactivePicture) {
+		this.inactivePicture = inactivePicture;
+	}
+
+	public int getProbability() {
+		return probability;
+	}
+
+	public void setProbability(int probability) {
+		this.probability = probability;
 	}
 }

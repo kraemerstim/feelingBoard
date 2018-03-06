@@ -27,10 +27,10 @@ public class ChartEntry {
 			resultString = getYear().toString() + '-' + String.format("%02d", getMonth()) + '-' +  String.format("%02d", getDay());
 			break;
 		case WEEK:
-			resultString = getYear().toString() + '-' + String.format("%02d", getWeek());
+			resultString = "KW" + String.format("%02d", getWeek()) + " " + getYear().toString();
 			break;
 		case MONTH:
-			resultString = getYear().toString() + '-' + String.format("%02d", getMonth());
+			resultString = String.format("%02d", getMonth()) + ". " + getYear().toString();
 			break;
 		default:
 			break;

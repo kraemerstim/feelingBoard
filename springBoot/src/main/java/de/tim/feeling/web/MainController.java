@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import de.tim.feeling.Contact.ContactEntry;
-import de.tim.feeling.Contact.ContactEntryRepository;
+import de.tim.feeling.contact.ContactEntry;
+import de.tim.feeling.contact.ContactEntryRepository;
 
 @Controller
 @RequestMapping(path = "/")

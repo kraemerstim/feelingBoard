@@ -1,4 +1,4 @@
-package de.tim.feeling.Contact;
+package de.tim.feeling.contact;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

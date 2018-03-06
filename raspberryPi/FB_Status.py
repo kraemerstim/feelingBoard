@@ -21,7 +21,7 @@ class FB_Status:
 
   def rfid_id_callback(self, uidString):
     if (self.RFID_uid != uidString):
-      self.RFID_uid = uidString;
+      self.RFID_uid = uidString
       try:
         account = feeling_rest.getAccountByUid(self.RFID_uid, True)
         if account:

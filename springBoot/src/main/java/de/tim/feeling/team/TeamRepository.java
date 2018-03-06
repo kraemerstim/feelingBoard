@@ -1,4 +1,4 @@
-package de.tim.feeling.Team;
+package de.tim.feeling.team;
 
 import java.util.List;
 

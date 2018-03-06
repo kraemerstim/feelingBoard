@@ -1,4 +1,4 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.account;
 
 import java.math.BigInteger;
 import java.net.URI;
@@ -33,14 +33,14 @@ public class AccountController {
 	private String restKey;
 	
 	@GetMapping(path="/all")
-	public @ResponseBody Iterable<AccountRestReturnData> Accounts(@RequestHeader("Key") String Key) {
+	public @ResponseBody Iterable<AccountRestReturnData> getAllAccounts(@RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			  return null;
-		List<AccountRestReturnData> accounts = new ArrayList<AccountRestReturnData>(); 
+		List<AccountRestReturnData> returnAccounts = new ArrayList<AccountRestReturnData>(); 
 		for (Account account : accountRepository.findAll()) {
-			accounts.add(new AccountRestReturnData(account));
+			returnAccounts.add(new AccountRestReturnData(account));
 		}
-		return accounts;
+		return returnAccounts;
 	}
 	
 	@GetMapping(path="/{id}")
@@ -81,7 +81,7 @@ public class AccountController {
 	}
 	
 	@PostMapping
-	ResponseEntity<?> add(@RequestBody Account input, @RequestHeader("Key") String Key) {
+	ResponseEntity<?> addAccount(@RequestBody Account input, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			return ResponseEntity.badRequest().build();
 		input.setChipUID(hashString(input.getChipUID()));
@@ -102,7 +102,6 @@ public class AccountController {
 			String hex = String.format( "%064x", new BigInteger( 1, digest ) );
 			return hex;
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			return "";
 		}
 	}

@@ -18,7 +18,7 @@ BTN_6 = 24
 BTN_7 = 12
 HOT_BUTTON = 2
 
-buttons = (BTN_1, BTN_2, BTN_4, BTN_5)
+buttons = (BTN_7, BTN_6, BTN_4, BTN_3)
 
 GPIO_EVENT = GPIO.FALLING
 GPIO_PULL_UP_DOWN = GPIO.PUD_UP
@@ -35,7 +35,7 @@ def buttonPressedCallback(channel):
   button_lock.acquire()
   try:
     time.sleep(0.02)
-    if GPIO.input(channel) == 1:
+    if GPIO.input(channel) == 0:
       buttonPressed(channel)
   finally:
     button_lock.release()
@@ -55,22 +55,13 @@ def initialize():
   __hotButtonCallback = None
   
   GPIO.setmode(GPIO.BCM)
-  GPIO.setup(BTN_1, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_2, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_3, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_4, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_5, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_6, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(BTN_7, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
-  GPIO.setup(HOT_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+  for button in buttons:
+    GPIO.setup(button, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
   
-  GPIO.add_event_detect(BTN_1, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_2, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_3, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_4, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_5, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_6, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
-  GPIO.add_event_detect(BTN_7, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
+  for button in buttons:
+    GPIO.add_event_detect(button, GPIO_EVENT, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
+
+  GPIO.setup(HOT_BUTTON, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
   GPIO.add_event_detect(HOT_BUTTON, GPIO.RISING, callback=buttonPressedCallback, bouncetime=GPIO_BOUNCETIME)
 
 def debug(channel):
@@ -81,6 +72,7 @@ def debug(channel):
 
 def main():
   global program_running
+  program_running = True
   GPIO.setmode(GPIO.BCM)
   GPIO.setup(BTN_1, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)
   GPIO.setup(BTN_2, GPIO.IN, pull_up_down = GPIO_PULL_UP_DOWN)

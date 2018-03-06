@@ -1,16 +1,23 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.account;
 
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import de.tim.feeling.Team.Team;
+import de.tim.feeling.achievement.Achievement;
+import de.tim.feeling.team.Team;
 
 
 @Entity
@@ -25,12 +32,21 @@ public class Account {
 	@ManyToOne
 	private Team team;
 	
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            })
+	@JoinTable(name="account_achievement", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "achievement_id"))
+	private Set<Achievement> unlockedAchievements;
+	
 	private String password;
 	private String role;
 	private String username;
 	private String code;
 	private Timestamp codeTimeOut;
 	private boolean enabled;
+	private Timestamp newAchievementLocktime;
 	
 	public Account() {
 		super();
@@ -56,6 +72,14 @@ public class Account {
 
 	public void setCodeTimeOut(Timestamp codeTimeOut) {
 		this.codeTimeOut = codeTimeOut;
+	}
+
+	public Timestamp getNewAchievementLocktime() {
+		return newAchievementLocktime;
+	}
+
+	public void setNewAchievementLocktime(Timestamp newAchievementLocktime) {
+		this.newAchievementLocktime = newAchievementLocktime;
 	}
 
 	public boolean isEnabled() {
@@ -99,6 +123,14 @@ public class Account {
 
 	public void setChipUID(String chipUID) {
 		this.chipUID = chipUID;
+	}
+	
+	public Set<Achievement> getUnlockedAchievements() {
+		return unlockedAchievements;
+	}
+
+	public void setUnlockedAchievements(Set<Achievement> unlockedAchievements) {
+		this.unlockedAchievements = unlockedAchievements;
 	}
 
 	public String getName() {

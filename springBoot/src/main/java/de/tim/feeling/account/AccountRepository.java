@@ -1,11 +1,11 @@
-package de.tim.feeling.Account;
+package de.tim.feeling.account;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import de.tim.feeling.Team.Team;
+import de.tim.feeling.team.Team;
 
 public interface AccountRepository extends CrudRepository<Account, Long> {
 	Account findFirstByChipUID(String chipUID);

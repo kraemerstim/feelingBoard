@@ -1,6 +1,5 @@
 package de.tim.feeling.web.chart;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,9 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import de.tim.feeling.Account.Account;
-import de.tim.feeling.Account.AccountRepository;
-import de.tim.feeling.Entry.EntryRepository;
+import de.tim.feeling.account.Account;
+import de.tim.feeling.account.AccountRepository;
+import de.tim.feeling.entry.EntryRepository;
 import de.tim.feeling.web.ControllerBase;
 
 @Controller
@@ -39,7 +38,7 @@ public class ChartController extends ControllerBase {
 			"rgba(59, 62, 172, 0.5)" };
 
 	@GetMapping("/")
-	public String chart(Model model) throws ParseException {
+	public String chart(Model model) {
 		ChartData<String, Double> chartData = getChartEntries();
 		model.addAttribute("ChartData", chartData);
 		return "chart";
@@ -59,11 +58,11 @@ public class ChartController extends ControllerBase {
 		labelAccountIDs.addAll(teamAccountIDs);
 
 		List<ChartEntry> labels = getEntries(labelAccountIDs, sorting);
-		if (labels.size() > 30) {
+		if (labels.size() > 60) {
 			sorting = ChartSorting.WEEK;
 			labels = getEntries(labelAccountIDs, sorting);
 		}
-		if (labels.size() > 30) {
+		if (labels.size() > 60) {
 			sorting = ChartSorting.MONTH;
 			labels = getEntries(labelAccountIDs, sorting);
 		}

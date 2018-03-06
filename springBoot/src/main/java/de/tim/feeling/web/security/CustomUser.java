@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import de.tim.feeling.Account.Account;
+import de.tim.feeling.account.Account;
 
 public class CustomUser extends User implements UserDetails{
 	private static final long serialVersionUID = 6295229428286544967L;
