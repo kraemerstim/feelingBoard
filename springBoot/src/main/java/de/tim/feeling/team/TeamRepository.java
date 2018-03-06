@@ -9,6 +9,6 @@ public interface TeamRepository extends CrudRepository<Team, Long> {
 	Team findFirstByName(String name);
 	
 	//leere teams finden
-	@Query("Select new de.tim.feeling.Team.Team(t.id, t.name) FROM Team t left join t.accounts a where a.team is null")
+	@Query("Select new de.tim.feeling.team.Team(t.id, t.name) FROM Team t left join t.accounts a where a.team is null")
     List<Team> findEmptyTeams();
 }
