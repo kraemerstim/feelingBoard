@@ -4,3 +4,4 @@
 /Servers/
 raspberryPi/.vscode/settings.json
 .vscode/settings.json
+*.jar
