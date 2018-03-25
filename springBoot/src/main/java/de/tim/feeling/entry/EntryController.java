@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +37,13 @@ public class EntryController {
 	@Autowired
 	private AchievementRepository achievementRepository;
 
+	@Value("${secret.restkey}")
+	private String restKey;
+	
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<EntryRestReturnData> getAllEntries() {
+	public @ResponseBody Iterable<EntryRestReturnData> getAllEntries(@RequestHeader("Key") String Key) {
+		if (Key.compareTo(restKey)!=0)
+			  return null;
 		List<EntryRestReturnData> entries = new ArrayList<EntryRestReturnData>();
 		for (Entry entry : entryRepository.findAll()) {
 			entries.add(new EntryRestReturnData(entry));
@@ -45,7 +52,9 @@ public class EntryController {
 	}
 
 	@GetMapping(path = "/{id}")
-	EntryRestReturnData getEntryByID(@PathVariable Long id) {
+	EntryRestReturnData getEntryByID(@PathVariable Long id, @RequestHeader("Key") String Key) {
+		if (Key.compareTo(restKey)!=0)
+			  return null;
 		Entry entry = this.entryRepository.findOne(id);
 		if (entry == null)
 			return null;
@@ -53,7 +62,9 @@ public class EntryController {
 	}
 
 	@PostMapping
-	ResponseEntity<?> addEntry(@RequestBody EntryRestInput input) {
+	ResponseEntity<?> addEntry(@RequestBody EntryRestInput input, @RequestHeader("Key") String Key) {
+		if (Key.compareTo(restKey)!=0)
+			return ResponseEntity.badRequest().build();
 		Entry entry = new Entry(input.getFeeling(), new Timestamp(System.currentTimeMillis()));
 		Account account = accountRepository.findOne(input.getAccountID());
 		entry.setAccount(account);

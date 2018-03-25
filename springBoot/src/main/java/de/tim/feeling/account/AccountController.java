@@ -29,7 +29,7 @@ public class AccountController {
 	@Autowired 
 	private AccountRepository accountRepository;
 	
-	@Value("${tim.restkey}")
+	@Value("${secret.restkey}")
 	private String restKey;
 	
 	@GetMapping(path="/all")
