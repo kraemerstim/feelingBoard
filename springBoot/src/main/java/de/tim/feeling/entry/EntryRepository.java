@@ -23,7 +23,7 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
     List<ChartEntry> findByAccountsAndGroupedByDay(@Param("ids") List<Long> accountIDs);
 	
 	//nach Woche gruppiert
-	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), WEEK(timestamp)")
+	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), WEEK(timestamp) order by YEAR(timestamp), WEEK(timestamp)")
     List<ChartEntry> findByAccountsAndGroupedByWeek(@Param("ids") List<Long> accountIDs);
 	
 	//nach Monat gruppiert
