@@ -48,7 +48,7 @@ public class ChartController extends ControllerBase {
 		TreeMap<String, Double> labelMap = new TreeMap<String, Double>();
 		ChartSorting sorting = ChartSorting.DAY;
 		Account userAccount = GetLoggedInUserAccount();
-		Account anonymAccount = accountRepository.findOne((long) 1);
+		Account anonymAccount = accountRepository.findById((long) 1).orElse(null);
 		List<Long> teamAccountIDs = new ArrayList<Long>();
 		if (userAccount.getTeam() != null) {
 			List<Account> accounts = accountRepository.findByTeam(userAccount.getTeam());
@@ -58,6 +58,7 @@ public class ChartController extends ControllerBase {
 		labelAccountIDs.addAll(teamAccountIDs);
 
 		List<ChartEntry> labels = getEntries(labelAccountIDs, sorting);
+		
 		if (labels.size() > 60) {
 			sorting = ChartSorting.WEEK;
 			labels = getEntries(labelAccountIDs, sorting);

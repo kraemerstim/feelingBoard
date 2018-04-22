@@ -57,7 +57,7 @@ public class UserController extends ControllerBase {
 		}
 		else if (account.getTeam() == null || userData.getSelectedTeam() != account.getTeam().getId())
 		{
-			Team team = teamRepository.findOne(userData.getSelectedTeam());
+			Team team = teamRepository.findById(userData.getSelectedTeam()).orElse(null);
 			account.setTeam(team);
 		}
 		accountRepository.save(account);

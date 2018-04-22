@@ -47,7 +47,7 @@ public class AccountController {
 	AccountRestReturnData getAccountByID(@PathVariable Long id, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 		  return null;
-		Account account = this.accountRepository.findOne(id);
+		Account account = this.accountRepository.findById(id).orElse(null);
 		if (account == null)
 			return null;
 		else

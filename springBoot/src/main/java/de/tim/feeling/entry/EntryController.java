@@ -55,7 +55,7 @@ public class EntryController {
 	EntryRestReturnData getEntryByID(@PathVariable Long id, @RequestHeader("Key") String Key) {
 		if (Key.compareTo(restKey)!=0)
 			  return null;
-		Entry entry = this.entryRepository.findOne(id);
+		Entry entry = this.entryRepository.findById(id).orElse(null);
 		if (entry == null)
 			return null;
 		return new EntryRestReturnData(entry);
@@ -66,7 +66,7 @@ public class EntryController {
 		if (Key.compareTo(restKey)!=0)
 			return ResponseEntity.badRequest().build();
 		Entry entry = new Entry(input.getFeeling(), new Timestamp(System.currentTimeMillis()));
-		Account account = accountRepository.findOne(input.getAccountID());
+		Account account = accountRepository.findById(input.getAccountID()).orElse(null);
 		entry.setAccount(account);
 		if (account == null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
