@@ -70,11 +70,9 @@ public class ChartController extends ControllerBase {
 
 		ChartData<String, Double> chartData = new ChartData<String, Double>();
 		for (ChartEntry entry : labels) {
-			labelMap.put(entry.getString(sorting), 0.0);
-		}
-
-		for (Map.Entry<String, ?> entry : labelMap.entrySet()) {
-			chartData.addLabel(entry.getKey());
+			String label = entry.getString(sorting);
+			labelMap.put(label, 0.0);
+			chartData.addLabel(label);
 		}
 
 		// Account
@@ -97,8 +95,13 @@ public class ChartController extends ControllerBase {
 		return chartData;
 	}
 
-	private DataSet<String, Double> getDataSet(List<ChartEntry> entries, ChartSorting sorting,
-			TreeMap<String, Double> map, int id, String type, String label) {
+	private DataSet<String, Double> getDataSet(
+			List<ChartEntry> entries, 
+			ChartSorting sorting,
+			TreeMap<String, Double> map, 
+			int id, 
+			String type, 
+			String label) {
 		DataSet<String, Double> dataSet = new DataSet<String, Double>();
 		if (map == null) {
 			for (ChartEntry entry : entries) {

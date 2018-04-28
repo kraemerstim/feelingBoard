@@ -23,7 +23,7 @@ import de.tim.feeling.team.Team;
 @Entity
 public class Account {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private String chipUID;

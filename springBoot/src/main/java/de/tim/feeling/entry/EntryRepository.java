@@ -19,14 +19,14 @@ public interface EntryRepository extends CrudRepository<Entry, Long> {
 	//Custom queries
 	//Timestamps 
 	//nach Tag gruppiert
-	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by DATE(timestamp)")
+	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by DATE(timestamp) order by DATE(timestamp)")
     List<ChartEntry> findByAccountsAndGroupedByDay(@Param("ids") List<Long> accountIDs);
 	
 	//nach Woche gruppiert
-	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), WEEK(timestamp) order by YEAR(timestamp), WEEK(timestamp)")
+	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), 0, round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), WEEK(timestamp) order by YEAR(timestamp), WEEK(timestamp)")
     List<ChartEntry> findByAccountsAndGroupedByWeek(@Param("ids") List<Long> accountIDs);
 	
 	//nach Monat gruppiert
-	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), WEEK(timestamp), DAY(timestamp), round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), MONTH(timestamp)")
+	@Query("Select new de.tim.feeling.web.chart.ChartEntry(YEAR(timestamp), MONTH(timestamp), 0, 0, round(AVG(feeling),2)) FROM Entry where account_id in :ids group by YEAR(timestamp), MONTH(timestamp) order by YEAR(timestamp), MONTH(timestamp)")
 	List<ChartEntry> findByAccountsAndGroupedByMonth(@Param("ids") List<Long> accountIDs);
 }

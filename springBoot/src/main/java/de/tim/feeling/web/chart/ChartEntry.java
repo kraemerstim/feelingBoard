@@ -14,10 +14,6 @@ public class ChartEntry {
 		setWeek(aWeek);
 		setDay(aDay);
 	}
-	
-	public ChartEntry(Integer aYear, Integer aMonth, Integer aWeek, Integer aDay){
-		this(aYear, aMonth, aWeek, aDay, 0.0);
-	}
 
 	public String getString(ChartSorting sorting)
 	{
