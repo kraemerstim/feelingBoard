@@ -48,7 +48,7 @@ public class ChartController extends ControllerBase {
 		TreeMap<String, Double> labelMap = new TreeMap<String, Double>();
 		ChartSorting sorting = ChartSorting.DAY;
 		Account userAccount = GetLoggedInUserAccount();
-		Account anonymAccount = accountRepository.findOne((long) 1);
+		Account anonymAccount = accountRepository.findById((long) 1).orElse(null);
 		List<Long> teamAccountIDs = new ArrayList<Long>();
 		if (userAccount.getTeam() != null) {
 			List<Account> accounts = accountRepository.findByTeam(userAccount.getTeam());
@@ -58,6 +58,7 @@ public class ChartController extends ControllerBase {
 		labelAccountIDs.addAll(teamAccountIDs);
 
 		List<ChartEntry> labels = getEntries(labelAccountIDs, sorting);
+		
 		if (labels.size() > 60) {
 			sorting = ChartSorting.WEEK;
 			labels = getEntries(labelAccountIDs, sorting);
@@ -69,11 +70,9 @@ public class ChartController extends ControllerBase {
 
 		ChartData<String, Double> chartData = new ChartData<String, Double>();
 		for (ChartEntry entry : labels) {
-			labelMap.put(entry.getString(sorting), 0.0);
-		}
-
-		for (Map.Entry<String, ?> entry : labelMap.entrySet()) {
-			chartData.addLabel(entry.getKey());
+			String label = entry.getString(sorting);
+			labelMap.put(label, 0.0);
+			chartData.addLabel(label);
 		}
 
 		// Account
@@ -96,8 +95,13 @@ public class ChartController extends ControllerBase {
 		return chartData;
 	}
 
-	private DataSet<String, Double> getDataSet(List<ChartEntry> entries, ChartSorting sorting,
-			TreeMap<String, Double> map, int id, String type, String label) {
+	private DataSet<String, Double> getDataSet(
+			List<ChartEntry> entries, 
+			ChartSorting sorting,
+			TreeMap<String, Double> map, 
+			int id, 
+			String type, 
+			String label) {
 		DataSet<String, Double> dataSet = new DataSet<String, Double>();
 		if (map == null) {
 			for (ChartEntry entry : entries) {

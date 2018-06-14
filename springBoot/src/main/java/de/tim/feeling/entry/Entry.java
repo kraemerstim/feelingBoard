@@ -15,7 +15,7 @@ import de.tim.feeling.account.Account;
 @Entity
 public class Entry {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne

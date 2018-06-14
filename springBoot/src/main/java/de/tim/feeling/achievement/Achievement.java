@@ -10,7 +10,7 @@ import de.tim.feeling.account.Account;;
 @Entity
 public class Achievement {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;

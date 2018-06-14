@@ -30,7 +30,7 @@ public class ControllerBase {
 	public Account GetLoggedInUserAccount() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal != null && principal instanceof CustomUser) {
-			return  accountRepository.findOne(((CustomUser) principal).getAccountID());
+			return  accountRepository.findById(((CustomUser) principal).getAccountID()).orElse(null);
 		}
 
 		return null;
