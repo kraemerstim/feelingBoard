@@ -1,0 +1,54 @@
+RFID:
+1: 24
+2: 23
+3: 19
+4: 21
+5: 25 (Masse)
+6: 22
+7: 19 (3,3V)
+
+LCD
+1: Masse
+2: +5V
+3: Poti
+4: 16 (GPIO23)
+5: 12 (GPIO18)
+6: Masse
+7: 7  (GPIO4)
+8: 11 (GPIO17)
+9: 13 (GPIO27)
+10: 15(GPIO22)
+11: Poti2
+12: Masse
+
+Buttons Version1:
+1: 29 (GPIO5)
+2: 31 (GPIO6)
+3: 33 (GPIO13)
+4: 35 (GPIO19)
+5: 37 (GPIO26)
+6: 18 (GPIO24)
+7: 32 (GPIO12)
+
+Buttons Version2:
+1: 37 (GPIO26)
+2: 35 (GPIO19)
+3: 33 (GPIO13)
+4: 31 (GPIO6)
+5: 29 (GPIO5) 
+6: 18 (GPIO24)
+7: 32 (GPIO12)
+
+HotButton: 
+GJS: 3(GPIO2)
+Button: 5(GPIO3)
+
+LED Version1:
+1: 36 (GPIO16)
+2: 38 (GPIO20)
+3: 40 (GPIO21)
+
+LED Version1:
+1: 40 (GPIO21)
+2: 38 (GPIO20)
+3: 36 (GPIO16)
